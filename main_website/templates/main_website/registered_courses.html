@@ -37,21 +37,25 @@
                         </tr>
                     </thead>
                     <tbody id = 'mainTableBody'>
-                            {% for course in courses %}
+                            {% for grade in grades %}
                                     <tr class = "parentRow">
-                                        <td>{{course.course_id}}</td>
-                                        <td>{{course.name}}</td>
-                                        <td>{{course.number_of_hours}}</td>
-                                        <td>{{course.course_id}}</td>
-                                        <td>{{course.course_id}}</td>
-                                        <td>{{course.course_id}}</td>
+                                        <td>{{grade.course.course_id}}</td>
+                                        <td>{{grade.course.name}}</td>
+                                        <td>{{grade.course.number_of_hours}}</td>
+                                        <td>{{grade.course_grade}}</td>
+                                        <td>{{grade.final_grade}}</td>
+                                        <td>
+                                            {% with x=grade.final_grade y=grade.course_grade %}
+                                                {{x|add:y}}
+                                            {% endwith %}
+                                        </td>
                                         <td><button class="expand-button" ><i class="fa fa-plus"></i></button></td>
                                     </tr>
                                     <tr class="expandedRow" style="display: none;">
                                         <td colspan="7" class = "test">
-                                            <p><strong>Department</strong> : {{course.department}}</p>
-                                            <p><strong>Lecture Day</strong> : {{course.lecture_day}}</p>
-                                            <p><strong>Hall Number</strong> : {{course.hall_number}}</p>
+                                            <p><strong>Department</strong> : {{grade.course.department.name}}</p>
+                                            <p><strong>Lecture Day</strong> : {{grade.course.lecture_day}}</p>
+                                            <p><strong>Hall Number</strong> : {{grade.course.hall_number}}</p>
                                         </td>
                                     </tr>
                             {% endfor %}
