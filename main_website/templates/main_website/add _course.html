@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/Add Course.css" />
+    <script defer src="../js/header.js"></script>
+    <script defer src="../js/footer.js"></script>
+    <script defer src="../js/localStorage_data.js"></script>
+    <script defer src="../js/add_course.js"></script>
+    
+    <title>Add Course</title>
+</head>
+<body>
+    <!-- header -->
+    <header id="website-header"></header>
+    <div id="main-content">
+            <div class="page-body">
+            <div class="title">
+                <h1><b>Add Course</b> </h1>
+            </div>
+            <form >
+            <div class="txt_field">
+                <span></span>
+                <input type="text" id="courseName" name="Course name" required >
+                <label for="course name" class="form__label">Course Name:</label>
+            </div>
+            <div id="cNameError" style="display:none;color:red;">Invalid Name:The name must start with letters </div>
+            <br>
+            <div class="txt_field">
+                <span></span>
+                <input type="text" id="courseID" name="Course ID"  required>
+                <label for="course ID" class="form__label">Course ID:</label>
+            </div>
+            <div id="idError" style="display:none;color:red;">ID must start with letters followed by numbers</div>
+            <br>
+            <div class="txt_field">
+                <span></span>
+                <input type="number" id="courseHours" name="Course Hours"  min="1" max ="20"required>
+                <label for="course Hours" class="form__label">Course Hours:</label>
+            </div>
+            <br>
+            <div >
+                <label for="department" >Department:</label>
+                <span class="custom-dropdown">
+                    <select name="department" id="department">
+                        <optgroup label="department">
+                                <option value="" disabled selected  >Select your department</option>
+                                <option value="CS"> Computer Science </option>
+                                <option value="IT"> Information Technology </option>
+                                <option value="OR"> Operation Research </option>
+                                <option value="IS"> Information System </option>
+                                <option value="AI"> Artificial Intelligence </option>
+                        </optgroup>
+                    </select>
+                </span>
+            </div> 
+            <div id="departmentError" style="display:none;color:red;">Please select a department.</div>
+            <br>
+            <div class="txt_field">
+                <span></span>
+                <input type="text" id="lecDay" name="lDay"  required>
+                <label for="lecture Day" class="form__label">lecture day:</label>
+            </div>
+            <br>
+            <div class="txt_field">
+                <span></span>
+                <input type="text" id="hNumber" name="hallNumber" required>
+                <label for="Hall number"  class="form__label">Hall number:</label>
+            </div>
+            <br>
+            <div>
+                <button type="reset" class="btn"id="reset"> <span> Reset</span> </button>
+                <button type="add" class="btn" id="add"> <span>Submit</span></button>
+            </div>
+        </form>
+        </div>
+    </div>
+    
+    <!-- footer Section -->
+    <footer id = "website-footer"></footer>
+</body>
+</html>

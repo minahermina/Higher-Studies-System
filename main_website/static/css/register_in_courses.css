@@ -1,0 +1,79 @@
+.mainDiv .pageTitle {
+  color: black;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.mainDiv {
+  background-color: white;
+  width: 35%;
+  height: 15%;
+  padding: 30px;
+  border-radius: 20px;
+  justify-content: center;
+  margin-top: 1px;
+  margin-left: 32%;
+  overflow: hidden;
+  box-shadow: 0 0 7px rgba(0, 0, 0.5);
+  padding-bottom: 60px;
+  padding-top: 60px;
+}
+
+/* Form Group Styling */
+.form-group {
+  margin-bottom: 10px;
+  font-family: 'Poppins';
+  font-size: 19px;
+}
+
+/* Label Styling */
+label {
+  display: inline-block;
+  width: 100px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  vertical-align: top;
+  text-decoration: none;
+}
+
+/* Input Styling */
+input[name="name"],
+input[name="id"],
+input[name="department"] {
+  display: inline-block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid #6e99b4;
+  font-size: 16px;
+}
+
+/* Select Styling */
+select[name="course1"],
+select[name="course2"],
+select[name="course3"] {
+  display: inline-block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #114a6e;
+  border-radius: 6px;
+  font-size: 18px;
+  color: aliceblue;
+  background-color: #587c94;
+}
+
+
+/* Button Styling*/
+button[type="submit"],
+button[type="reset"] {
+  width: 80%;
+  height: 45px;
+  border: 1px solid #6e99b4;
+  border-radius: 25px;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  display: block;
+  margin: 0 auto;
+}

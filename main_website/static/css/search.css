@@ -1,0 +1,131 @@
+
+#search-box {
+    background-color: #fff;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    margin-left: 10%;
+    margin-right: 10%;
+    border-radius: 20px;
+    box-shadow:var(--main-box-shadow);
+}
+
+#table-container {
+    width: 80%;
+    margin: auto;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255,255,255,0.2);
+}
+
+thead {
+    background-color: #f1f1f1;
+    font-weight: bold;
+}
+tr{
+    border-bottom: 1px solid #ddd;
+}
+
+th,
+td {
+    padding: 10px 10px;
+    text-align: left;
+    color: #000;
+    /* border-bottom: 1px solid #ddd; */
+}
+
+
+table tr td:first-child{
+    width: 25%;
+}
+
+tr:hover .button-container {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+tr:hover{
+    background-color: #eee;
+    transform: translateX(0);
+}
+
+
+.search-container> input[type=search]{
+    flex: 0.6;
+    margin-right: 6%;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 7px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #000;
+}
+
+
+#Students {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    appearance: none;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 7px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #000;
+
+}
+
+.search-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+
+.delete:hover , .search:hover{
+    /* opacity: 0; */
+    transform: translateX(-4px);
+    /* transform:scale(1.1); */
+    transition: all 0.3s ease-in-out;
+    justify-content: center;
+}
+
+
+button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--gradient-background-color);
+    cursor: pointer;
+}
+
+
+a:hover i{
+    transform: translateX(-4px);
+    /* transform:scale(1.1); */
+    transition: all 0.3s ease-in-out;
+    justify-content: center;
+}
+
+.title{
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h1{
+    color: #000;
+    padding-bottom: 10px;
+
+}
+

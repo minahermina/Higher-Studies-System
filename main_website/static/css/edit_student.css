@@ -1,0 +1,46 @@
+.mainDiv{
+    background-color: white;
+    color: black;
+    width: 40%;
+    height: 40%;
+    padding: 60px;
+    border-radius: 20px;
+    justify-content: center;
+    margin-left: 28%;
+    overflow: hidden;
+    font-weight: normal;
+}    
+.mainDiv h1{
+    color:black;
+    margin-bottom: 20px;
+    text-align: center;
+}
+label{
+    display: block;
+    margin-bottom: 3px;
+}
+
+label[for="m"], label[for="f"],label[for="a"] ,label[for="ina"]{
+    margin-top: -24px;
+    margin-left: 20px;  
+    margin-bottom: -4px;
+}
+input[type="text"],[type='email']{
+    padding: 2px;
+    width:85%;
+    height: 25px;
+    border: 1px solid #49697d ;
+    border-radius: 3px;
+    font-size: 1rem;
+}
+.btn{
+    margin-left: 50px;
+}
+select {
+    padding: 2px;
+    width:85%;
+    height: 25px;
+    border: 1px solid #49697d ;
+    border-radius: 3px;
+    font-size: 1rem;
+}

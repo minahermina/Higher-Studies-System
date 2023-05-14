@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- style for make the table mor readable and centered it on the page-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet"  href = "../css/search.css" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script defer src="../js/header.js"></script>
+    <script defer src="../js/footer.js"></script>
+    <script defer src="../js/search.js"></script>
+    <script defer src="../js/localStorage_data.js"></script>
+    <title>Document</title>
+    
+</head>
+<body>
+    <!-- this for header section (top of the page) -->
+    <header id = "website-header"></header>
+    
+    <div id ="main-content">
+        <div id = "search-box">
+            <div class="title">
+                <h1>Search Student</h1>
+            </div>
+            <form method="get">
+                <div class = "search-container">
+                    <button type="submit" class = "search"><i class="fa fa-search"></i></button>
+                    <input type="search" placeholder="Enter the name or ID" name="keyword">
+                    <label style = "margin-right: 5px; color: #000;">sort by</label>
+                    <select id = "Students" name = "priority">
+                        <option value ="None" selected>None</option>
+                        <option value ="name">Name</option>
+                        <option value ="ID">ID</option>
+                        <option value ="GPA">GPA</option>
+                    </select>
+                </div>
+
+            <!-- table for displaying content of the Students -->
+                <div id = "table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <!-- some default data -->
+                                <th>Studnet name</th>
+                                <th>Student ID</th>
+                                <th>Status</th>
+                                <th>GPA</th>
+                                <th>Email</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <footer id = "website-footer"></footer>
+    
+    
+</body>
+</html>

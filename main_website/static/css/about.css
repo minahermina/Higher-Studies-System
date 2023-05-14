@@ -1,0 +1,83 @@
+#about h2, #about h1, #about h3{
+    color: #000;
+}
+#about h3{
+    text-align: left;
+    margin-right: 10px;
+}
+
+#about  h1{
+    margin: auto;
+    width: fit-content;
+}
+
+
+#about{
+    background-color: #fff;
+    text-align: center;
+    width: 60%;
+    margin: 20px auto auto auto;
+    padding-bottom: 50px ;
+    padding-top: 60px ;
+    border-radius: var(--main-radius);
+    box-shadow: var(--main-box-shadow);
+}
+
+#member-container{
+    display: grid;
+    /*margin: auto;*/
+    grid-template-columns: auto auto;
+    margin: 50px;
+    gap: 30px;
+    border-radius: 10px;
+}
+
+#member-container .member-box{
+    padding: 20px 0 20px 0px;
+    display: inline-grid;
+    border-radius: 10px;
+    text-align: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(0, 0,0, 0.5);;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+#member-container .member-box:hover{
+    /* transform: scale(1.02);
+    transition: all 0.3s ease-in ; */
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    animation-name: example;
+    animation-duration: 0.25s;
+    border-left: 8px solid var(--main-color);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.contact{
+    margin: 20px 0 0 0 ;
+    display: flex;
+    flex-direction: row;
+}
+.contact .gmail{
+    content: url(../images/gmail.svg);
+}
+
+.contact .github{
+    content: url(../images/github.svg);
+}
+
+.contact .linkedin{
+    content: url(../images/linkedin.svg);
+
+}
+
+.contact img {
+    width: 30px;
+    height: 30px;
+    margin:0 0 0 5px;
+}
+
+.contact img:hover {
+    transform: scale(1.2);
+    transition: all 0.2s ease-in ;
+}

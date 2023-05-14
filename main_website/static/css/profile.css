@@ -1,0 +1,25 @@
+#profile-container h1{
+    padding: 0;
+
+}
+
+
+
+#profile-container{
+    color: #000;
+    background-color: #fff;
+    text-align: center;
+    width: 60%;
+    margin: 20px auto auto auto;
+    padding-bottom: 50px ;
+    padding-top: 60px ;
+    border-radius: var(--main-radius);
+    box-shadow: var(--main-box-shadow);
+}
+#info-box{
+    /*background: #4b6f86;*/
+    text-align: left;
+    width:70%;
+    margin: auto;
+    padding:50px;
+}

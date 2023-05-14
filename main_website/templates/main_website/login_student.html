@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="../css/Login_Student.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <script defer src="../js/header.js"></script>
+    <script defer src="../js/footer.js"></script>
+    <script defer src="../js/localStorage_data.js"></script>
+    <script defer src="../js/Login_Student.js"></script>
+    <script defer src="../js/eyeIcon.js"></script>
+    <title> Login Student </title>
+</head>
+
+<body>
+    <!-- header -->
+    <header id="website-header"></header>
+    <div id="main-content">
+        <div class="mainDiv">
+            <div class="pageTitle">
+                <h1> <b> Login </b></h1>
+            </div>
+
+            <div>
+                <form method="post">
+                    <div class="txt_field">
+                        <input type="text" id='idField' required>
+                        <span></span>
+                        <label> ID </label>
+                    </div>
+                    <!-- Password -->
+                    <div class="txt_field">
+                        <input type="password" id="passField" required>
+                        <ion-icon name="eye-off-outline" ></ion-icon>
+                        <label> Password </label>
+                    </div>
+                    <!-- Remember me checkbox -->
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember-me">
+                        <label for="remember-me" style="color: black;"> Remember me</label>
+                    </div>
+                    <!-- buttons -->
+                    <br> <br>
+                    <button type="submit" class="btn">Submit</button>
+                    <br> <br> <br> <br>
+                    <button type="reset" class="btn">Reset</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- footer Section -->
+    <footer id="website-footer"></footer>
+</body>
+
+</html>

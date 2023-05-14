@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/edit_student.css">
+    <script defer src="../js/header.js"></script>
+    <script defer src="../js/footer.js"></script>
+    <script defer src="../js/localStorage_data.js"></script>
+    <script defer src="../js/edit_student.js"></script>
+    <title>Edit Student</title>
+</head>
+<body onload="retrieveData()">
+    <!-- header -->
+    <header id="website-header"></header>
+    <div id="main-content">
+    <div class ="mainDiv">
+        <h1><b>Edit Student</b></h1>
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="student name" placeholder="Student Name" required autofocus>
+        </div>
+        <br>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Email">
+            </div>
+        <br>
+        <div>
+            <label for="id">ID:</label>
+            <input type="text" id="id" name="student id" placeholder="Student ID" required>
+        </div>
+        <br>
+        <div>
+            <label for="gpa">GPA</label>
+            <input type="text" id="GPA" name="GPA" placeholder="GPA" required>
+        </div>
+        <br>
+        <div>
+            <label for="university">University:</label>
+            <select name="university" id="university" required>
+                <optgroup label="University">
+                    <option value="" selected disabled>Select your university</option>
+                    <option value="CU">Cairo University</option>
+                    <option value="ASU">Ain Shams University</option>
+                    <option value="HU">Helwan University</option>
+                    <option value="AUC">The American University in Cairo</option>
+                    <option value="GUC">German University in Cairo</option>
+                </optgroup>
+            </select>
+            <div id="uniError" style="display:none;color: red;">Please enter the university.</div>
+        </div>
+        <br>
+        <div>
+            <label for="department">Department:</label>
+            <select name="department" id="department" required>
+                <optgroup label="department">
+                    <option value="" disabled selected  >Select your department</option>
+                    <option value="CS"> Computer Science </option>
+                    <option value="IT"> Information Technology </option>
+                    <option value="DS"> Decision Support </option>
+                    <option value="IS"> Information System </option>
+                    <option value="AI"> Artificial Intelligence </option>
+                </optgroup>
+            </select>
+            <div id="depError" style="display:none;color: red;">Please enter the department.</div>
+        </div>
+        <br>
+            <div>
+                <label>Gender:</label>
+                <input id="m" type="radio" name="gender" value="Male" >
+                <label for="m">Male</label>
+                <input id="f" type="radio" name="gender" value="Female">
+                <label for="f">Female</label>
+            </div>
+        <br>
+            <div>
+                <label>Status:</label>
+                <input id="a" type="radio" name="status" value="active" checked="true">
+                <label for="a">Active</label>
+                <input id="ina" type="radio" name="status" value="inactive">
+                <label for="ina">Inactive</label>
+            </div>
+        <br> 
+        <div>
+            <button type="edit" class ="btn" id = "edit"> <span> Edit</span> </button>
+        </div>
+    </div>
+        </div>
+    <!-- footer Section -->
+    <footer id = "website-footer"></footer>
+</body>
+</html>
