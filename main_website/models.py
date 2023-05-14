@@ -9,7 +9,6 @@ class Student(AbstractUser):
     # university = models.
     # is_active (bool)
     department = models.ForeignKey('Department', on_delete=models.PROTECT)
-    courses = models.ManyToManyField('Course')
     groups = models.ManyToManyField(Group, related_name='student_groups')
     user_permissions = models.ManyToManyField(Permission, related_name='student_user_permissions')
     class Meta:
@@ -43,3 +42,11 @@ class Course(models.Model):
     def __str__(self):
         return self.name
 
+class Grades(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course_grade = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    final_grade = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+
+    def str(self):
+        return f"{self.student} - {self.course}"
