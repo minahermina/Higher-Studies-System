@@ -1,20 +1,14 @@
 from django.shortcuts import render, redirect
-from .models import Student
+from .models import Student, Grades
 
 def home(request):
 
     return render(request, 'main_website/home.html', {})
 
 def registered_courses(request):
-    student = Student.objects.get(stud_id='20210031')
+    grades = Grades.objects.filter(student_id='20210031')
 
-    print(student.name)
-    print(student.department)
-
-    print(student.courses.all())
-    for course in student.courses.all():
-        print(course.name)
     context = {
-        'courses' : student.courses.all()
+        'grades' : Grades.objects.filter
     }
     return render(request, 'main_website/registered_courses.html', context)

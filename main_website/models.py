@@ -45,8 +45,8 @@ class Course(models.Model):
 class Grades(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    course_grade = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
-    final_grade = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    course_grade = models.IntegerField(null=True)
+    final_grade = models.IntegerField(null=True)
 
-    def str(self):
+    def __str__(self):
         return f"{self.student} - {self.course}"
