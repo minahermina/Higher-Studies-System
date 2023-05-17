@@ -12,3 +12,6 @@ def registered_courses(request):
         'grades' : Grades.objects.filter
     }
     return render(request, 'main_website/registered_courses.html', context)
+
+def error_404(request, exception):
+    return render(request, 'main_website/404.html', status=404)
