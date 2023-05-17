@@ -1,23 +1,25 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
+
 <head>
     <!-- style for make the table mor readable and centered it on the page-->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet"  href = "../css/search.css" >
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <script defer src="../js/header.js"></script>
-    <script defer src="../js/footer.js"></script>
-    <script defer src="../js/search.js"></script>
-    <script defer src="../js/localStorage_data.js"></script>
+{#    <script defer src={% static 'js/header.js"></script'%}/>#}
+    <script defer src="{% static 'js/search.js' %}"></script>
+    <script defer src="{% static 'js/footer.js' %}"></script>
     <title>Document</title>
     
 </head>
 <body>
     <!-- this for header section (top of the page) -->
-    <header id = "website-header"></header>
+    <header id = "website-header">{% include 'header.html' %}</header>
     
     <div id ="main-content">
         <div id = "search-box">
@@ -52,7 +54,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+                        {% for student in students %}
+                            <tr>
+                                <td>{{student.first_name}} {{student.last_name}}</td>
+                                <td>{{student.stud_id}}</td>
+                                {% if student.is_active == True %}
+                                <td>Active</td>
+                                {% else %}
+                                <td>Not Active</td>
+                                {% endif %}
+                                <td>{{student.gpa}}</td>
+                                <td>{{student.email}}</td>
+                                <td class="button-container">
+                                    <a href="edit_student.html" data-student= "{{student.id}}">
+                                      <i class="fas fa-edit"></i>
+                                    </a>
+                                    <button class="delete" data-studentid="{{student.id}}"><i class="fas fa-trash"></i></button>
+                                  </td>
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>

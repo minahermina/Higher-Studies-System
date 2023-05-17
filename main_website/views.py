@@ -19,3 +19,10 @@ def registered_courses(request):
         'grades' : Grades.objects.filter
     }
     return render(request, 'main_website/registered_courses.html', context)
+
+def search_students(request):
+    students = Student.objects.all()
+    context = {
+        'students' : students
+    }
+    return render(request , 'main_website/search.html' , context)
