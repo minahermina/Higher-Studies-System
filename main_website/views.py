@@ -26,3 +26,13 @@ def search_students(request):
         'students' : students
     }
     return render(request , 'main_website/search.html' , context)
+
+def add_course(request):
+    return render(request , 'main_website/add_course.html',{})
+
+def edit_student(request):
+    student = Student.objects.filter(stud_id='20210031')
+    context = {
+        'student': student
+    }
+    return render(request, 'main_website/edit_student.html', context)
