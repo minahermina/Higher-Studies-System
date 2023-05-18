@@ -5,42 +5,42 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/Add Course.css" />
-    <script defer src="../js/header.js"></script>
-    <script defer src="../js/footer.js"></script>
-    <script defer src="../js/localStorage_data.js"></script>
-    <script defer src="../js/add_course.js"></script>
-    
+    <link rel="stylesheet" href={% static 'css/main.css'%}>
+    <link rel="stylesheet" href={% static 'css/Add Course.css'%}>
+    <script defer src={% static 'js/header.js'%}></script>
+    <script defer src={% static 'js/footer.js.js'%}></script>
+    <script defer src={% static 'js/add_course.js'%}></script>
     <title>Add Course</title>
+
 </head>
 <body>
     <!-- header -->
     <header id="website-header"></header>
-    <div id="main-content">
+       <div id="main-content">
             <div class="page-body">
             <div class="title">
                 <h1><b>Add Course</b> </h1>
             </div>
-            <form >
+            <form id ="form" action="" method="post">
+
             <div class="txt_field">
                 <span></span>
-                <input type="text" id="courseName" name="Course name" required >
-                <label for="course name" class="form__label">Course Name:</label>
+                <input type="text" id="courseName" class="form__field" name="Course name" value="" placeholder="Course name" autofocus>
+                <label class="form__label" for="Course name">Course name:</label>
             </div>
             <div id="cNameError" style="display:none;color:red;">Invalid Name:The name must start with letters </div>
             <br>
             <div class="txt_field">
                 <span></span>
-                <input type="text" id="courseID" name="Course ID"  required>
-                <label for="course ID" class="form__label">Course ID:</label>
+                <input type="text" id="courseID" class="form__field" name="Course ID" value="" placeholder="course ID" autofocus>
+                <label class="form__label" for="Course ID">course ID:</label>
             </div>
             <div id="idError" style="display:none;color:red;">ID must start with letters followed by numbers</div>
             <br>
             <div class="txt_field">
                 <span></span>
-                <input type="number" id="courseHours" name="Course Hours"  min="1" max ="20"required>
-                <label for="course Hours" class="form__label">Course Hours:</label>
+                <input type="number" min="1" max ="20" id="courseHours" name="course Hours" class="form__field" placeholder="course Hours">
+                <label for="course Hours" class="form__label">course Hours:</label>
             </div>
             <br>
             <div >
@@ -62,14 +62,14 @@
             <br>
             <div class="txt_field">
                 <span></span>
-                <input type="text" id="lecDay" name="lDay"  required>
-                <label for="lecture Day" class="form__label">lecture day:</label>
+                <input type="text" id="lecDay" class="form__field" name="lDay" value="" placeholder="lecture day" autofocus>
+                <label class="form__label" for="lecture Day">lecture day:</label>
             </div>
             <br>
             <div class="txt_field">
                 <span></span>
-                <input type="text" id="hNumber" name="hallNumber" required>
-                <label for="Hall number"  class="form__label">Hall number:</label>
+                <input type="text" id="hNumber" class="form__field" name="hallNumber" value="" placeholder="Hall number" autofocus>
+                <label class="form__label" for="Hall number">Hall number:</label>
             </div>
             <br>
             <div>
@@ -79,6 +79,7 @@
         </form>
         </div>
     </div>
+    
     
     <!-- footer Section -->
     <footer id = "website-footer"></footer>

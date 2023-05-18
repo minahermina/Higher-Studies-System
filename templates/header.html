@@ -1,0 +1,38 @@
+<nav>
+    <img src="" alt="">
+    <h2><a href = "../">FCAI CU</a></h2>
+    <ul id="right">
+        <li> <a href="" class = "left-right-border-effect">Home</a></li>
+        <li id = "login-button">
+            <a href="" class = "left-right-border-effect">Login</a>
+            <ul class = "dropdown-content">
+                <li><a href="../login_student/">Student</a></li>
+                <li><a href="../login_admin/">Admin</a></li>
+            </ul>
+        </li>
+
+        <li id = "menu">
+            <a href="" class = "left-right-border-effect" >Menu</a>
+            <ul class = "dropdown-content">
+                <li class = "student-only"><a href="register_in_courses.html">Register in a Course</a></li>
+                <li class = "student-only"><a href="registered_courses.html">Registered Courses</a></li>
+                <li class = "admin-only"><a href="add_Student.html">Add a Student</a></li>
+                <li class = "admin-only"><a href="search.html">Search in Students</a></li>
+                <li class = "admin-only"><a href="edit_student.html">Edit Student</a></li>
+                <li class = "admin-only"><a href="add _course.html">Add Course</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="../main_website/templates/main_website/about.html" class = "left-right-border-effect">About</a>
+        </li>
+        <li  class="hidden" id="log_out">
+            <a class = "left-right-border-effect" >Logout</a>
+        </li>
+
+        {% if request.user.is_authenticated%}
+        <li class="">
+            <a href="../main_website/templates/main_website/profile.html" class = "left-right-border-effect" id = "profile" style="padding: 10px;">{{ re }}</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
