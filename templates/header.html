@@ -29,8 +29,10 @@
             <a class = "left-right-border-effect" >Logout</a>
         </li>
 
+        {% if request.user.is_authenticated%}
         <li class="">
-            <a href="../main_website/templates/main_website/profile.html" class = "left-right-border-effect" id = "profile" style="padding: 10px;">username</a>
+            <a href="../main_website/templates/main_website/profile.html" class = "left-right-border-effect" id = "profile" style="padding: 10px;">{{ re }}</a>
         </li>
+        {% endif %}
     </ul>
 </nav>
