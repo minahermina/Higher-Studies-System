@@ -20,6 +20,7 @@ def registered_courses(request):
     }
     return render(request, 'main_website/registered_courses.html', context)
 
+
 def search_students(request):
     students = Student.objects.all()
     context = {
@@ -36,3 +37,6 @@ def edit_student(request):
         'student': student
     }
     return render(request, 'main_website/edit_student.html', context)
+
+def error_404(request, exception):
+    return render(request, 'main_website/404.html', status=404)
