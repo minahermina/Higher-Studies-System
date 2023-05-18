@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{% static 'css/search.css' %}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<!--{#    <script defer src={% static 'js/header.js"></script'%}/>#}-->
+
     <script defer src="{% static 'js/search.js' %}"></script>
     <script defer src="{% static 'js/footer.js' %}"></script>
     <title>Document</title>
@@ -66,11 +66,11 @@
                                 <td>{{student.gpa}}</td>
                                 <td>{{student.email}}</td>
                                 <td class="button-container">
-                                    <a href="{%url 'edit_student' %}?student_id={{ student.id }}">
-                                      <i class="fas fa-edit"></i>
+                                    <a href="{% url 'edit_student' %}?student_id={{student.stud_id}}">
+                                        <i class="fas fa-edit"></i>
                                     </a>
-                                    <button class="delete" data-studentid="{{student.id}}"><i class="fas fa-trash"></i></button>
-                                  </td>
+                                    <button class="delete" data-studentid="{{student.stud_id}}"><i class="fas fa-trash"></i></button>
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -85,9 +85,9 @@
     
     
 </body>
-
 </html>
 
+<!--<input type="submit" value="form link Button"/>-->
 <!--<form action="{% url 'edit_student' %}" method="POST">-->
 <!--    {% csrf_token %}-->
 <!--    <input type="hidden" name="student_id" value="{{ student.id }}">-->
@@ -95,4 +95,11 @@
 <!--        <i class="fas fa-edit"></i>-->
 <!--    </button>-->
 <!--</form>-->
+
+<!--<td class="button-container">-->
+<!--<a href="{%url 'edit_student' %}?student_id={{ student.id }}">-->
+<!--<i class="fas fa-edit"></i>-->
+<!--</a>-->
+<!--<button class="delete" data-studentid="{{student.id}}"><i class="fas fa-trash"></i></button>-->
+<!--</td>-->
 
