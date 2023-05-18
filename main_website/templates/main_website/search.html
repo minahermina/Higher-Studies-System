@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{% static 'css/search.css' %}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-{#    <script defer src={% static 'js/header.js"></script'%}/>#}
+<!--{#    <script defer src={% static 'js/header.js"></script'%}/>#}-->
     <script defer src="{% static 'js/search.js' %}"></script>
     <script defer src="{% static 'js/footer.js' %}"></script>
     <title>Document</title>
@@ -85,4 +85,14 @@
     
     
 </body>
+
 </html>
+
+<!--<form action="{% url 'edit_student' %}" method="POST">-->
+<!--    {% csrf_token %}-->
+<!--    <input type="hidden" name="student_id" value="{{ student.id }}">-->
+<!--    <button type="submit" style="border: none; background: none;">-->
+<!--        <i class="fas fa-edit"></i>-->
+<!--    </button>-->
+<!--</form>-->
+
