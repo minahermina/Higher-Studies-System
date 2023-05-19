@@ -3,9 +3,11 @@ from django.shortcuts import render, redirect
 from .models import Student, Grades
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import authenticate, login, logout
+import time
 
 
 def home(request):
@@ -15,12 +17,46 @@ def home(request):
 def about(request):
     return render(request, 'main_website/about.html', {})
 
+
+# def logoutPage(request):
+#
+#     return redirect('home')
+
+
 def loginStudent(request):
     return render(request, 'main_website/login_student.html', {})
 
 
 def loginAdmin(request):
-    return render(request, 'main_website/login_admin.html', {})
+    message = None
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('pass')
+        remember = request.POST.get('remember')
+        admin = authenticate(request, username=username, password=password)
+
+        # print(remember)
+        if admin is not None:
+            login(request, admin)
+            print(remember)
+            # request.session.set_expiry(0)
+            # request.session.flush()
+            if remember is not None:
+                request.session.set_expiry(None)
+            else:
+                request.session.set_expiry(0)
+            return redirect('home')
+        else:
+            # if username is not None and password is not None:
+            messages.error(request, 'Credentials are not valid')
+            return redirect('login_admin')
+
+        # request.session.flush()
+    # print(messages.warning(request, "Your account expires in three days."))
+
+    context = {}
+    return render(request, 'main_website/login_admin.html', context)
 
 
 @user_passes_test(lambda user: user.is_authenticated and not user.is_staff)
@@ -33,8 +69,8 @@ def registered_courses(request):
     return render(request, 'main_website/registered_courses.html', context)
 
 
-# @login_required(login_url='login_admin')
-# @staff_member_required
+@login_required(login_url='login_admin')
+@staff_member_required
 def search_students(request):
     students = Student.objects.all()
     context = {
@@ -43,8 +79,8 @@ def search_students(request):
     return render(request, 'main_website/search.html', context)
 
 
-# @login_required(login_url='login_admin')
-# @staff_member_required
+@login_required(login_url='login_admin')
+@staff_member_required
 def add_course(request):
     return render(request, 'main_website/add_course.html', {})
 

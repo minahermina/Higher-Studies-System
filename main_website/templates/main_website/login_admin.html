@@ -10,10 +10,8 @@
     <link rel="stylesheet" href="{% static 'css/Login_Student.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <script defer src="{% static 'js/footer.js'%}"></script>
-    <script defer src="{% static 'js/Login_admin.js'%}"></script>
+<!--    <script defer src="{% static 'js/Login_admin.js'%}"></script>-->
     <script defer src="{% static 'js/eyeIcon.js' %}"></script>
-{#    <script defer src="../js/localStorage_data.js"></script>#}
-{#    <script defer src="../js/header.js"></script>#}
 
     <title> Login Admin </title>
 </head>
@@ -23,27 +21,34 @@
     <header id="website-header">
         {% include 'header.html' %}
     </header>
+
     <div id="main-content">
         <div class="mainDiv">
             <div class="pageTitle">
                 <h1> <b> Login </b></h1>
             </div>
             <div>
-                <form method="post">
+                <form method="POST">
+                    {% csrf_token%}
                     <div class="txt_field">
-                        <input type="text" required>
+                        <input type="text" name = "username" required>
                         <span></span>
                         <label> Username </label>
                     </div>
                     <!-- Password -->
                     <div class="txt_field">
-                        <input type="password" required>
+                        <input type="password" name = "pass" required>
                         <ion-icon name="eye-off-outline" ></ion-icon>
                         <label> Password </label>
                     </div>
+                    {%if messages%}
+                        {% for message in messages %}
+                            <div  style="color: red; margin: 0 0 15px 15px;">{{ message }}</div>
+                        {% endfor %}
+                    {%endif%}
                     <!-- Remember me checkbox -->
                     <div class="remember-me">
-                        <input type="checkbox" id="remember-me">
+                        <input type="checkbox" id="remember-me" name = "remember">
                         <label for="remember-me" style="color: black;"> Remember me</label>
                     </div>
                     <!-- buttons -->

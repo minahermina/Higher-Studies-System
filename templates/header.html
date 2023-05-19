@@ -1,13 +1,13 @@
 <nav>
     <img src="" alt="">
-    <h2><a href = "../">FCAI CU</a></h2>
+    <h2><a href = "{% url 'home' %}">FCAI CU</a></h2>
     <ul id="right">
-        <li> <a href="" class = "left-right-border-effect">Home</a></li>
+        <li> <a href="{% url 'home' %}" class = "left-right-border-effect">Home</a></li>
         <li id = "login-button">
             <a href="" class = "left-right-border-effect">Login</a>
             <ul class = "dropdown-content">
-                <li><a href="../login_student/">Student</a></li>
-                <li><a href="../login_admin/">Admin</a></li>
+                <li><a href="{% url 'login_student' %}">Student</a></li>
+                <li><a href="{% url 'login_admin' %}">Admin</a></li>
             </ul>
         </li>
 
@@ -23,7 +23,7 @@
             </ul>
         </li>
         <li>
-            <a href="../main_website/templates/main_website/about.html" class = "left-right-border-effect">About</a>
+            <a href="{% url 'about' %}" class = "left-right-border-effect">About</a>
         </li>
         <li  class="hidden" id="log_out">
             <a class = "left-right-border-effect" >Logout</a>
