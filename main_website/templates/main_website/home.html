@@ -21,7 +21,12 @@
     <div id = "main-content">
 
         {% if request.user.is_authenticated %}
-        <p>logged in </p>
+
+            {% if request.user.is_staff %}
+                <p>admin</p>
+            {% else %}
+                <p>student </p>
+            {%endif%}
         {%endif%}
         <h1 >WELCOME,<br>
             Higher Studies SYSTEM</h1>
