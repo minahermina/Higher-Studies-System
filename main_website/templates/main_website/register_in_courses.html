@@ -28,7 +28,8 @@
                 <h1> <b> Register Courses </b></h1>
             </div>
 
-            <form onsubmit="return validateForm()">
+            <form onsubmit="return validateForm()" method="post">
+             {% csrf_token %}
                 <!-- Name -->
                 <div class="form-group">
                     <label for="name" style="color: #2f4858;"> Name: </label>

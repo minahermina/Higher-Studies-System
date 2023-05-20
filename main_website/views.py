@@ -85,7 +85,7 @@ def loginAdmin(request):
 @login_required(login_url='login_admin')
 def logoutPage(request):
     logout(request)
-    return redirect('home')
+    return redirect('main_website/home.html')
 
 
 # @user_passes_test(lambda user: user.is_authenticated and not user.is_staff)
@@ -143,7 +143,7 @@ def register_in_courses(request):
         course3_id = request.POST.get('course3')
 
         # retrieve the student
-        student_id = '20210031'
+
         student = Student.objects.get(stud_id=student_id)
 
         # retrieve the selected courses
@@ -151,9 +151,11 @@ def register_in_courses(request):
         course2 = Course.objects.get(course_id=course2_id)
         course3 = Course.objects.get(course_id=course3_id)
 
-        student.courses.add(course1, course2, course3)
+        Grades.objects.create(student=student, course=course1)
+        Grades.objects.create(student=student, course=course2)
+        Grades.objects.create(student=student, course=course3)
 
-        return redirect('home')
+        return render(request, 'main_website/home.html')
 
     else:
         student_id = '20210031'
