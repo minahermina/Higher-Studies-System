@@ -22,5 +22,7 @@ urlpatterns = [
     path('registered_courses/', views.registered_courses, name='registered_courses'),
     path('login_student/', views.loginStudent, name='login_student'),
     path('login_admin/', views.loginAdmin, name='login_admin'),
-    path('search/' , views.search_students , name = "search_students")
+    path('search/' , views.search_students , name = "search_students"),
+    path('add_student/', views.add_student, name="add_student"),
+
 ]
