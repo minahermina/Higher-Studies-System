@@ -9,6 +9,7 @@ class Student(AbstractUser):
     # university = models.
     # is_active (bool)
     department = models.ForeignKey('Department', on_delete=models.PROTECT)
+    is_staff = models.BooleanField(default=False)
     groups = models.ManyToManyField(Group, related_name='student_groups')
     user_permissions = models.ManyToManyField(Permission, related_name='student_user_permissions')
     class Meta:

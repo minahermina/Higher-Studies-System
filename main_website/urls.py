@@ -19,10 +19,16 @@ from main_website import views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('about/', views.about, name='about'),
     path('registered_courses/', views.registered_courses, name='registered_courses'),
     path('login_student/', views.loginStudent, name='login_student'),
     path('login_admin/', views.loginAdmin, name='login_admin'),
     path('search/' , views.search_students , name = "search_students"),
+    path('add_course/', views.add_course, name='add_course'),
+    path('edit_student/', views.edit_student, name='edit_student'),
+    path('profile/', views.profile, name='profile'),
+    path('logout/', views.logoutPage, name='logout'),
+    path('register_in_courses/', views.register_in_courses, name='register_in_courses'),
     path('add_student/', views.add_student, name="add_student"),
 
 ]

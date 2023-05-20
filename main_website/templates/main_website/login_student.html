@@ -29,15 +29,16 @@
             </div>
 
             <div>
-                <form method="post">
+                <form method="POST">
+                    {% csrf_token %}
                     <div class="txt_field">
-                        <input type="text" id='idField' required>
+                        <input type="text" name = "id" id='idField' required>
                         <span></span>
                         <label> ID </label>
                     </div>
                     <!-- Password -->
                     <div class="txt_field">
-                        <input type="password" id="passField" required>
+                        <input type="password" name = "pass" id="passField" required>
                         <ion-icon name="eye-off-outline" ></ion-icon>
                         <label> Password </label>
                     </div>

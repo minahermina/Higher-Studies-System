@@ -92,7 +92,7 @@ tr:hover{
 }
 
 
-.delete:hover , .search:hover{
+.delete:hover , .search:hover , .edit:hover{
     /* opacity: 0; */
     transform: translateX(-4px);
     /* transform:scale(1.1); */

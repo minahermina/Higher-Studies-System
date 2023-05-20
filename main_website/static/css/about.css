@@ -1,3 +1,5 @@
+{% load static%}
+
 #about h2, #about h1, #about h3{
     color: #000;
 }
