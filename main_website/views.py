@@ -142,7 +142,7 @@ def register_in_courses(request):
         course2_id = request.POST.get('course2')
         course3_id = request.POST.get('course3')
 
-        # retrieve the student from the database
+        # retrieve the student
         student_id = '20210031'
         student = Student.objects.get(stud_id=student_id)
 
