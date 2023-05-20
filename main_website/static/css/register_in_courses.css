@@ -34,6 +34,7 @@ label {
   margin-bottom: 5px;
   vertical-align: top;
   text-decoration: none;
+  font-size: 16px;
 }
 
 /* Input Styling */
@@ -54,23 +55,23 @@ select[name="course2"],
 select[name="course3"] {
   display: inline-block;
   width: 100%;
-  padding: 10px;
+  height: 30px;
   border: 1px solid #114a6e;
   border-radius: 6px;
-  font-size: 18px;
+  font-size: 16px;
   color: aliceblue;
   background-color: #587c94;
+  margin-right: 50px;
 }
-
 
 /* Button Styling*/
 button[type="submit"],
 button[type="reset"] {
-  width: 80%;
+  width: 70%;
   height: 45px;
   border: 1px solid #6e99b4;
   border-radius: 25px;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
   outline: none;

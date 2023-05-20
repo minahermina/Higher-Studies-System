@@ -27,6 +27,6 @@ urlpatterns = [
     path('add_course/', views.add_course, name='add_course'),
     path('edit_student/', views.edit_student, name='edit_student'),
     path('profile/', views.profile, name='profile'),
-    path('logout/', views.logoutPage, name='logout')
-
+    path('logout/', views.logoutPage, name='logout'),
+    path('register_in_courses/', views.register_in_courses, name='register_in_courses'),
 ]

@@ -1,6 +1,6 @@
 from django.contrib.auth import admin
 from django.shortcuts import render, redirect
-from .models import Student, Grades
+from .models import Student, Grades, Course
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import admin, messages
@@ -132,3 +132,36 @@ def edit_student(request):
 
 def error_404(request, exception):
     return render(request, 'main_website/404.html', status=404)
+
+
+def register_in_courses(request):
+    # when clicking on the save button
+    if request.method == 'POST':
+        student_id = '20210031'
+        course1_id = request.POST.get('course1')
+        course2_id = request.POST.get('course2')
+        course3_id = request.POST.get('course3')
+
+        # retrieve the student from the database
+        student_id = '20210031'
+        student = Student.objects.get(stud_id=student_id)
+
+        # retrieve the selected courses
+        course1 = Course.objects.get(course_id=course1_id)
+        course2 = Course.objects.get(course_id=course2_id)
+        course3 = Course.objects.get(course_id=course3_id)
+
+        student.courses.add(course1, course2, course3)
+
+        return redirect('home')
+
+    else:
+        student_id = '20210031'
+        student = Student.objects.get(stud_id=student_id)
+        department_courses = Course.objects.filter(department=student.department)
+
+        context = {
+            'student': student,
+            'department_courses': department_courses,
+        }
+    return render(request, 'main_website/register_in_courses.html', context)
