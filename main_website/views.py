@@ -13,6 +13,8 @@ import time
 
 
 def home(request):
+
+
     return render(request, 'main_website/home.html', {})
 
 
@@ -33,23 +35,24 @@ def loginStudent(request):
     if request.method == 'POST':
         id = request.POST.get('id')
         password = request.POST.get('pass')
-        user = authenticate(request, stud_id=id, password=password)
+
+        print(id + ' ' + password)
+        student = Student.objects.get(stud_id=id)
+
+        print(student.username + ' ' + student.stud_id)
+        user = authenticate(request, username=student.username, password=password)
+        # print(student.user.check_password(password))
         print(user)
-        # print(remember)
         if user is not None:
-            login(request, admin)
+            login(request, user)
             return redirect('home')
         else:
-            # if username is not None and password is not None:
             messages.error(request, 'Credentials are not valid')
             return redirect('login_student')
 
-        # request.session.flush()
-    # print(messages.warning(request, "Your account expires in three days."))
-
     context = {}
-
     return render(request, 'main_website/login_student.html', context)
+
 
 
 def loginAdmin(request):
