@@ -26,16 +26,21 @@
             <div class="title">
                 <h1>Search Student</h1>
             </div>
-            <form method="get">
+            <form method="POST" action = "{% url 'search_students' %}" >
+                {% csrf_token %}
                 <div class = "search-container">
                     <button type="submit" class = "search"><i class="fa fa-search"></i></button>
-                    <input type="search" placeholder="Enter the name or ID" name="keyword">
+                    {% if search != '' %}
+                    <input type="search" placeholder="{{ search }}" name="keyword" value = "{{ search }}">
+                    {% else %}
+                    <input type="search" placeholder="Enter the Name or ID" name="keyword" >
+                    {% endif %}
+
                     <label style = "margin-right: 5px; color: #000;">sort by</label>
                     <select id = "Students" name = "priority">
                         <option value ="None" selected>None</option>
                         <option value ="name">Name</option>
-                        <option value ="ID">ID</option>
-                        <option value ="GPA">GPA</option>
+                        <option value ="stud_id">ID</option>
                     </select>
                 </div>
 
@@ -48,30 +53,33 @@
                                 <th>Studnet name</th>
                                 <th>Student ID</th>
                                 <th>Status</th>
-                                <th>GPA</th>
                                 <th>Email</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                         {% for student in students %}
-                            <tr>
-                                <td>{{student.first_name}} {{student.last_name}}</td>
-                                <td>{{student.stud_id}}</td>
-                                {% if student.is_active == True %}
-                                <td>Active</td>
-                                {% else %}
-                                <td>Not Active</td>
-                                {% endif %}
-                                <td>{{student.gpa}}</td>
-                                <td>{{student.email}}</td>
-                                <td class="button-container">
-                                    <a href="{% url 'edit_student' %}?student_id={{student.stud_id}}">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <button class="delete" data-studentid="{{student.stud_id}}"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>{{student.name}}</td>
+                            <td>{{student.stud_id}}</td>
+                            {% if student.is_active == True %}
+                            <td>Active</td>
+                            {% else %}
+                            <td>Not Active</td>
+                            {% endif %}
+                            <td>{{student.email}}</td>
+                            <td class="button-container">
+                                <form method = "POST" action = "{% url 'edit_student' %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class = "edit"><i class="fas fa-edit"></i></button>
+                                    <input type="hidden" name="edit" value="{{ student.stud_id }}">
+                                </form>
+
+                                <button type="submit" class = "delete"><i class="fas fa-trash"></i></button>
+                                <input type="hidden" name="delete" value="{{ student.stud_id }}">
+
+                            </td>
+                        </tr>
                         {% endfor %}
                         </tbody>
                     </table>
@@ -87,19 +95,5 @@
 </body>
 </html>
 
-<!--<input type="submit" value="form link Button"/>-->
-<!--<form action="{% url 'edit_student' %}" method="POST">-->
-<!--    {% csrf_token %}-->
-<!--    <input type="hidden" name="student_id" value="{{ student.id }}">-->
-<!--    <button type="submit" style="border: none; background: none;">-->
-<!--        <i class="fas fa-edit"></i>-->
-<!--    </button>-->
-<!--</form>-->
 
-<!--<td class="button-container">-->
-<!--<a href="{%url 'edit_student' %}?student_id={{ student.id }}">-->
-<!--<i class="fas fa-edit"></i>-->
-<!--</a>-->
-<!--<button class="delete" data-studentid="{{student.id}}"><i class="fas fa-trash"></i></button>-->
-<!--</td>-->
 
