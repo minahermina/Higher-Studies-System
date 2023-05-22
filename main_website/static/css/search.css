@@ -111,13 +111,6 @@ button {
 }
 
 
-a:hover i{
-    transform: translateX(-4px);
-    /* transform:scale(1.1); */
-    transition: all 0.3s ease-in-out;
-    justify-content: center;
-}
-
 .title{
     margin-bottom: 20px;
     text-align: center;
