@@ -65,7 +65,7 @@ function validate_form(){
 
     const dateOfBirthField = document.getElementById("DateOfBirth").value;
     const dateErorr = document.getElementById("dateError");
-    if(dateOfBirthField == ""){
+    if(dateOfBirthField === ""){
         dateErorr.style.display="block";
         document.getElementById("DateOfBirth").focus();
         window.scroll({top:500});
@@ -78,7 +78,7 @@ function validate_form(){
 
     const universityField = document.getElementById("university").value;
     const uniErorr=document.getElementById("uniError");
-    if (universityField == "") {
+    if (universityField === "") {
         uniErorr.style.display="block";
         window.scroll(0,300);
         return false;
@@ -90,7 +90,7 @@ function validate_form(){
 
     const departmentField = document.getElementById("department").value;
     const depErorr=document.getElementById("depError");
-    if (departmentField == "") {
+    if (departmentField === "") {
         depErorr.style.display="block";
         window.scroll(0,300);
         return false;
@@ -102,7 +102,7 @@ function validate_form(){
 
     const course1 = document.getElementById("c1").value;
     const cr1=document.getElementById("c1Error");
-    if (course1 == "") {
+    if (course1 === "") {
         cr1.style.display="block";
         window.scroll(0,1000);
         return false;
@@ -114,7 +114,7 @@ function validate_form(){
 
     const course2 = document.getElementById("c2").value;
     const cr2=document.getElementById("c2Error");
-    if (course2 == "") {
+    if (course2 === "") {
         cr2.style.display="block";
         window.scroll(0,1000);
         return false;
@@ -126,7 +126,7 @@ function validate_form(){
 
     const course3 = document.getElementById("c3").value;
     const cr3 =document.getElementById("c3Error");
-    if (course3 == "") {
+    if (course3 === "") {
         cr3.style.display="block";
         window.scroll(0,1000);
         return false;
@@ -140,82 +140,21 @@ function validate_form(){
     const c2 = document.getElementById("c2").value;
     const c3 = document.getElementById("c3").value;
 
-    if (c1 == c2 || c1 == c3 || c2 == c3) {
+    if (c1 === c2 || c1 === c3 || c2 === c3) {
         alert("Please select different courses for each option.");
         return false;
     }
     return true;
 }
 
-function storeData() {
-    let form=document.getElementById("form");
+function isValid(){
+    const form = document.getElementById('form');
     if(validate_form()){
-        let name = document.getElementById("name").value;
-        let id = document.getElementById("id").value;
-        let dateOfBirth = document.getElementById("DateOfBirth").value;
-        let university = document.getElementById("university").value;
-        let email=document.getElementById("email").value;
-        let gender = document.querySelector('input[name="gender"]:checked').value;
-        let department = document.getElementById("department").value;
-        let status = document.querySelector('input[name="status"]:checked').value;
-        let course1 = document.getElementById("c1").value;
-        let course2 = document.getElementById("c2").value;
-        let course3 = document.getElementById("c3").value;
-        let pass=document.getElementById("password").value;
-        let gpa=document.getElementById("gpa").value;
-
-        
-        let data = JSON.parse(localStorage.getItem("students"));
-         
-        // check if id exists
-        for(j = 0; j < data.length; j++){
-            if(data[j]['id'] == id){
-                alert("This ID already exists. Enter another one.")
-                document.getElementById("id").focus();
-                window.scroll(0,0);
-                return false;
-            }
-        }
-        // check if email exists
-        for(j = 0; j < data.length; j++){
-            if(data[j]['email'] == email){
-                alert("This email already exists. Enter another one.")
-                document.getElementById("email").focus();
-                window.scroll(0,0);
-                return false;
-            }
-        }
-
-        let course_and_marks = {};
-        course_and_marks[course1]="0,0";
-        let course_and_marks2 = {};
-        course_and_marks2[course2]="0,0";
-        let course_and_marks3 = {};
-        course_and_marks3[course3]="0,0";
-        
-        let studentData = {
-            name,
-            id,
-            dateOfBirth,
-            university,
-            gender,
-            email,
-            department,
-            status,
-            courses: JSON.stringify([course_and_marks, course_and_marks2,course_and_marks3]),
-            pass,
-            gpa,
-        };
-    
-        data.push(studentData);
-    
-        localStorage.setItem("students", JSON.stringify(data));
+        alert("Your data has been submitted successfully.");
         return true;
-    }   
-    else{
-        return false;
     }
-}  
+    return false;
+}
 
 const reset = document.getElementById('reset');
 
@@ -225,12 +164,12 @@ reset.addEventListener('click', function() {
 });
 
 
-const form = document.getElementById('form');
 
-form.addEventListener('submit', function(event) {
-    event.preventDefault(); // prevent default form submission behavior
-    if(storeData()){
-        alert("Your data has been submitted successfully.");
-    }
-});
+
+// form.addEventListener('submit', function(event) {
+//     event.preventDefault(); // prevent default form submission behavior
+//     if(validate_form()){
+//         alert("Your data has been submitted successfully.");
+//     }
+// });
   

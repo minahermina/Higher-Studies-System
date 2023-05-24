@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -8,11 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <link rel="stylesheet" href={% static 'css/add_student.css' %}>
-    <link rel="stylesheet" href={% static 'css/main.css' %}>
-    <script defer src={% static 'js/footer.js' %}></script>
-    <script defer src={% static 'js/add_student.js' %}></script>
-    <script defer src={% static 'js/eyeIcon.js' %}></script>
+    <link rel="stylesheet" href="{% static 'css/add_student.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script defer src="{% static 'js/footer.js' %}"></script>
+    <script defer src="{% static 'js/add_student.js' %}"></script>
+    <script defer src="{% static 'js/eyeIcon.js' %}"></script>
     <meta name="description" content="Add Student Page." />
     <title>Add Student</title>
 </head>
@@ -27,7 +27,7 @@
             <div class="title">
                 <h1>Add Student</h1>
             </div>
-            <form id ="form" action="" method="post">
+            <form id ="form" onsubmit="return isValid()" method="POST">
                 {% csrf_token %}
                 <div class="txt_field">
                     <span></span>
@@ -94,11 +94,9 @@
                         <select name="department" id="department" required>
                             <optgroup label="department">
                                 <option value="" disabled selected >Select your department</option>
-                                <option value="cs"> Computer Science </option>
-                                <option value="IT"> Information Technology </option>
-                                <option value="DS"> Decision Support </option>
-                                <option value="IS"> Information System </option>
-                                <option value="AI"> Artificial Intelligence </option>
+                                    {% for departement in departments %}
+                                        <option value="{{ departement.name }}">{{ departement.name }}</option>
+                                    {% endfor %}
                             </optgroup>
                         </select>
                     </span>
@@ -115,9 +113,9 @@
                 <br>
                 <div>
                     <label>Status:</label>
-                    <input id="a" type="radio" name="status" value="active" checked="true">
+                    <input id="a" type="radio" name="status" value="true" checked="true">
                     <label for="a">Active</label>
-                    <input id="ina" type="radio" name="status" value="inactive">
+                    <input id="ina" type="radio" name="status" value="false">
                     <label for="ina">Inactive</label>
                 </div>
                 <br>
@@ -127,15 +125,9 @@
                         <select name="course1" id="c1" required>
                             <optgroup label="course1">
                                 <option value="" disabled selected >Select the first course</option>
-                                <option value="cs101"> Computer Organization</option>
-                                <option value="cs102"> Algorithms </option>
-                                <option value="cs103"> Software Engineering </option>
-                                <option value="cs104"> Operating Systems </option>
-                                <option value="DS221"> Linear Programming </option>
-                                <option value="CS321"> Data Structures and Algorithms </option>
-                                <option value="IS421"> Database Systems </option>
-                                <option value="IT521"> Computer Networks </option>
-                                <option value="AI621"> Machine Learning </option>
+                                 {% for course in courses %}
+                                     <option value="{{ course.course_id }}">{{ course.name }}</option>
+                                 {% endfor %}
                             </optgroup>
                         </select>
                     </span>
@@ -147,15 +139,9 @@
                         <select name="course2" id="c2" required>
                             <optgroup label="course2">
                                 <option value="" disabled selected >Select the second course</option>
-                                <option value="cs101"> Computer Organization</option>
-                                <option value="cs102"> Algorithms </option>
-                                <option value="cs103"> Software Engineering </option>
-                                <option value="cs104"> Operating Systems </option>
-                                <option value="DS221"> Linear Programming </option>
-                                <option value="CS321"> Data Structures and Algorithms </option>
-                                <option value="IS421"> Database Systems </option>
-                                <option value="IT521"> Computer Networks </option>
-                                <option value="AI621"> Machine Learning </option>
+                                    {% for course in courses %}
+                                        <option value="{{ course.course_id }}">{{ course.name }}</option>
+                                    {% endfor %}
                             </optgroup>
                         </select>
                     </span>
@@ -167,15 +153,9 @@
                         <select name="course3" id="c3" required>
                             <optgroup label="course3">
                                 <option value="" disabled selected >Select the third course</option>
-                                <option value="cs101"> Computer Organization</option>
-                                <option value="cs102"> Algorithms </option>
-                                <option value="cs103"> Software Engineering </option>
-                                <option value="cs104"> Operating Systems </option>
-                                <option value="DS221"> Linear Programming </option>
-                                <option value="CS321"> Data Structures and Algorithms </option>
-                                <option value="IS421"> Database Systems </option>
-                                <option value="IT521"> Computer Networks </option>
-                                <option value="AI621"> Machine Learning </option>
+                                    {% for course in courses %}
+                                        <option value="{{ course.course_id }}">{{ course.name }}</option>
+                                    {% endfor %}
                         </select>
                     </span>
                     <div id="c3Error" style="display:none;color: red;">Please enter course3.</div>
