@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 from datetime import datetime
 import time
-
+from django.http import JsonResponse
 from django.contrib.auth.decorators import user_passes_test
 
 
@@ -271,3 +271,10 @@ def add_student(request):
             'departments': departments
         }
         return render(request, 'main_website/add_student.html', context)
+
+
+def get_courses_by_department(request):
+    department_id = request.GET.get('department')
+    courses = Course.objects.filter(department_id=department_id).values('course_id', 'name')
+
+    return JsonResponse(list(courses), safe=False)

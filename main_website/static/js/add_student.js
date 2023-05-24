@@ -162,7 +162,57 @@ reset.addEventListener('click', function() {
     window.scroll({top:1});
 });
 
+document.getElementById("department").addEventListener("change", function () {
+  var departmentId = this.value;
+  var course1Select = document.getElementById("c1");
+  var course2Select = document.getElementById("c2");
+  var course3Select = document.getElementById("c3");
 
+  // Disable the course select menus
+  course1Select.disabled = true;
+  course2Select.disabled = true;
+  course3Select.disabled = true;
+
+  // Clear the course options
+  course1Select.innerHTML =
+    '<optgroup label="course1"><option value="" disabled selected>Select the first course</option></optgroup>';
+  course2Select.innerHTML =
+    '<optgroup label="course2"><option value="" disabled selected>Select the second course</option></optgroup>';
+  course3Select.innerHTML =
+    '<optgroup label="course3"><option value="" disabled selected>Select the third course</option></optgroup>';
+
+  if (departmentId) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          var courses = JSON.parse(xhr.responseText);
+
+          // Populate the course select menus with the retrieved courses
+          for (var i = 0; i < courses.length; i++) {
+            var option = document.createElement("option");
+            option.value = courses[i].id;
+            option.textContent = courses[i].name;
+            course1Select.appendChild(option.cloneNode(true));
+            course2Select.appendChild(option.cloneNode(true));
+            course3Select.appendChild(option.cloneNode(true));
+          }
+
+          // Enable the course select menus
+          course1Select.disabled = false;
+          course2Select.disabled = false;
+          course3Select.disabled = false;
+        } else {
+          console.error("Failed to retrieve courses: " + xhr.status);
+        }
+      }
+    };
+
+    // Make a request to the server to retrieve courses for the selected department
+    xhr.open("GET", "/api/courses/?department=" + departmentId, true);
+    xhr.send();
+  }
+});
 
 
 // form.addEventListener('submit', function(event) {
