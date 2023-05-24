@@ -1,6 +1,6 @@
 from django.contrib.auth import admin
 from django.shortcuts import render, redirect
-from .models import Student, Grades, Course, Department
+from .models import Student, Grades, Course, Department, User
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import admin, messages
