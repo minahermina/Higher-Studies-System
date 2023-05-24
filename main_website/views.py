@@ -1,6 +1,6 @@
 from django.contrib.auth import admin
 from django.shortcuts import render, redirect
-from .models import Student, Grades, Course
+from .models import Student, Grades, Course, User
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import admin, messages
@@ -11,10 +11,36 @@ from django.db.models import Q
 
 import time
 
+from django.contrib.auth.decorators import user_passes_test
+
+
+def admin_required(view_func):
+    def check_admin(user):
+        return user.is_authenticated and user.role == User.Role.ADMIN
+
+    def decorator(request, *args, **kwargs):
+        if check_admin(request.user):
+            return view_func(request, *args, **kwargs)
+        else:
+            return redirect('home')  # Redirect to the home page
+
+    return decorator
+
+
+def student_required(view_func):
+    def check_admin(user):
+        return user.is_authenticated and user.role == User.Role.STUDENT
+
+    def decorator(request, *args, **kwargs):
+        if check_admin(request.user):
+            return view_func(request, *args, **kwargs)
+        else:
+            return redirect('home')  # Redirect to the home page
+
+    return decorator
+
 
 def home(request):
-
-
     return render(request, 'main_website/home.html', {})
 
 
@@ -32,6 +58,9 @@ def profile(request):
 
 
 def loginStudent(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+
     if request.method == 'POST':
         id = request.POST.get('id')
         password = request.POST.get('pass')
@@ -54,9 +83,10 @@ def loginStudent(request):
     return render(request, 'main_website/login_student.html', context)
 
 
-
 def loginAdmin(request):
     message = None
+    if request.user.is_authenticated:
+        return redirect('home')
 
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -90,11 +120,11 @@ def loginAdmin(request):
 @login_required(login_url='login_admin')
 def logoutPage(request):
     logout(request)
-    return redirect('main_website/home.html')
+    return redirect('home')
 
 
-# @user_passes_test(lambda user: user.is_authenticated and not user.is_staff)
-# @user_passes_test(lambda user: user.groups.filter(name='Administrators').exists(), login_url='login')
+@login_required(login_url='login_student')
+@student_required
 def registered_courses(request):
     grades = Grades.objects.filter(student_id='20210031')
 
@@ -105,7 +135,7 @@ def registered_courses(request):
 
 
 @login_required(login_url='login_admin')
-@staff_member_required
+@admin_required
 def search_students(request):
     students = Student.objects.all()
     name = ''
@@ -120,22 +150,21 @@ def search_students(request):
         elif priority == 'stud_id':
             students = students.order_by('stud_id')
 
-
     context = {
         'students': students,
-        'search' : name,
+        'search': name,
     }
     return render(request, 'main_website/search.html', context)
 
 
 @login_required(login_url='login_admin')
-@staff_member_required
+@admin_required
 def add_course(request):
     return render(request, 'main_website/add_course.html', {})
 
 
 @login_required(login_url='login_admin')
-@staff_member_required
+@admin_required
 def edit_student(request):
     id = request.GET.get('student_id')
 
@@ -152,7 +181,8 @@ def edit_student(request):
 def error_404(request, exception):
     return render(request, 'main_website/404.html', status=404)
 
-
+@login_required(login_url='login_student')
+@student_required
 def register_in_courses(request):
     # when clicking on the save button
     if request.method == 'POST':
@@ -186,6 +216,9 @@ def register_in_courses(request):
             'department_courses': department_courses,
         }
     return render(request, 'main_website/register_in_courses.html', context)
-    
+
+
+@login_required(login_url='login_admin')
+@admin_required
 def add_student(request):
     return render(request, 'main_website/add_student.html')
