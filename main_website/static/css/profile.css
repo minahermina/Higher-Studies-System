@@ -1,6 +1,14 @@
+/*!*{% load static %}*!*/
+/*{% include static 'css/main.css' %}*/
+
 #profile-container h1{
     padding: 0;
 
+}
+
+a{
+    text-decoration: underline;
+    color: var( --main-color);
 }
 
 

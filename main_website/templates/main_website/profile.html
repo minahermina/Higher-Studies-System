@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
-    <script defer src="../js/footer.js"></script>
+    <script defer src="{% static 'js/footer.js' %}"></script>
     <title>Profile</title>
 </head>
 <body>
@@ -21,16 +21,16 @@
         <div id="profile-container">
             <h1>Profile</h1>
             <div id="info-box">
-                <p>ِName:</p> <br>
-                <span>Username:</span><br>
-                <span>E-mail:</span><br>
-                <span>Phone Number:</span><br>
-                <span>GPA:</span><br>
-                <span>Date of Birth:</span><br>
-                <span>University:</span><br>
-                <span>Gender:</span><br>
-                <span>Department:</span><br>
-                <span><a href="registered_courses.html">Registerd Courses</a></span><br>
+                <p>Name: <span> {{request.user.name}}</span></p>
+                <p>Email: <span> {{request.user.email}}</span></p>
+                <p>Date of Birth: <span> {{request.user.date_of_birth|date:"d/m/Y"}} </span></p>
+                <p>Gender: <span> {{request.user.gender}}</span></p>
+                <p>Date Joined: <span> {{request.user.date_joined|date:"d/m/Y"}} </span></p>
+                <p>
+                    Registered Courses:
+                    <a href="{% url 'registered_courses'%}"> Click Here !</a>
+                </p>
+
 
             </div>
         </div>
