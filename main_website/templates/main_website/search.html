@@ -76,13 +76,11 @@
                                     <input type="hidden" name="edit" value="{{ student.stud_id }}">
                                     <input type="hidden" name="form_type" value="edit-form">
                                 </form>
-                                <form method="POST" action="{% url 'search_students' %}" id="delete-form">
+                                <form method="POST" action="{% url 'search_students' %}" id="deleteForm">
                                     {% csrf_token %}
-                                    <button type="button" class="delete"><i class="fas fa-trash"></i></button>
+                                    <button type="button" class="delete" id="deleteButton"><i class="fas fa-trash"></i></button>
                                     <input type="hidden" name="delete" value="{{ student.stud_id }}">
-                                    <input type="hidden" name="form_type" value="delete-form">
                                 </form>
-
                             </td>
                         </tr>
                         {% endfor %}
