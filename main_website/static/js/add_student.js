@@ -11,6 +11,18 @@ function validate_form(){
         nameError.style.display = "none";
     }
 
+    const usernameInput = document.getElementById("username");
+    const usernameError = document.getElementById("username-error");
+
+    if (usernameInput.value.trim() === "" || !/^[a-zA-Z0-9_-]{3,16}$/.test(usernameInput.value.trim())) { // added space to regex
+        usernameError.style.display = "block";
+        usernameInput.focus();
+        window.scroll(0,0);
+        return false;
+    } else {
+        usernameError.style.display = "none";
+    }
+
 
     const emailInput = document.getElementById("email");
     const emailError = document.getElementById("emailError");
@@ -35,19 +47,6 @@ function validate_form(){
         return false;
     } else {
         idError.style.display = "none";
-    }
-
-
-    const gpaInput = document.getElementById('gpa');
-    const gpaError = document.getElementById("gpaError");
-    const gpa = parseFloat(gpaInput.value);
-    if (isNaN(gpa) || gpa < 0 || gpa > 4) {
-        gpaError.style.display = "block";
-        gpaInput.focus();
-        window.scroll(0,0);
-        return false;
-    } else {
-        gpaError.style.display = "none";
     }
 
 
