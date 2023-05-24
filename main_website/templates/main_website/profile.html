@@ -19,19 +19,63 @@
     <!-- Main Content  -->
     <div id = "main-content">
         <div id="profile-container">
-            <h1>Profile</h1>
-            <div id="info-box">
-                <p>Name: <span> {{request.user.name}}</span></p>
-                <p>Email: <span> {{request.user.email}}</span></p>
-                <p>Date of Birth: <span> {{request.user.date_of_birth|date:"d/m/Y"}} </span></p>
-                <p>Gender: <span> {{request.user.gender}}</span></p>
-                <p>Date Joined: <span> {{request.user.date_joined|date:"d/m/Y"}} </span></p>
-                <p>
-                    Registered Courses:
-                    <a href="{% url 'registered_courses'%}"> Click Here !</a>
-                </p>
+            {%  if request.user.role == "STUDENT"%}
+                    <h1>Student Profile</h1>
+                {% else %}
+                    <h1>Admin Profile</h1>
 
+            {% endif %}
+            <div class="info-box">
+                <div class="card">
+                    <div class="card-body">
 
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td>Name</td>
+                                <td>:</td>
+                                <td>{{ request.user }}</td>
+                            </tr>
+                            <tr>
+                                <td>Gender</td>
+                                <td>:</td>
+                                <td>{{ request.user.gender }}</td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td>:</td>
+                                <td>{{ request.user.email }}</td>
+                            </tr>
+                            <tr>
+                                <td>Date of Birth</td>
+                                <td>:</td>
+                                <td>{{ request.user.date_of_birth|date:'d/m/Y' }}</td>
+                            </tr>
+                            <tr>
+                                <td>Date Joined</td>
+                                <td>:</td>
+                                <td>{{ request.user.date_joined|date:'d/m/Y' }}</td>
+                            </tr>
+                            {%  if request.user.role == "STUDENT"%}
+                                <tr>
+                                    <td>ID</td>
+                                    <td>:</td>
+                                    <td>{{ request.user.student.stud_id}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Department</td>
+                                    <td>:</td>
+                                    <td>{{ request.user.student.department}}</td>
+                                </tr>
+                                <tr>
+                                    <td>University</td>
+                                    <td>:</td>
+                                    <td>{{ request.user.student.university}}</td>
+                                </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
             </div>
         </div>
     </div>
