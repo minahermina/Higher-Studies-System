@@ -126,10 +126,10 @@ def logoutPage(request):
 @login_required(login_url='login_student')
 @student_required
 def registered_courses(request):
-    grades = Grades.objects.filter(student_id='20210031')
-
+    grades = Grades.objects.filter(student_id=request.user.student.stud_id)
+    
     context = {
-        'grades': Grades.objects.filter
+        'grades': grades
     }
     return render(request, 'main_website/registered_courses.html', context)
 
