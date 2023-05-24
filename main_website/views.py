@@ -252,10 +252,10 @@ def add_student(request):
 
         department = Department.objects.get(id=department_id)
 
-        student = Student(name=name, username=username, email=email, stud_id=stud_id, password=password,
-                          date_of_birth=date_of_birth,  department=department,
-                          is_active=status, university=university, gender=gender)
-        student.save()
+        student = Student.objects.create_user(name=name, username=username, email=email, stud_id=stud_id,
+                                              password=password,
+                                              date_of_birth=date_of_birth,  department=department,
+                                              is_active=status, university=university, gender=gender)
 
         Grades.objects.create(student=student, course=course1)
         Grades.objects.create(student=student, course=course2)
