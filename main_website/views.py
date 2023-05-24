@@ -1,6 +1,6 @@
 from django.contrib.auth import admin
 from django.shortcuts import render, redirect
-from .models import Student, Grades, Course, User
+from .models import Student, Grades, Course, Department, User
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import admin, messages
@@ -126,10 +126,10 @@ def logoutPage(request):
 @login_required(login_url='login_student')
 @student_required
 def registered_courses(request):
-    grades = Grades.objects.filter(student_id='20210031')
-
+    grades = Grades.objects.filter(student_id=request.user.student.stud_id)
+    
     context = {
-        'grades': Grades.objects.filter
+        'grades': grades
     }
     return render(request, 'main_website/registered_courses.html', context)
 
@@ -228,6 +228,39 @@ def register_in_courses(request):
 
 
 @login_required(login_url='login_admin')
-@admin_required
+@staff_member_required
 def add_student(request):
-    return render(request, 'main_website/add_student.html')
+
+    if request.method == 'POST':
+        courses = Course.objects.all()
+        departments = Department.objects.all()
+        # context = {
+        #     'courses': courses,
+        #     'departments': departments
+        # }
+        name = request.POST.get('student name')
+        email = request.POST.get('email')
+        stud_id = request.POST.get('student id')
+        gpa = request.POST.get('gpa')
+        password = request.POST.get('password')
+        date_of_birth = request.POST.get('dateOfBirth')
+        university = request.POST.get('university')
+        department = request.POST.get('department')
+        gender = request.POST.get('gender')
+        status = request.POST.get('status')
+        course1 = request.POST.get('course1')
+        course2 = request.POST.get('course2')
+        course3 = request.POST.get('course3')
+
+        Student.objects.create(name=name, email=email, stud_id=stud_id, gpa=gpa, password=password,
+                               date_of_birth=date_of_birth, university=university, department=department,
+                               gender=gender, is_active=status)
+        return render(request, 'main_website/add_student.html', {})
+    else:
+        courses = Course.objects.all()
+        departments = Department.objects.all()
+        context = {
+            'courses': courses,
+            'departments': departments
+        }
+        return render(request, 'main_website/add_student.html', context)
