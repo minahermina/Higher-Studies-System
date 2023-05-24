@@ -42,15 +42,16 @@
                         <option value ="name">Name</option>
                         <option value ="stud_id">ID</option>
                     </select>
+                    <input type="hidden" name="form_type" value="search-from">
                 </div>
-
+            </form>
             <!-- table for displaying content of the Students -->
                 <div id = "table-container">
                     <table>
                         <thead>
                             <tr>
                                 <!-- some default data -->
-                                <th>Studnet name</th>
+                                <th>Student name</th>
                                 <th>Student ID</th>
                                 <th>Status</th>
                                 <th>Email</th>
@@ -73,10 +74,14 @@
                                     {% csrf_token %}
                                     <button type="submit" class = "edit"><i class="fas fa-edit"></i></button>
                                     <input type="hidden" name="edit" value="{{ student.stud_id }}">
+                                    <input type="hidden" name="form_type" value="edit-form">
                                 </form>
-
-                                <button type="submit" class = "delete"><i class="fas fa-trash"></i></button>
-                                <input type="hidden" name="delete" value="{{ student.stud_id }}">
+                                <form method="POST" action="{% url 'search_students' %}" id="delete-form">
+                                    {% csrf_token %}
+                                    <button type="button" class="delete"><i class="fas fa-trash"></i></button>
+                                    <input type="hidden" name="delete" value="{{ student.stud_id }}">
+                                    <input type="hidden" name="form_type" value="delete-form">
+                                </form>
 
                             </td>
                         </tr>
@@ -84,7 +89,6 @@
                         </tbody>
                     </table>
                 </div>
-            </form>
         </div>
     </div>
 
@@ -93,6 +97,7 @@
     
     
 </body>
+
 </html>
 
 

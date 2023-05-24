@@ -137,6 +137,15 @@ def registered_courses(request):
 @login_required(login_url='login_admin')
 @admin_required
 def search_students(request):
+    if request.method == 'POST':
+        form_type = request.POST.get('form_type')
+        if form_type == 'delete-form':
+            delete_id = request.POST.get('delete')
+            try:
+                student = Student.objects.get(stud_id=delete_id)
+                student.delete()
+            except Student.DoesNotExist:
+                pass
     students = Student.objects.all()
     name = ''
     if request.method == 'POST':
