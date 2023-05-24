@@ -1,6 +1,6 @@
 from django.contrib.auth import admin
-from django.shortcuts import render, redirect
-from .models import Student, Grades, Course, User, Department
+from django.shortcuts import render, redirect, HttpResponse
+from .models import Student, Grades, Course, Department, User
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import admin, messages
@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
-
+from datetime import datetime
 import time
 
 from django.contrib.auth.decorators import user_passes_test
@@ -41,6 +41,7 @@ def student_required(view_func):
 
 
 def home(request):
+
     return render(request, 'main_website/home.html', {})
 
 
@@ -126,10 +127,10 @@ def logoutPage(request):
 @login_required(login_url='login_student')
 @student_required
 def registered_courses(request):
-    grades = Grades.objects.filter(student_id='20210031')
-
+    grades = Grades.objects.filter(student_id=request.user.student.stud_id)
+    
     context = {
-        'grades': Grades.objects.filter
+        'grades': grades
     }
     return render(request, 'main_website/registered_courses.html', context)
 
@@ -137,6 +138,15 @@ def registered_courses(request):
 @login_required(login_url='login_admin')
 @admin_required
 def search_students(request):
+    if request.method == 'POST':
+        form_type = request.POST.get('form_type')
+        if form_type == 'delete-form':
+            delete_id = request.POST.get('delete')
+            try:
+                student = Student.objects.get(stud_id=delete_id)
+                student.delete()
+            except Student.DoesNotExist:
+                pass
     students = Student.objects.all()
     name = ''
     if request.method == 'POST':
@@ -186,14 +196,13 @@ def error_404(request, exception):
 def register_in_courses(request):
     # when clicking on the save button
     if request.method == 'POST':
-        student_id = '20210031'
+        student_id = request.POST.get('student_id')
         course1_id = request.POST.get('course1')
         course2_id = request.POST.get('course2')
         course3_id = request.POST.get('course3')
-
         # retrieve the student
 
-        student = Student.objects.get(stud_id=student_id)
+        student = Student.objects.get(user=request.user)
 
         # retrieve the selected courses
         course1 = Course.objects.get(course_id=course1_id)
@@ -207,8 +216,8 @@ def register_in_courses(request):
         return render(request, 'main_website/home.html')
 
     else:
-        student_id = '20210031'
-        student = Student.objects.get(stud_id=student_id)
+        student_id = request.POST.get('student_id')
+        student = Student.objects.get(user= request.user)
         department_courses = Course.objects.filter(department=student.department)
 
         context = {

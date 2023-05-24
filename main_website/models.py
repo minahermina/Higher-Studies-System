@@ -18,6 +18,13 @@ class User(AbstractUser):
     #  Common fields ------------------------------------------
     role = models.CharField(max_length=50, choices=Role.choices, default=Role.ADMIN)
     name = models.CharField(max_length=50, null=True)
+    date_of_birth = models.DateTimeField(null=True)
+    gender = models.CharField(max_length=10, choices=[
+        ('Male', 'Male'),
+        ('Female', 'Female')],
+        null=True,
+        )
+
     # email
 
     # USERNAME_FIELD = 'username'
@@ -55,6 +62,15 @@ class Student(User):
     # university = models.
     # is_active (bool)
     department = models.ForeignKey('Department', on_delete=models.PROTECT)
+    university = models.CharField(max_length=50, choices=[
+        ('Ain Shams University', 'Ain Shams University'),
+        ('Cairo University', 'Cairo University'),
+        ('Helwan University', 'Helwan University'),
+        ('The American University in Cairo', 'The American University in Cairo'),
+        ('German University in Cairo', 'German University in Cairo')],
+        default ='Cairo University'
+      )
+
 
     # is_staff = models.BooleanField(default=False)
 
