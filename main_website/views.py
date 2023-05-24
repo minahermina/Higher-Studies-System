@@ -13,6 +13,8 @@ import time
 
 
 def home(request):
+
+
     return render(request, 'main_website/home.html', {})
 
 
@@ -50,6 +52,7 @@ def loginStudent(request):
 
     context = {}
     return render(request, 'main_website/login_student.html', context)
+
 
 
 def loginAdmin(request):
@@ -117,9 +120,10 @@ def search_students(request):
         elif priority == 'stud_id':
             students = students.order_by('stud_id')
 
+
     context = {
         'students': students,
-        'search': name,
+        'search' : name,
     }
     return render(request, 'main_website/search.html', context)
 
