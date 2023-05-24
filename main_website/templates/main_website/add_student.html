@@ -125,9 +125,9 @@
                         <select name="course1" id="c1" required>
                             <optgroup label="course1">
                                 <option value="" disabled selected >Select the first course</option>
-                                 {% for course in courses %}
-                                     <option value="{{ course.course_id }}">{{ course.name }}</option>
-                                 {% endfor %}
+{#                                 {% for course in courses %}#}
+{#                                     <option value="{{ course.course_id }}">{{ course.name }}</option>#}
+{#                                 {% endfor %}#}
                             </optgroup>
                         </select>
                     </span>
@@ -139,9 +139,9 @@
                         <select name="course2" id="c2" required>
                             <optgroup label="course2">
                                 <option value="" disabled selected >Select the second course</option>
-                                    {% for course in courses %}
-                                        <option value="{{ course.course_id }}">{{ course.name }}</option>
-                                    {% endfor %}
+{#                                    {% for course in courses %}#}
+{#                                        <option value="{{ course.course_id }}">{{ course.name }}</option>#}
+{#                                    {% endfor %}#}
                             </optgroup>
                         </select>
                     </span>
@@ -153,9 +153,9 @@
                         <select name="course3" id="c3" required>
                             <optgroup label="course3">
                                 <option value="" disabled selected >Select the third course</option>
-                                    {% for course in courses %}
-                                        <option value="{{ course.course_id }}">{{ course.name }}</option>
-                                    {% endfor %}
+{#                                    {% for course in courses %}#}
+{#                                        <option value="{{ course.course_id }}">{{ course.name }}</option>#}
+{#                                    {% endfor %}#}
                         </select>
                     </span>
                     <div id="c3Error" style="display:none;color: red;">Please enter course3.</div>
