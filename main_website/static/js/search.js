@@ -1,4 +1,6 @@
-    var deleteButtons = document.querySelectorAll(".delete");
+
+
+var deleteButtons = document.querySelectorAll(".delete");
 
     // Attach click event handler to each delete button
     deleteButtons.forEach(function(button) {
