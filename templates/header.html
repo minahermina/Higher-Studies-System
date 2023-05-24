@@ -19,7 +19,7 @@
                     {#  Student chioces #}
                     {% if request.user.role == "STUDENT" %}
                         <li class = "student-only"><a href="register_in_courses.html">Register in a Course</a></li>
-                        <li class = "student-only"><a href="registered_courses.html">Registered Courses</a></li>
+                        <li class = "student-only"><a href="{% url 'registered_courses'%}">Registered Courses</a></li>
                     {% else %}
                         {#  Admin chioces #}
                         <li class = "admin-only"><a href="add_Student.html">Add a Student</a></li>
