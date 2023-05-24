@@ -238,24 +238,30 @@ def add_student(request):
         stud_id = request.POST.get('student id')
         password = request.POST.get('password')
         date_of_birth = request.POST.get('dateOfBirth')
-        department = request.POST.get('department')
+        department_id = request.POST.get('department')
         status = request.POST.get('status')
-        course1ID = request.POST.get('course1')
-        course2ID = request.POST.get('course2')
-        course3ID = request.POST.get('course3')
+        course1_ID = request.POST.get('course1')
+        course2_ID = request.POST.get('course2')
+        course3_ID = request.POST.get('course3')
+        university = request.POST.get('university')
+        gender = request.POST.get('gender')
 
-        course1 = Course.objects.get(course_id=course1ID)
-        course2 = Course.objects.get(course_id=course2ID)
-        course3 = Course.objects.get(course_id=course3ID)
+        course1 = Course.objects.get(course_id=course1_ID)
+        course2 = Course.objects.get(course_id=course2_ID)
+        course3 = Course.objects.get(course_id=course3_ID)
+
+        department = Department.objects.get(id=department_id)
 
         student = Student(name=name, username=username, email=email, stud_id=stud_id, password=password,
                           date_of_birth=date_of_birth,  department=department,
-                          is_active=status)
+                          is_active=status, university=university, gender=gender)
         student.save()
 
         Grades.objects.create(student=student, course=course1)
         Grades.objects.create(student=student, course=course2)
         Grades.objects.create(student=student, course=course3)
+
+        return render(request, 'main_website/add_student.html', {})
 
     else:
         courses = Course.objects.all()

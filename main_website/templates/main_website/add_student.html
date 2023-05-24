@@ -95,7 +95,7 @@
                             <optgroup label="department">
                                 <option value="" disabled selected >Select your department</option>
                                     {% for departement in departments %}
-                                        <option value="{{ departement.name }}">{{ departement.name }}</option>
+                                        <option value="{{ departement.id }}">{{ departement.name }}</option>
                                     {% endfor %}
                             </optgroup>
                         </select>
