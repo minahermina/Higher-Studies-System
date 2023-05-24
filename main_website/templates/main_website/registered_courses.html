@@ -18,7 +18,9 @@
     </head>
     <body>
         <!-- header -->
-        <header id="website-header"></header>
+        <header id="website-header">
+            {% include 'header.html'%}
+        </header>
         <div id = "main-content">
             <div id = "personal-data">
                 <!-- <div id = "title"> -->
@@ -46,7 +48,11 @@
                                         <td>{{grade.final_grade}}</td>
                                         <td>
                                             {% with x=grade.final_grade y=grade.course_grade %}
-                                                {{x|add:y}}
+                                                {% if x is none and y is none %}
+                                                    None
+                                                {% else %}
+                                                    {{ x|add:y }}
+                                                {% endif %}
                                             {% endwith %}
                                         </td>
                                         <td><button class="expand-button" ><i class="fa fa-plus"></i></button></td>

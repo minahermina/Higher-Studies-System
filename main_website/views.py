@@ -1,5 +1,5 @@
 from django.contrib.auth import admin
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from .models import Student, Grades, Course, Department, User
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.admin.views.decorators import staff_member_required
@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
-
+from datetime import datetime
 import time
 
 from django.contrib.auth.decorators import user_passes_test
@@ -41,6 +41,7 @@ def student_required(view_func):
 
 
 def home(request):
+
     return render(request, 'main_website/home.html', {})
 
 
@@ -195,14 +196,13 @@ def error_404(request, exception):
 def register_in_courses(request):
     # when clicking on the save button
     if request.method == 'POST':
-        student_id = '20210031'
+        student_id = request.POST.get('student_id')
         course1_id = request.POST.get('course1')
         course2_id = request.POST.get('course2')
         course3_id = request.POST.get('course3')
-
         # retrieve the student
 
-        student = Student.objects.get(stud_id=student_id)
+        student = Student.objects.get(user=request.user)
 
         # retrieve the selected courses
         course1 = Course.objects.get(course_id=course1_id)
@@ -216,8 +216,8 @@ def register_in_courses(request):
         return render(request, 'main_website/home.html')
 
     else:
-        student_id = '20210031'
-        student = Student.objects.get(stud_id=student_id)
+        student_id = request.POST.get('student_id')
+        student = Student.objects.get(user= request.user)
         department_courses = Course.objects.filter(department=student.department)
 
         context = {
