@@ -4,7 +4,7 @@
 
 }
 
-a{
+#profile-container a{
     text-decoration: underline;
     color: var( --main-color);
 }
