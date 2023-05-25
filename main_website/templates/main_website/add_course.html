@@ -1,38 +1,41 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href={% static 'css/main.css'%}>
-    <link rel="stylesheet" href={% static 'css/Add Course.css'%}>
-    <script defer src={% static 'js/header.js'%}></script>
-    <script defer src={% static 'js/footer.js.js'%}></script>
-    <script defer src={% static 'js/add_course.js'%}></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="{% static 'css/add_student.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script defer src="{% static 'js/footer.js' %}"></script>
+    <script defer src="{% static 'js/eyeIcon.js' %}"></script>
+    <meta name="description" content="Add Student Page." />
     <title>Add Course</title>
 
 </head>
 <body>
-    <!-- header -->
-    <header id="website-header"></header>
-       <div id="main-content">
-            <div class="page-body">
+ <header id="website-header">{% include 'header.html' %}</header>
+
+    <div id = "main-content">
+        <section class="page-body">
             <div class="title">
                 <h1><b>Add Course</b> </h1>
             </div>
-            <form id ="form" action="" method="post">
-
+            <form id ="form" action="" method="POST">
+                {% csrf_token %}
             <div class="txt_field">
                 <span></span>
-                <input type="text" id="courseName" class="form__field" name="Course name" value="" placeholder="Course name" autofocus>
+                <input type="text" id="courseName" class="form__field" name="name" value="" placeholder="Course name" autofocus>
                 <label class="form__label" for="Course name">Course name:</label>
             </div>
             <div id="cNameError" style="display:none;color:red;">Invalid Name:The name must start with letters </div>
             <br>
             <div class="txt_field">
                 <span></span>
-                <input type="text" id="courseID" class="form__field" name="Course ID" value="" placeholder="course ID" autofocus>
+                <input type="text" id="courseID" class="form__field" name="ID" value="" placeholder="course ID" autofocus>
                 <label class="form__label" for="Course ID">course ID:</label>
             </div>
             <div id="idError" style="display:none;color:red;">ID must start with letters followed by numbers</div>
@@ -43,7 +46,6 @@
                 <label for="course Hours" class="form__label">course Hours:</label>
             </div>
             <br>
-            
             <div>
                 <label for="department">Department:</label>
                 <span class="custom-dropdown">
@@ -59,8 +61,9 @@
                 <div id="depError" style="display:none;color: red;">Please enter the department.</div>
             </div>
             <br>
+
             <div>
-            <label for="lectureDay">University:</label>
+            <label for="lecture Day">lecture Day:</label>
             <span class="custom-dropdown">
                 <select name="lDay" id="lecDay" required>
                     <optgroup label="lecture Day">
@@ -85,10 +88,11 @@
             <br>
             <div>
                 <button type="reset" class="btn"id="reset"> <span> Reset</span> </button>
-                <button type="add" class="btn" id="add"> <span>Submit</span></button>
+                <button type="submit" class="btn" id="add"> <span>Submit</span></button>
             </div>
+
         </form>
-        </div>
+        </section>
     </div>
     
     

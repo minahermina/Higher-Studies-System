@@ -6,11 +6,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="{% static 'css/add_student.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
-
+    <script defer src="{% static 'js/footer.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/add_student.css'%}">
-    <script defer src="{% static 'js/footer.js.js'%}"></script>
     <title>Edit Student</title>
 </head>
 
@@ -21,11 +22,11 @@
             <div class="title">
                 <h1>Edit Student</h1>
             </div>
-             <form id ="form" method="POST" action = "{% url 'search_students' %}" >
+             <form id ="form" method="POST" >
                 {% csrf_token %}
                 <div class="txt_field">
                     <span></span>
-                    <input type="text" id="name" class="form__field" name="student name" value="{{student.name}}" placeholder="Name" autofocus>
+                    <input type="text" id="name" class="form__field" name="student_name" value="{{student.name}}" placeholder="Name" autofocus>
                     <label class="form__label" for="name">Name:</label>
                 </div>
                 <div id="name-error" style="display:none;color:red;">Name can't be empty and must contain only letters.</div>
@@ -107,32 +108,23 @@
                 </div>
                 <br>
                 <div>
-                    <label>Gender:</label>
-                    {% if student.gender == "Male" %}
-                    <input id="m" type="radio" name="gender" value="Male" checked="true">
+                   <label>Gender:</label>
+                    <input id="m" type="radio" name="gender" value="Male" {% if student.gender == "Male" %}checked="true"{% endif %}>
                     <label for="m">Male</label>
-                    <input id="f" type="radio" name="gender" value="Female">
+                    <input id="f" type="radio" name="gender" value="Female" {% if student.gender == "Female" %}checked="true"{% endif %}>
                     <label for="f">Female</label>
 
-                    {% else %}
-                    <input id="m" type="radio" name="gender" value="Male" >
-                    <label for="m">Male</label>
-                    <input id="f" type="radio" name="gender" value="Female" checked="true">
-                    <label for="f">Female</label>
-                    {% endif %}
                 </div>
                 <br>
                 <div>
                     <label>Status:</label>
-                    <input id="a" type="radio" name="status" value="student.is_active" checked="student.is_active">
+                    <label>Status:</label>
+                    <input id="a" type="radio" name="status" value=1 checked="{{student.is_active}}">
                     <label for="a">Active</label>
-                    {% if student.is_active == True %}
-                    <input id="ina" type="radio" name="status" value="false">
+
+                    <input id="ina" type="radio" name="status" value="0"{% if student.is_active == True %}checked= False{% else %}checked= True {% endif %}>
                     <label for="ina">Inactive</label>
-                    {% else %}
-                     <input id="ina" type="radio" name="status" value="true">
-                    <label for="ina">Inactive</label>
-                    {% endif %}
+
                 </div>
                 <br>
                 <div>
@@ -140,9 +132,11 @@
                         <span class="custom-dropdown">
                             <select name="course1" id="c1" required>
                                 <optgroup label="course1">
-                                <option value="{{ takenCourses.0.course_id }}"selected >{{ takenCourses.0.course }}</option>
+                                <option value="{{ takenCourses.0.Course.course_id }}"selected >{{ takenCourses.0.Course.name }}</option>
                                 {% for course in courses %}
-                                <option value="{{ course.course_id }}">{{ course.name }}</option>
+                                    {% if takenCourses.0.Course.course_id != course.course_id  %}
+                                        <option value="{{ course.course_id }}">{{ course.name }}</option>
+                                    {% endif %}
                                 {% endfor %}
                                 </optgroup>
                             </select>
@@ -154,10 +148,12 @@
                      <span class="custom-dropdown">
                         <select name="course2" id="c2" required>
                             <optgroup label="course2">
-                            <option value="{{ takenCourses.1.course_id }}"selected >{{  takenCourses.1.course }}</option>
+                            <option value="{{ takenCourses.1.course_id }}"selected >{{ takenCourses.1.name }}</option>
                                 {% for course in courses %}
-                                <option value="{{ course.course_id }}">{{ course.name }}</option>
-                                {% endfor %}
+                                    {% if takenCourses.0.Course.course_id != course.course_id   %}
+                                        <option value="{{ course.course_id }}">{{ course.name }}</option>
+                                    {% endif %}
+                                {% endfor %}                      
                             </optgroup>
                         </select>
                     </span>
@@ -168,9 +164,11 @@
                         <span class="custom-dropdown">
                             <select name="course3" id="c3" required>
                                 <optgroup label="course3">
-                                <option value="{{ takenCourses.2.course_id }}"selected >{{ takenCourses.2.course }}</option>
+                                <option value="{{ takenCourses.2.course_id }}"selected >{{ takenCourses.2.name }}</option>
                                 {% for course in courses %}
-                                <option value="{{ course.course_id }}">{{ course.name }}</option>
+                                    {% if  takenCourses.0.Course.course_id != course.course_id   %}
+                                        <option value="{{ course.course_id }}">{{ course.name }}</option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
                         </span>
