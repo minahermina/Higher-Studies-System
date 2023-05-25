@@ -280,6 +280,7 @@ def register_in_courses(request):
         # retrieve the student
 
         student = Student.objects.get(user=request.user)
+        Grades.objects.filter(student=student).delete()
 
         # retrieve the selected courses
         course1 = Course.objects.get(course_id=course1_id)
