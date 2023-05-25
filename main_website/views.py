@@ -164,11 +164,22 @@ def search_students(request):
     return render(request, 'main_website/search.html', context)
 
 
+
 @login_required(login_url='login_admin')
 @admin_required
 def add_course(request):
-    return render(request, 'main_website/add_course.html')
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        course_id = request.POST.get('Course ID')
+        department = request.POST.get('department')
+        number_of_hours = request.POST.get('course Hours')
+        lecture_day = request.POST.get('lDay')
+        hall_number = request.POST.get('hallNumber')
+        course = Course.objects.create_user(name=name, course_id = course_id, department = department,
+                                            number_of_hours = number_of_hours, lecture_day=lecture_day ,hall_number=hall_number)
+    
 
+    return render(request, 'main_website/add_course.html')
 
 @login_required(login_url='login_admin')
 @admin_required
@@ -214,7 +225,7 @@ def edit_student(request):
                     gender=gender
                 )
             #else:
-
+                #just delete student
 
             #if c1==
     context = {
@@ -223,7 +234,6 @@ def edit_student(request):
         'courses':allCourses,
     }
     return render(request, 'main_website/edit_student.html', context)
-
 
 
 def error_404(request, exception):
