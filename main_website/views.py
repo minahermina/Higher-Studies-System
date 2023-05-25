@@ -165,6 +165,8 @@ def search_students(request):
 
 
 
+
+
 @login_required(login_url='login_admin')
 @admin_required
 def add_course(request):
@@ -240,6 +242,7 @@ def edit_student(request):
         'courses':allCourses,
     }
     return render(request, 'main_website/edit_student.html', context)
+
 
 
 def error_404(request, exception):
