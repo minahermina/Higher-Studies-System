@@ -51,44 +51,6 @@ function validate_form(){
         passwordError.style.display = "none";
     }
 
-
-    const dateOfBirthField = document.getElementById("DateOfBirth").value;
-    const dateErorr = document.getElementById("dateError");
-    if(dateOfBirthField === ""){
-        dateErorr.style.display="block";
-        document.getElementById("DateOfBirth").focus();
-        window.scroll({top:500});
-        return false;
-    }
-    else{
-        dateErorr.style.display="none";
-    }
-
-
-    const universityField = document.getElementById("university").value;
-    const uniErorr=document.getElementById("uniError");
-    if (universityField === "") {
-        uniErorr.style.display="block";
-        window.scroll(0,300);
-        return false;
-    }
-    else{
-        uniErorr.style.display="none";
-    }
-
-
-    const departmentField = document.getElementById("department").value;
-    const depErorr=document.getElementById("depError");
-    if (departmentField === "") {
-        depErorr.style.display="block";
-        window.scroll(0,300);
-        return false;
-    }
-    else{
-        depErorr.style.display="none";
-    }
-
-
     const course1 = document.getElementById("c1").value;
     const cr1=document.getElementById("c1Error");
     if (course1 === "") {
