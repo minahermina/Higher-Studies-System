@@ -133,7 +133,7 @@
                                 <optgroup label="course1">
                                 <option value="{{ takenCourses.0.Course.course_id }}"selected >{{ takenCourses.0.Course.name }}</option>
                                 {% for course in courses %}
-                                    {% if {{ takenCourses.0.Course.course_id }} !={{ course.course_id }}  %}
+                                    {% if takenCourses.0.Course.course_id != course.course_id  %}
                                         <option value="{{ course.course_id }}">{{ course.name }}</option>
                                     {% endif %}
                                 {% endfor %}
@@ -149,7 +149,7 @@
                             <optgroup label="course2">
                             <option value="{{ takenCourses.1.course_id }}"selected >{{ takenCourses.1.name }}</option>
                                 {% for course in courses %}
-                                    {% if {{ takenCourses.0.Course.course_id }} !={{ course.course_id }}  %}
+                                    {% if takenCourses.0.Course.course_id != course.course_id   %}
                                         <option value="{{ course.course_id }}">{{ course.name }}</option>
                                     {% endif %}
                                 {% endfor %}                      
@@ -165,7 +165,7 @@
                                 <optgroup label="course3">
                                 <option value="{{ takenCourses.2.course_id }}"selected >{{ takenCourses.2.name }}</option>
                                 {% for course in courses %}
-                                    {% if {{ takenCourses.0.Course.course_id }} !={{ course.course_id }}  %}
+                                    {% if  takenCourses.0.Course.course_id != course.course_id   %}
                                         <option value="{{ course.course_id }}">{{ course.name }}</option>
                                     {% endif %}
                                 {% endfor %}
