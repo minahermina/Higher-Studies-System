@@ -6,7 +6,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
 from datetime import timedelta
 from django.core.exceptions import ObjectDoesNotExist
-
+from django.db.models import Q
 
 def admin_required(view_func):
     def check_admin(user):
@@ -144,23 +144,30 @@ def search_students(request):
             except Student.DoesNotExist:
                 pass
     students = Student.objects.all()
-    name = ''
+    search = ''
     if request.method == 'POST':
         priority = request.POST.get('priority')
-        name = request.POST.get('keyword')
+        search = request.POST.get('keyword')
 
-        if name:
-            students = students.filter(name__icontains=name)
+        if search:
+            deps =  Department.objects.filter(name = search)
+            students = students.filter(Q(name__icontains=search) | Q(department_id__in=deps.values_list('id', flat=True)))
         if priority == 'name':
             students = students.order_by('name')
         elif priority == 'stud_id':
             students = students.order_by('stud_id')
 
+    departments = []
+    for student in students:
+        department = Department.objects.get(id=student.department_id)
+        departments.append(department.name)
+
     context = {
-        'students': students,
-        'search': name,
+        'students_departments':  zip(students, departments),
+        'search': search,
     }
     return render(request, 'main_website/search.html', context)
+
 
 
 @login_required(login_url='login_admin')

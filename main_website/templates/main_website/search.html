@@ -34,7 +34,7 @@
                     {% if search != '' %}
                     <input type="search" placeholder="{{ search }}" name="keyword" value = "{{ search }}">
                     {% else %}
-                    <input type="search" placeholder="Enter the Name or ID" name="keyword" >
+                    <input type="search" placeholder="Enter the Name or Department" name="keyword" >
                     {% endif %}
 
                     <label style = "margin-right: 5px; color: #000;">sort by</label>
@@ -54,16 +54,18 @@
                                 <!-- some default data -->
                                 <th>Student name</th>
                                 <th>Student ID</th>
+                                <th>Student Department</th>
                                 <th>Status</th>
                                 <th>Email</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                        {% for student in students %}
+                        {% for student, department in students_departments %}
                         <tr>
                             <td>{{student.name}}</td>
                             <td>{{student.stud_id}}</td>
+                            <td>{{department}}</td>
                             {% if student.is_active == True %}
                             <td>Active</td>
                             {% else %}
