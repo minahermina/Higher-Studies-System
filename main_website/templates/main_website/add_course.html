@@ -25,7 +25,7 @@
                 <h1><b>Add Course</b> </h1>
             </div>
             <form id ="form" action="" method="post">
-
+                {% csrf_token %}
             <div class="txt_field">
                 <span></span>
                 <input type="text" id="courseName" class="form__field" name="Course name" value="" placeholder="Course name" autofocus>
