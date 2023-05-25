@@ -1,8 +1,13 @@
+
 #profile-container h1{
     padding: 0;
 
 }
 
+#profile-container a{
+    text-decoration: underline;
+    color: var( --main-color);
+}
 
 
 #profile-container{
@@ -11,15 +16,40 @@
     text-align: center;
     width: 60%;
     margin: 20px auto auto auto;
-    padding-bottom: 50px ;
     padding-top: 60px ;
     border-radius: var(--main-radius);
     box-shadow: var(--main-box-shadow);
 }
-#info-box{
+
+.info-box{
     /*background: #4b6f86;*/
+    line-height:35px;
     text-align: left;
     width:70%;
+    font-size: 1.02rem;
     margin: auto;
     padding:50px;
 }
+
+
+
+.info-box h2 {
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.info-box .card {
+    background-color: #fff;
+    height: auto;
+    padding: 20px 0 20px 50px;
+}
+
+.info-box .card table {
+    border: none;
+    font-size: 16px;
+    width: 80%;
+}
+
+

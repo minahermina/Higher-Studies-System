@@ -21,37 +21,41 @@
             <div class="title">
                 <h1>Edit Student</h1>
             </div>
-            <form id ="form" action="" method="post">
+             <form id ="form" method="POST" action = "{% url 'search/' %}" >
+                {% csrf_token %}
                 <div class="txt_field">
                     <span></span>
-                    <input type="text" id="name" class="form__field" name="student name" value="{{student.first_name}} {{student.last_name}}" placeholder="Name" autofocus>
+                    <input type="text" id="name" class="form__field" name="student name" value="{{student.name}}" placeholder="Name" autofocus>
                     <label class="form__label" for="name">Name:</label>
                 </div>
                 <div id="name-error" style="display:none;color:red;">Name can't be empty and must contain only letters.</div>
                 <br>
+
                 <div class="txt_field">
                     <span></span>
-                    <input type="text" id="email" value="{{student.email}}" class="form__field" name="email" placeholder="email">
+                    <input type="text" id="username" class="form__field" name="username" value="{{student.username}}" placeholder="Username">
+                    <label class="form__label" for="username">Username:</label>
+                </div>
+                 <br>
+                <input type="hidden" name="edit" value="{{ student.stud_id }}">
+                 <input type="hidden" name="form_type" value="update">
+                <div class="txt_field">
+                    <span></span>
+                    <input type="text" id="email" class="form__field" name="email" value = "{{student.email}}" placeholder="email">
                     <label for="email" class="form__label">Email:</label>
                 </div>
                 <span id="emailError" style="display: none; color: red;">Please enter a valid email.</span>
                 <br>
                 <div class="txt_field">
                     <span></span>
-                    <input type="text" id="id" name="student id" value="{{student.stud_id}}" class="form__field" placeholder="id">
+                    <input type="text" id="id" name="student id" value ="{{student.stud_id}}"  class="form__field" placeholder="id">
                     <label for="id" class="form__label">ID:</label>
                 </div>
                 <div id="id-error" style="display:none;color: red;">ID can't be empty. It's a numeric value of length 8.</div>
                 <br>
                 <div class="txt_field">
                     <span></span>
-                    <input type="number" value="{{student.gpa}}" step="0.01" min="0" max="4" id="gpa" name="gpa" class="form__field" placeholder="gpa">
-                    <label for="gpa" class="form__label">GPA:</label>
-                </div>
-                <br>
-                <div class="txt_field">
-                    <span></span>
-                    <input type="password" id="password" name="password" class="form__field" placeholder="password">
+                    <input type="password" value="you forget to get password" id="password" name="password" class="form__field" placeholder="password">
                     <ion-icon name="eye-off-outline" ></ion-icon>
                     <label for="password" class="form__label">Password:</label>
                 </div>
@@ -59,25 +63,35 @@
                 <br>
                 <div>
                     <label for="DateOfBirth">Date Of Birth:</label>
-                    <input type="date" name="dateOfBirth" id="DateOfBirth" min='1899-01-01' max='2005-12-31' >
+                    <input type="date" value="{{ student.date_of_birth }}"  name="dateOfBirth" id="DateOfBirth" min='1899-01-01' max='2005-12-31' >
                 </div>
-                <div id="dateError" style="display:none;color: red;">Please enter the date of birth.</div>
+                <div id="dateError" style="display:none;color: rgba(253,23,23,0.09);">Please enter the date of birth.</div>
                 <br>
                 <div>
                     <label for="university">University:</label>
                     <span class="custom-dropdown">
                         <select name="university" id="university" required>
                             <optgroup label="University">
-                                <option value="" selected disabled>Select your university</option>
-                                <option value="CU">Cairo University</option>
-                                <option value="ASU">Ain Shams University</option>
-                                <option value="HU">Helwan University</option>
-                                <option value="AUC">The American University in Cairo</option>
-                                <option value="GUC">German University in Cairo</option>
+                                <option value="{{student.university }}" selected >{{ student.university }}</option>
+                                {% if student.university != "Cairo University" %}
+                                <option value="Cairo University">Cairo University</option>
+                                {% endif %}
+                                {% if student.university != "Ain Shams University" %}
+                                <option value="Ain Shams University">Ain Shams University</option>
+                                {% endif %}
+                                {% if student.university != "Helwan University" %}
+                                <option value="Helwan University">Helwan University</option>
+                                {% endif %}
+                                {% if student.university != "The American University in Cairo" %}
+                                <option value="The American University in Cairo">The American University in Cairo</option>
+                                {% endif %}
+                                {% if student.university != "German University in Cairo" %}
+                                <option value="German University in Cairo">German University in Cairo</option>
+                                {% endif %}
                             </optgroup>
                         </select>
                     </span>
-                    <div id="uniError" style="display:none;color: red;">Please enter the university.</div>
+
                 </div>
                 <br>
                 <div>
@@ -85,12 +99,8 @@
                     <span class="custom-dropdown">
                         <select name="department" id="department" required>
                             <optgroup label="department">
-                                <option value="" disabled selected >Select your department</option>
-                                <option value="cs"> Computer Science </option>
-                                <option value="IT"> Information Technology </option>
-                                <option value="DS"> Decision Support </option>
-                                <option value="IS"> Information System </option>
-                                <option value="AI"> Artificial Intelligence </option>
+                                <option value="{{ student.department }}" selected >{{ student.department.name }}</option>
+
                             </optgroup>
                         </select>
                     </span>
@@ -98,21 +108,74 @@
                 <br>
                 <div>
                     <label>Gender:</label>
+                    {% if student.gender == "Male" %}
                     <input id="m" type="radio" name="gender" value="Male" checked="true">
                     <label for="m">Male</label>
                     <input id="f" type="radio" name="gender" value="Female">
                     <label for="f">Female</label>
+
+                    {% else %}
+                    <input id="m" type="radio" name="gender" value="Male" >
+                    <label for="m">Male</label>
+                    <input id="f" type="radio" name="gender" value="Female" checked="true">
+                    <label for="f">Female</label>
+                    {% endif %}
                 </div>
                 <br>
                 <div>
                     <label>Status:</label>
-                    <input id="a" type="radio" name="status" value="active" checked="true">
+                    <input id="a" type="radio" name="status" value="student.is_active" checked="student.is_active">
                     <label for="a">Active</label>
-                    <input id="ina" type="radio" name="status" value="inactive">
+                    {% if student.is_active == True %}
+                    <input id="ina" type="radio" name="status" value="false">
                     <label for="ina">Inactive</label>
+                    {% else %}
+                     <input id="ina" type="radio" name="status" value="true">
+                    <label for="ina">Inactive</label>
+                    {% endif %}
+                </div>
+                <br>
+                <div>
+                    <label for="c1">Course 1:</label>
+                        <span class="custom-dropdown">
+                            <select name="course1" id="c1" required>
+                                <optgroup label="course1">
+                                <option value="{{ takenCourses.0.course_id }}"selected >{{ takenCourses.0.name }}</option>
+                                {% for course in courses %}
+                                <option value="{{ course.course_id }}">{{ course.name }}</option>
+                                {% endfor %}
+                                </optgroup>
+                            </select>
+                        </span>
+                    <div id="c1Error" style="display:none;color: red;">Please enter course1.</div>
+                </div>
+                 <div>
+                 <label for="c2">Course 2:</label>
+                     <span class="custom-dropdown">
+                        <select name="course2" id="c2" required>
+                            <optgroup label="course2">
+                            <option value="{{ takenCourses.1.course_id }}"selected >{{ takenCourses.1.name }}</option>
+                                {% for course in courses %}
+                                <option value="{{ course.course_id }}">{{ course.name }}</option>                       {% endfor %}
+                            </optgroup>
+                        </select>
+                    </span>
+                 <div id="c2Error" style="display:none;color: red;">Please enter course2.</div>
+                </div>
+                <div>
+                    <label for="c3">Course 3:</label>
+                        <span class="custom-dropdown">
+                            <select name="course3" id="c3" required>
+                                <optgroup label="course3">
+                                <option value="{{ takenCourses.2.course_id }}"selected >{{ takenCourses.2.name }}</option>
+                                {% for course in allcourses %}
+                                <option value="{{ course.course_id }}">{{ course.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                        <div id="c3Error" style="display:none;color: red;">Please enter course3.</div>
                 </div>
 
-                <br>
                 <br>
                 <div>
                     <button type="submit" class="btn" id="submit"> <span> Edit</span></button>
