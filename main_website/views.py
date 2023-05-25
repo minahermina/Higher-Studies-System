@@ -317,7 +317,7 @@ def add_student(request):
             Grades.objects.create(student=student, course=course2)
             Grades.objects.create(student=student, course=course3)
 
-        return redirect('add_student')
+        return render(request, 'main_website/home.html')
 
     else:
         courses = Course.objects.all()

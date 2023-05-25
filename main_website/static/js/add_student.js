@@ -219,9 +219,12 @@ const form = document.getElementById('form');
 //         alert("Your data has been submitted successfully.");
 //     });
 // }
-form.addEventListener('submit', function() {
+form.addEventListener('submit', function(event) {
     if(validate_form()){
         alert("Your data has been submitted successfully.");
+    }
+    else{
+        event.preventDefault();
     }
 });
   

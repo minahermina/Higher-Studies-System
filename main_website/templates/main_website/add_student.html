@@ -31,35 +31,35 @@
                 {% csrf_token %}
                 <div class="txt_field">
                     <span></span>
-                    <input type="text" id="name" class="form__field" name="student name" value="" placeholder="Name" autofocus required>
+                    <input type="text" id="name" class="form__field" name="student name" value="" placeholder="Name" autofocus >
                     <label class="form__label" for="name">Name:</label>
                 </div>
                 <div id="name-error" style="display:none;color:red;">Name can't be empty and must contain only letters.</div>
                 <br>
                 <div class="txt_field">
                     <span></span>
-                    <input type="text" id="username" class="form__field" name="username" value="" placeholder="Username" required>
+                    <input type="text" id="username" class="form__field" name="username" value="" placeholder="Username" >
                     <label class="form__label" for="username">Username:</label>
                 </div>
                 <div id="username-error" style="display:none;color:red;">Username is not valid.</div>
                 <br>
                 <div class="txt_field">
                     <span></span>
-                    <input type="text" id="email" class="form__field" name="email" placeholder="email" required>
+                    <input type="text" id="email" class="form__field" name="email" placeholder="email" >
                     <label for="email" class="form__label">Email:</label>
                 </div>
                 <span id="emailError" style="display: none; color: red;">Please enter a valid email.</span>
                 <br>
                 <div class="txt_field">
                     <span></span>
-                    <input type="text" id="id" name="student id" class="form__field" placeholder="id" required>
+                    <input type="text" id="id" name="student id" class="form__field" placeholder="id" >
                     <label for="id" class="form__label">ID:</label>
                 </div>
                 <div id="id-error" style="display:none;color: red;">ID can't be empty. It's a numeric value of length 8.</div>
                 <br>
                 <div class="txt_field">
                     <span></span>
-                    <input type="password" id="password" name="password" class="form__field" placeholder="password" required>
+                    <input type="password" id="password" name="password" class="form__field" placeholder="password" >
                     <ion-icon name="eye-off-outline" ></ion-icon>
                     <label for="password" class="form__label">Password:</label>
                 </div>
@@ -67,7 +67,7 @@
                 <br>
                 <div>
                     <label for="DateOfBirth">Date Of Birth:</label>
-                    <input type="date" name="dateOfBirth" id="DateOfBirth" min='1899-01-01' max='2005-12-31' required>
+                    <input type="date" name="dateOfBirth" id="DateOfBirth" min='1899-01-01' max='2005-12-31' >
                 </div>
                 <div id="dateError" style="display:none;color: red;">Please enter the date of birth.</div>
                 <br>
