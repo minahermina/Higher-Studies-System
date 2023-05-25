@@ -178,7 +178,7 @@ def add_course(request):
         hall_number = request.POST.get('hallNumber')
         department_id = request.POST.get('department')
         department = Department.objects.get(id=department_id)
-        course = Course.objects.create_user(name=name, course_id = course_id, department = department,
+        course = Course.objects.create(name=name, course_id = course_id, department = department,
                                             number_of_hours = number_of_hours, lecture_day=lecture_day ,hall_number=hall_number)
     departments = Department.objects.all()
     context = {
