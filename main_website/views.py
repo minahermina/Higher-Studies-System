@@ -178,7 +178,10 @@ def add_course(request):
         department = Department.objects.get(id=department_id)
         course = Course.objects.create_user(name=name, course_id = course_id, department = department,
                                             number_of_hours = number_of_hours, lecture_day=lecture_day ,hall_number=hall_number)
-    
+    departments = Department.objects.all()
+    context = {
+        'departments': departments
+    }
 
     return render(request, 'main_website/add_course.html')
 
