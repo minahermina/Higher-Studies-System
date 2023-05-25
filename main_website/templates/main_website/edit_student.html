@@ -56,7 +56,7 @@
                 <br>
                 <div class="txt_field">
                     <span></span>
-                    <input type="password" value="you forget to get password" id="password" name="password" class="form__field" placeholder="password">
+                    <input type="password" value="" id="password" name="password" class="form__field" placeholder="password" disabled>
                     <ion-icon name="eye-off-outline" ></ion-icon>
                     <label for="password" class="form__label">Password:</label>
                 </div>
@@ -64,7 +64,7 @@
                 <br>
                 <div>
                     <label for="DateOfBirth">Date Of Birth:</label>
-                    <input type="date" value="{{ student.date_of_birth }}"  name="dateOfBirth" id="DateOfBirth" min='1899-01-01' max='2005-12-31' >
+                    <input type="date" value="{{ student.date_of_birth }}"  name="dateOfBirth" id="DateOfBirth" min='1899-01-01' max='2005-12-31'  required>
                 </div>
                 <div id="dateError" style="display:none;color: rgba(253,23,23,0.09);">Please enter the date of birth.</div>
                 <br>
@@ -100,7 +100,7 @@
                     <span class="custom-dropdown">
                         <select name="department" id="department" required>
                             <optgroup label="department">
-                                <option value="{{ student.department }}" selected >{{ student.department.name }}</option>
+                                <option value="{{ student.department.id }}" selected >{{ student.department.name }}</option>
 
                             </optgroup>
                         </select>
@@ -117,7 +117,7 @@
                 </div>
                 <br>
                 <div>
-                    <label>Status:</label>
+{#                    <label>Status:</label>#}
                     <label>Status:</label>
                     <input id="a" type="radio" name="status" value=1 checked="{{student.is_active}}">
                     <label for="a">Active</label>
@@ -131,11 +131,12 @@
                     <label for="c1">Course 1:</label>
                         <span class="custom-dropdown">
                             <select name="course1" id="c1" required>
+{#                                <p>{{ takenCourses.0.Course }}</p>#}
                                 <optgroup label="course1">
-                                <option value="{{ takenCourses.0.Course.course_id }}"selected >{{ takenCourses.0.Course.name }}</option>
+                                <option value="{{ takenCourses.0.course.course_id }}" selected >{{ takenCourses.0.course }}</option>
 
                                 {% for course in courses %}
-                                    {% if takenCourses.0.Course.course_id != course.course_id  %}
+                                    {% if takenCourses.0.course.course_id != course.course_id  %}
                                         <option value="{{ course.course_id }}">{{ course.name }}</option>
                                     {% endif %}
                                 {% endfor %}
@@ -149,9 +150,9 @@
                      <span class="custom-dropdown">
                         <select name="course2" id="c2" required>
                             <optgroup label="course2">
-                            <option value="{{ takenCourses.1.course_id }}"selected >{{ takenCourses.1.name }}</option>
+                            <option value="{{ takenCourses.1.course_id }}"selected >{{ takenCourses.1.course }}</option>
                                 {% for course in courses %}
-                                    {% if takenCourses.0.Course.course_id != course.course_id   %}
+                                    {% if takenCourses.1.course.course_id != course.course_id   %}
                                         <option value="{{ course.course_id }}">{{ course.name }}</option>
                                     {% endif %}
                                 {% endfor %}                      
@@ -165,9 +166,9 @@
                         <span class="custom-dropdown">
                             <select name="course3" id="c3" required>
                                 <optgroup label="course3">
-                                <option value="{{ takenCourses.2.course_id }}"selected >{{ takenCourses.2.name }}</option>
+                                <option value="{{ takenCourses.2.course_id }}"selected >{{ takenCourses.2.course }}</option>
                                 {% for course in courses %}
-                                    {% if  takenCourses.0.Course.course_id != course.course_id   %}
+                                    {% if  takenCourses.2.course.course_id != course.course_id   %}
                                         <option value="{{ course.course_id }}">{{ course.name }}</option>
                                     {% endif %}
                                 {% endfor %}
