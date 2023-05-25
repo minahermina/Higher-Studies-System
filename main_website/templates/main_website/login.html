@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <link rel="stylesheet" href="{% static 'css/Login_Student.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <script defer src="{% static 'js/footer.js'%}"></script>
     <script defer src="{% static 'js/eyeIcon.js' %}"></script>
@@ -30,9 +30,15 @@
                 <form method="POST">
                     {% csrf_token%}
                     <div class="txt_field">
-                        <input type="text" name = "username" required>
-                        <span></span>
-                        <label> Username </label>
+                        {% if login_type == 'admin'%}
+                            <input type="text" name = "username" required>
+                            <span></span>
+                            <label> Username </label>
+                            {% else %}
+                            <input type="text" name = "id" id='idField' required>
+                            <span></span>
+                            <label> ID </label>
+                        {% endif %}
                     </div>
                     <!-- Password -->
                     <div class="txt_field">
