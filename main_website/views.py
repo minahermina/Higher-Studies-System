@@ -171,15 +171,17 @@ def add_course(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         course_id = request.POST.get('Course ID')
-        department = request.POST.get('department')
         number_of_hours = request.POST.get('course Hours')
         lecture_day = request.POST.get('lDay')
         hall_number = request.POST.get('hallNumber')
+        department_id = request.POST.get('department')
+        department = Department.objects.get(id=department_id)
         course = Course.objects.create_user(name=name, course_id = course_id, department = department,
                                             number_of_hours = number_of_hours, lecture_day=lecture_day ,hall_number=hall_number)
     
 
     return render(request, 'main_website/add_course.html')
+
 
 @login_required(login_url='login_admin')
 @admin_required
