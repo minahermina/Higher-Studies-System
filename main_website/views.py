@@ -294,6 +294,7 @@ def add_student(request):
         university = request.POST.get('university')
         gender = request.POST.get('gender')
 
+
         if department_id is not None and course1_ID is not None and course2_ID is not None and course3_ID is not None:
             department_id = int(department_id)
             course1 = Course.objects.get(course_id=course1_ID)
@@ -311,7 +312,7 @@ def add_student(request):
             Grades.objects.create(student=student, course=course2)
             Grades.objects.create(student=student, course=course3)
 
-            return render(request, 'main_website/add_student.html', {})
+        return redirect('add_student')
 
     else:
         courses = Course.objects.all()
