@@ -1,17 +1,10 @@
-from django.contrib.auth import admin
 from django.shortcuts import render, redirect, HttpResponse
 from .models import Student, Grades, Course, Department, User
-from django.contrib.auth.decorators import user_passes_test
-from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import admin, messages
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
-from django.db.models import Q
-from datetime import datetime
-import time
 from django.http import JsonResponse
-from django.contrib.auth.decorators import user_passes_test
 
 
 def admin_required(view_func):
@@ -48,7 +41,7 @@ def home(request):
 def about(request):
     return render(request, 'main_website/about.html', {})
 
-
+@login_required(login_url='home')
 def profile(request):
     return render(request, 'main_website/profile.html', {})
 
@@ -66,10 +59,8 @@ def loginStudent(request):
         id = request.POST.get('id')
         password = request.POST.get('pass')
 
-        print(id + ' ' + password)
         student = Student.objects.get(stud_id=id)
 
-        print(student.username + ' ' + student.stud_id)
         user = authenticate(request, username=student.username, password=password)
         # print(student.user.check_password(password))
         print(user)
@@ -81,10 +72,11 @@ def loginStudent(request):
             return redirect('login_student')
 
     context = {}
-    return render(request, 'main_website/login_student.html', context)
+    return render(request, 'main_website/login.html', context)
 
 
 def loginAdmin(request):
+    login_type = 'admin'
     message = None
     if request.user.is_authenticated:
         return redirect('home')
@@ -114,13 +106,15 @@ def loginAdmin(request):
         # request.session.flush()
     # print(messages.warning(request, "Your account expires in three days."))
 
-    context = {}
-    return render(request, 'main_website/login_admin.html', context)
+    context = {'login_type':login_type}
+    return render(request, 'main_website/login.html', context)
 
 
-@login_required(login_url='login_admin')
 def logoutPage(request):
-    logout(request)
+    if not request.user.is_authenticated:
+        pass
+    else:
+        logout(request)
     return redirect('home')
 
 
