@@ -1,48 +1,116 @@
-let students =JSON.parse(localStorage.getItem('students')) || []
+function validate_form(){
+    const nameInput = document.getElementById("name");
+    const nameError = document.getElementById("name-error");
 
-let selectedS = JSON.parse(localStorage.getItem('editStudent'));
-function retrieveData(){
-    document.getElementById('name').value = selectedS.name;
-    document.getElementById('id').value = selectedS.id;
-    document.getElementById('department').value = selectedS.department;
-    document.getElementById('university').value = selectedS.university;
-    document.getElementById('email').value = selectedS.email;
-    document.getElementById('GPA').value = selectedS.gpa;
-    //document.querySelector('input[name="status"]:checked').value = selectedS.status;
-    if (selectedS.gender=="Female"){
-        document.getElementById('f').checked =true;
-    }else{
-        document.getElementById('m').checked =true;
+    if (nameInput.value.trim() === "" || !/^[a-zA-Z\s]+$/.test(nameInput.value.trim())) { // added space to regex
+        nameError.style.display = "block";
+        nameInput.focus();
+        window.scroll(0,0);
+        return false;
+    } else {
+        nameError.style.display = "none";
     }
-    if (selectedS.status=="active"){
-        document.getElementById('a').checked =true;
-    }else{
-        document.getElementById('ina').checked =true;
+
+
+    const emailInput = document.getElementById("email");
+    const emailError = document.getElementById("emailError");
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailInput.value.trim() || !emailRegex.test(emailInput.value.trim())) {
+        emailError.style.display = "inline";
+        emailInput.focus();
+        window.scroll(0,0);
+        return false;
     }
-}
-function modify(){
-    var indx=0;
-    for(var indx=0;indx<students.length;indx++){
-        if(students[indx].id === selectedS.id){
-            students[indx].name= document.getElementById('name').value;
-            students[indx].id= document.getElementById('id').value;
-            students[indx].department= document.getElementById('department').value;
-            students[indx].university= document.getElementById('university').value;
-            students[indx].email= document.getElementById('email').value;
-            students[indx].gpa= document.getElementById('GPA').value ;
-            students[indx].status= document.querySelector('input[name="status"]:checked').value;
-            students[indx].gender= document.querySelector('input[name="gender"]:checked').value;
-            localStorage.setItem('students',JSON.stringify(students));
-            localStorage.setItem('editStudent' , JSON.stringify(students[indx]));
-            console.log(document.querySelector('input[name="status"]:checked').value);
-            break;
-        }
+    else{
+        emailError.style.display = "none";
     }
-    
+
+
+    const idInput = document.getElementById("id");
+    const idError = document.getElementById("id-error");
+    if (!idInput.value || idInput.value.length !== 8 || isNaN(idInput.value)) {
+        idError.style.display = "block";
+        idInput.focus();
+        window.scroll(0,0);
+        return false;
+    } else {
+        idError.style.display = "none";
+    }
+
+
+
+
+    const passwordField = document.getElementById("password");
+    const passwordError = document.getElementById("passwordError");
+    if (passwordField.value === "" || passwordField.value.length < 8) {
+        passwordError.style.display = "block";
+        passwordField.focus();
+        window.scroll(0,0);
+        return false;
+    } else {
+        passwordError.style.display = "none";
+    }
+
+    const course1 = document.getElementById("c1").value;
+    const cr1=document.getElementById("c1Error");
+    if (course1 === "") {
+        cr1.style.display="block";
+        window.scroll(0,1000);
+        return false;
+    }
+    else{
+        cr1.style.display="none";
+    }
+
+
+    const course2 = document.getElementById("c2").value;
+    const cr2=document.getElementById("c2Error");
+    if (course2 === "") {
+        cr2.style.display="block";
+        window.scroll(0,1000);
+        return false;
+    }
+    else{
+        cr2.style.display="none";
+    }
+
+
+    const course3 = document.getElementById("c3").value;
+    const cr3 =document.getElementById("c3Error");
+    if (course3 === "") {
+        cr3.style.display="block";
+        window.scroll(0,1000);
+        return false;
+    }
+    else{
+        cr3.style.display="none";
+    }
+
+
+    const c1 = document.getElementById("c1").value;
+    const c2 = document.getElementById("c2").value;
+    const c3 = document.getElementById("c3").value;
+
+    if (c1 === c2 || c1 === c3 || c2 === c3) {
+        alert("Please select different courses for each option.");
+        return false;
+    }
+    return true;
 }
 
-let myButton = document.getElementById('edit');
-myButton.addEventListener("click", function(e){
-    modify();
+function isValid(){
+    const form = document.getElementById('form');
+    if(validate_form()){
+        alert("Your data has been submitted successfully.");
+        return true;
+    }
+    return false;
+}
+
+const reset = document.getElementById('reset');
+
+reset.addEventListener('click', function() {
+    document.getElementById("name").focus();
+    window.scroll({top:1});
 });
 

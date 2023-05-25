@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
-    <script defer src="../js/footer.js"></script>
+    <script defer src="{% static 'js/footer.js' %}"></script>
     <title>Profile</title>
 </head>
 <body>
@@ -19,19 +19,63 @@
     <!-- Main Content  -->
     <div id = "main-content">
         <div id="profile-container">
-            <h1>Profile</h1>
-            <div id="info-box">
-                <p>ِName:</p> <br>
-                <span>Username:</span><br>
-                <span>E-mail:</span><br>
-                <span>Phone Number:</span><br>
-                <span>GPA:</span><br>
-                <span>Date of Birth:</span><br>
-                <span>University:</span><br>
-                <span>Gender:</span><br>
-                <span>Department:</span><br>
-                <span><a href="registered_courses.html">Registerd Courses</a></span><br>
+            {%  if request.user.role == "STUDENT"%}
+                    <h1>Student Profile</h1>
+                {% else %}
+                    <h1>Admin Profile</h1>
 
+            {% endif %}
+            <div class="info-box">
+                <div class="card">
+                    <div class="card-body">
+
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td>Name</td>
+                                <td>:</td>
+                                <td>{{ request.user }}</td>
+                            </tr>
+                            <tr>
+                                <td>Gender</td>
+                                <td>:</td>
+                                <td>{{ request.user.gender }}</td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td>:</td>
+                                <td>{{ request.user.email }}</td>
+                            </tr>
+                            <tr>
+                                <td>Date of Birth</td>
+                                <td>:</td>
+                                <td>{{ request.user.date_of_birth|date:'d/m/Y' }}</td>
+                            </tr>
+                            <tr>
+                                <td>Date Joined</td>
+                                <td>:</td>
+                                <td>{{ request.user.date_joined|date:'d/m/Y' }}</td>
+                            </tr>
+                            {%  if request.user.role == "STUDENT"%}
+                                <tr>
+                                    <td>ID</td>
+                                    <td>:</td>
+                                    <td>{{ request.user.student.stud_id}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Department</td>
+                                    <td>:</td>
+                                    <td>{{ request.user.student.department}}</td>
+                                </tr>
+                                <tr>
+                                    <td>University</td>
+                                    <td>:</td>
+                                    <td>{{ request.user.student.university}}</td>
+                                </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
             </div>
         </div>
     </div>

@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 {% load static %}
 
-<html>
+<html lang="en">
     <head>
+        <title>Registered Courses</title>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href={% static 'css/main.css'%}>
         <link rel="stylesheet" href={% static 'css/registeredCourses.css'%}>
         <script defer src={% static 'js/header.js'%}></script>
-        <script defer src={% static 'js/footer.js.js'%}></script>
+        <script defer src={% static 'js/footer.js'%}></script>
         <script defer src={% static 'js/registerCourses.js'%}></script>
 {#        <script defer src="../js/localStorage_data.js"></script>#}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -18,7 +19,9 @@
     </head>
     <body>
         <!-- header -->
-        <header id="website-header"></header>
+        <header id="website-header">
+            {% include 'header.html'%}
+        </header>
         <div id = "main-content">
             <div id = "personal-data">
                 <!-- <div id = "title"> -->
@@ -46,7 +49,11 @@
                                         <td>{{grade.final_grade}}</td>
                                         <td>
                                             {% with x=grade.final_grade y=grade.course_grade %}
-                                                {{x|add:y}}
+                                                {% if x is none and y is none %}
+                                                    None
+                                                {% else %}
+                                                    {{ x|add:y }}
+                                                {% endif %}
                                             {% endwith %}
                                         </td>
                                         <td><button class="expand-button" ><i class="fa fa-plus"></i></button></td>

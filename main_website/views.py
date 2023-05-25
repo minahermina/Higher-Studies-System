@@ -1,17 +1,11 @@
-from django.contrib.auth import admin
-from django.shortcuts import render, redirect
-from .models import Student, Grades, Course, User
-from django.contrib.auth.decorators import user_passes_test
-from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import render, redirect, HttpResponse
+from .models import Student, Grades, Course, Department, User
 from django.contrib import admin, messages
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
-from django.db.models import Q
-
-import time
-
-from django.contrib.auth.decorators import user_passes_test
+from django.http import JsonResponse
+from datetime import timedelta
 
 
 def admin_required(view_func):
@@ -41,20 +35,16 @@ def student_required(view_func):
 
 
 def home(request):
-    return render(request, 'main_website/home.html', {})
+    return render(request, 'main_website/home.html')
 
 
 def about(request):
-    return render(request, 'main_website/about.html', {})
+    return render(request, 'main_website/about.html')
 
 
+@login_required(login_url='home')
 def profile(request):
-    return render(request, 'main_website/profile.html', {})
-
-
-# def logoutPage(request):
-#
-#     return redirect('home')
+    return render(request, 'main_website/profile.html')
 
 
 def loginStudent(request):
@@ -62,29 +52,37 @@ def loginStudent(request):
         return redirect('home')
 
     if request.method == 'POST':
+        # messages.clear(request)
         id = request.POST.get('id')
         password = request.POST.get('pass')
+        remember = request.POST.get('remember')
 
-        print(id + ' ' + password)
-        student = Student.objects.get(stud_id=id)
+        try:
+            student = Student.objects.get(stud_id=id)
+        except:
+            messages.error(request, 'Credentials are not valid')
+            return redirect('login_student')
 
-        print(student.username + ' ' + student.stud_id)
         user = authenticate(request, username=student.username, password=password)
-        # print(student.user.check_password(password))
-        print(user)
+
         if user is not None:
             login(request, user)
+
+            if remember == 'on':
+                request.session.set_expiry(timedelta(days=365).total_seconds())
+            else:
+                request.session.set_expiry(0)
+
             return redirect('home')
         else:
             messages.error(request, 'Credentials are not valid')
             return redirect('login_student')
 
-    context = {}
-    return render(request, 'main_website/login_student.html', context)
+    return render(request, 'main_website/login.html')
 
 
 def loginAdmin(request):
-    message = None
+    login_type = 'admin'
     if request.user.is_authenticated:
         return redirect('home')
 
@@ -99,37 +97,37 @@ def loginAdmin(request):
             login(request, admin)
             print(remember)
             # request.session.set_expiry(0)
-            # request.session.flush()
-            if remember is not None:
-                request.session.set_expiry(None)
+
+            if remember == 'on':
+                request.session.set_expiry(timedelta(days=365).total_seconds())
             else:
                 request.session.set_expiry(0)
+
             return redirect('home')
         else:
             # if username is not None and password is not None:
             messages.error(request, 'Credentials are not valid')
             return redirect('login_admin')
 
-        # request.session.flush()
-    # print(messages.warning(request, "Your account expires in three days."))
-
-    context = {}
-    return render(request, 'main_website/login_admin.html', context)
+    context = {'login_type': login_type}
+    return render(request, 'main_website/login.html', context)
 
 
-@login_required(login_url='login_admin')
 def logoutPage(request):
-    logout(request)
+    if not request.user.is_authenticated:
+        pass
+    else:
+        logout(request)
     return redirect('home')
 
 
 @login_required(login_url='login_student')
 @student_required
 def registered_courses(request):
-    grades = Grades.objects.filter(student_id='20210031')
+    grades = Grades.objects.filter(student_id=request.user.student.stud_id)
 
     context = {
-        'grades': Grades.objects.filter
+        'grades': grades
     }
     return render(request, 'main_website/registered_courses.html', context)
 
@@ -137,6 +135,15 @@ def registered_courses(request):
 @login_required(login_url='login_admin')
 @admin_required
 def search_students(request):
+    if request.method == 'POST':
+        form_type = request.POST.get('form_type')
+        if form_type == 'delete-form':
+            delete_id = request.POST.get('delete')
+            try:
+                student = Student.objects.get(stud_id=delete_id)
+                student.delete()
+            except Student.DoesNotExist:
+                pass
     students = Student.objects.all()
     name = ''
     if request.method == 'POST':
@@ -160,20 +167,99 @@ def search_students(request):
 @login_required(login_url='login_admin')
 @admin_required
 def add_course(request):
-    return render(request, 'main_website/add_course.html', {})
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        print(name)
+        course_id = request.POST.get('Course ID')
+        number_of_hours = request.POST.get('course Hours')
+        lecture_day = request.POST.get('lDay')
+        hall_number = request.POST.get('hallNumber')
+        department_id = request.POST.get('department')
+        department = Department.objects.get(id=department_id)
+        course = Course.objects.create(name=name, course_id=course_id, department=department,
+                                       number_of_hours=number_of_hours, lecture_day=lecture_day,
+                                       hall_number=hall_number)
+    departments = Department.objects.all()
+    context = {
+        'departments': departments
+    }
+
+    return render(request, 'main_website/add_course.html', context)
 
 
 @login_required(login_url='login_admin')
 @admin_required
 def edit_student(request):
-    id = request.GET.get('student_id')
+    id = request.POST.get('edit')
+    student = Student.objects.get(stud_id=id)
+    takenCourses = Grades.objects.filter(student_id=id, final_grade__isnull=True)
+    # print(takenCourses.count())
+    allCourses = Course.objects.filter(department=student.department)
+    # courses = allCourses.object.filter()
 
-    student = Student.objects.filter(stud_id=id)
+    # student id can be changed
+    # if form type = update 1 check taken course 1 ,2 ,3 changed or not if changed then update in grades
+    # all courses must be courses in the student department an courses not in grades table with the same
+    # student id
+
+    # Grades.objects.filter(student_id=id, course_id=cid).update(student=student, course=course1)
 
     if request.method == 'POST':
-        print(request.POST)
+        # print("alarm")
+        form_type = request.POST.get('form_type')
+        # print(form_type)
+
+        if form_type == 'update':
+
+            sID = request.POST.get('student id')
+            # sID hasnot changed
+            name = request.POST.get('student_name')
+            username = request.POST.get('username')
+            email = request.POST.get('email')
+            # print(name)
+            password = request.POST.get('password')
+            date_of_birth = request.POST.get('dateOfBirth')
+            status = request.POST.get('status')
+            # print(status + "-------------------")
+            university = request.POST.get('university')
+            gender = request.POST.get('gender')
+            course1_ID = request.POST.get('course1')
+            course2_ID = request.POST.get('course2')
+            course3_ID = request.POST.get('course3')
+            if id == sID:
+                # student = Student.objects.get(stud_id=sID).update(
+                #     name=name,
+                #     username=username,
+                #     email=email,
+                #     password=password,
+                #     date_of_birth=date_of_birth,
+                #     is_active=status,
+                #     university=university,
+                #     gender=gender
+                # )
+                student = Student.objects.get(stud_id=sID)
+                print(student)
+
+                student.name = name
+                student.username = username
+                student.email = email
+                student.password = password
+                student.date_of_birth = date_of_birth
+                student.is_active = status
+                student.university = university
+                student.gender = gender
+
+                print(student)
+                student.save()
+                return redirect('search_students')
+            # else:
+            # just delete student
+
+            # if c1==
     context = {
-        'student': student
+        'student': student,
+        'takenCourses': takenCourses,
+        'courses': allCourses,
     }
     return render(request, 'main_website/edit_student.html', context)
 
@@ -181,19 +267,20 @@ def edit_student(request):
 def error_404(request, exception):
     return render(request, 'main_website/404.html', status=404)
 
+
 @login_required(login_url='login_student')
 @student_required
 def register_in_courses(request):
     # when clicking on the save button
     if request.method == 'POST':
-        student_id = '20210031'
+        student_id = request.POST.get('student_id')
         course1_id = request.POST.get('course1')
         course2_id = request.POST.get('course2')
         course3_id = request.POST.get('course3')
-
         # retrieve the student
 
-        student = Student.objects.get(stud_id=student_id)
+        student = Student.objects.get(user=request.user)
+        Grades.objects.filter(student=student).delete()
 
         # retrieve the selected courses
         course1 = Course.objects.get(course_id=course1_id)
@@ -204,11 +291,11 @@ def register_in_courses(request):
         Grades.objects.create(student=student, course=course2)
         Grades.objects.create(student=student, course=course3)
 
-        return render(request, 'main_website/home.html')
+        return redirect('home')
 
     else:
-        student_id = '20210031'
-        student = Student.objects.get(stud_id=student_id)
+        student_id = request.POST.get('student_id')
+        student = Student.objects.get(user=request.user)
         department_courses = Course.objects.filter(department=student.department)
 
         context = {
@@ -219,6 +306,54 @@ def register_in_courses(request):
 
 
 @login_required(login_url='login_admin')
-@admin_required
+@staff_member_required
 def add_student(request):
-    return render(request, 'main_website/add_student.html')
+    if request.method == 'POST':
+        name = request.POST.get('student name')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        stud_id = request.POST.get('student id')
+        password = request.POST.get('password')
+        date_of_birth = request.POST.get('dateOfBirth')
+        department_id = request.POST.get('department')
+        status = request.POST.get('status')
+        course1_ID = request.POST.get('course1')
+        course2_ID = request.POST.get('course2')
+        course3_ID = request.POST.get('course3')
+        university = request.POST.get('university')
+        gender = request.POST.get('gender')
+
+        if department_id is not None and course1_ID is not None and course2_ID is not None and course3_ID is not None:
+            department_id = int(department_id)
+            course1 = Course.objects.get(course_id=course1_ID)
+            course2 = Course.objects.get(course_id=course2_ID)
+            course3 = Course.objects.get(course_id=course3_ID)
+
+            department = Department.objects.get(id=department_id)
+
+            student = Student.objects.create_user(name=name, username=username, email=email, stud_id=stud_id,
+                                                  password=password,
+                                                  date_of_birth=date_of_birth, department=department,
+                                                  is_active=status, university=university, gender=gender)
+
+            Grades.objects.create(student=student, course=course1)
+            Grades.objects.create(student=student, course=course2)
+            Grades.objects.create(student=student, course=course3)
+
+        return render(request, 'main_website/home.html')
+
+    else:
+        courses = Course.objects.all()
+        departments = Department.objects.all()
+        context = {
+            'courses': courses,
+            'departments': departments
+        }
+        return render(request, 'main_website/add_student.html', context)
+
+
+def get_courses_by_department(request):
+    department_id = request.GET.get('department')
+    courses = Course.objects.filter(department_id=department_id).values('course_id', 'name')
+
+    return JsonResponse(list(courses), safe=False)
