@@ -110,11 +110,7 @@ form .txt_field {
     transition: 0.2s;
     color: #9b9b9b;
  }
-  /* .form__field:focus {
-    padding-bottom: 6px;
-    border-width: 3px;
-    border-image-slice: 1;
- } */
+
   .form__field:focus ~ .form__label {
     position: absolute;
     top: 0;
@@ -123,36 +119,6 @@ form .txt_field {
     color: #3e5c6e;
  }
 
-/* .txt_field input:focus~label{
-  top: -5px;
-  color: #3e5c6e;
-} */
-
-
-
-
-  
-  /* form input[type="text"],
-  form input[type="email"],
-  form input[type="password"],
-  form input[type="number"]{
-    padding: 2px;
-    width:100%;
-    height: 25px;
-    border: 1px solid #49697d ;
-    border-radius: 3px;
-    font-size: 1rem;
-    border:none;
-  } */
-
-  /* form select {
-    padding: 2px;
-    width:87%;
-    height: 30px;
-    border: 1px solid #49697d ;
-    border-radius: 3px;
-    font-size: 1rem;
-  } */
   
   form input[type="date"] {
     padding: 2px;
@@ -196,9 +162,6 @@ form .txt_field {
     opacity: 0.8;
   }
 
-  /* form button[type="reset"]{
-    background-color:#587c94 ;
-  } */
 
   label[for="m"], label[for="f"],label[for="a"] ,label[for="ina"]{
     margin-top: -24px;

@@ -1,9 +1,6 @@
 from django.db import models, DatabaseError
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import Group, Permission, User, BaseUserManager
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-
 
 class User(AbstractUser):
     class Role(models.TextChoices):
@@ -25,9 +22,6 @@ class User(AbstractUser):
         null=True,
         )
 
-    # email
-
-    # USERNAME_FIELD = 'username'
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -59,8 +53,7 @@ class Student(User):
     stud_id = models.CharField(max_length=8, unique=True, primary_key=True)
     base_role = User.Role.STUDENT
     role = User.Role.STUDENT
-    # university = models.
-    # is_active (bool)
+
     department = models.ForeignKey('Department', on_delete=models.PROTECT)
     university = models.CharField(max_length=50, choices=[
         ('Ain Shams University', 'Ain Shams University'),
@@ -70,9 +63,6 @@ class Student(User):
         ('German University in Cairo', 'German University in Cairo')],
         default ='Cairo University'
       )
-
-
-    # is_staff = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Student'

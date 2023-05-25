@@ -1,10 +1,9 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect
 from .models import Student, Grades, Course, Department, User
-from django.contrib import admin, messages
-from django.contrib.auth.decorators import user_passes_test, login_required
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
-from django.http import JsonResponse
 from datetime import timedelta
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -23,11 +22,11 @@ def admin_required(view_func):
 
 
 def student_required(view_func):
-    def check_admin(user):
+    def check_student(user):
         return user.is_authenticated and user.role == User.Role.STUDENT
 
     def decorator(request, *args, **kwargs):
-        if check_admin(request.user):
+        if check_student(request.user):
             return view_func(request, *args, **kwargs)
         else:
             return redirect('home')  # Redirect to the home page
@@ -97,7 +96,6 @@ def loginAdmin(request):
         if admin is not None:
             login(request, admin)
             print(remember)
-            # request.session.set_expiry(0)
 
             if remember == 'on':
                 request.session.set_expiry(timedelta(days=365).total_seconds())
@@ -171,7 +169,8 @@ def add_course(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         print(name)
-        course_id = request.POST.get('Course ID')
+        course_id = request.POST.get('ID')
+        print(course_id)
         number_of_hours = request.POST.get('course Hours')
         lecture_day = request.POST.get('lDay')
         hall_number = request.POST.get('hallNumber')
@@ -180,6 +179,7 @@ def add_course(request):
         course = Course.objects.create(name=name, course_id=course_id, department=department,
                                        number_of_hours=number_of_hours, lecture_day=lecture_day,
                                        hall_number=hall_number)
+        return redirect('home')
     departments = Department.objects.all()
     context = {
         'departments': departments
@@ -337,15 +337,12 @@ def add_student(request):
         date_of_birth = request.POST.get('dateOfBirth')
         department_id = request.POST.get('department')
         status = request.POST.get('status')
-        # course1_ID = request.POST.get('course1')
-        # course2_ID = request.POST.get('course2')
-        # course3_ID = request.POST.get('course3')
+
         university = request.POST.get('university')
         gender = request.POST.get('gender')
 
         departments = Department.objects.all()
         context = {
-            # 'courses': courses,
             'departments': departments
         }
         # Check if username and email already exist
@@ -371,11 +368,6 @@ def add_student(request):
         except ObjectDoesNotExist:
             pass
 
-        # if department_id is not None:
-        #     department_id = int(department_id)
-            # course1 = Course.objects.get(course_id=course1_ID)
-            # course2 = Course.objects.get(course_id=course2_ID)
-            # course3 = Course.objects.get(course_id=course3_ID)
 
             department = Department.objects.get(id=department_id)
 
@@ -384,24 +376,12 @@ def add_student(request):
                                         date_of_birth=date_of_birth,  department=department,
                                         is_active=status, university=university, gender=gender)
 
-            # Grades.objects.create(student=student, course=course1)
-            # Grades.objects.create(student=student, course=course2)
-            # Grades.objects.create(student=student, course=course3)
-
         return render(request, 'main_website/add_student.html', context)
 
     else:
-        # courses = Course.objects.all()
         departments = Department.objects.all()
         context = {
-            # 'courses': courses,
             'departments': departments
         }
         return render(request, 'main_website/add_student.html', context)
 
-
-# def get_courses_by_department(request):
-#     department_id = request.GET.get('department')
-#     courses = Course.objects.filter(department_id=department_id).values('course_id', 'name')
-#
-#     return JsonResponse(list(courses), safe=False)

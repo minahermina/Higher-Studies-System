@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/logo.png'%}" />
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="{% static 'css/add_student.css' %}">
@@ -60,7 +61,7 @@
                 <div class="txt_field">
                     <span></span>
                     <input type="password" id="password" name="password" class="form__field" placeholder="password" >
-                    <ion-icon name="eye-off-outline" ></ion-icon>
+                    <ion-icon name="eye-off" ></ion-icon>
                     <label for="password" class="form__label">Password:</label>
                 </div>
                 <div id="passwordError" style="display:none;color: red;">Password can't be empty and must be more than 8 chars.</div>
@@ -118,48 +119,7 @@
                     <input id="ina" type="radio" name="status" value="0">
                     <label for="ina">Inactive</label>
                 </div>
-{#                <br>#}
-{#                <div>#}
-{#                    <label for="c1">Course 1:</label>#}
-{#                    <span class="custom-dropdown">#}
-{#                        <select name="course1" id="c1" required>#}
-{#                            <optgroup label="course1">#}
-{#                                <option value="" disabled selected >Select the first course</option>#}
-{#                                 {% for course in courses %}#}
-{#                                     <option value="{{ course.course_id }}">{{ course.name }}</option>#}
-{#                                 {% endfor %}#}
-{#                            </optgroup>#}
-{#                        </select>#}
-{#                    </span>#}
-{#                    <div id="c1Error" style="display:none;color: red;">Please enter course1.</div>#}
-{#                </div>#}
-{#                <div>#}
-{#                    <label for="c2">Course 2:</label>#}
-{#                    <span class="custom-dropdown">#}
-{#                        <select name="course2" id="c2" required>#}
-{#                            <optgroup label="course2">#}
-{#                                <option value="" disabled selected >Select the second course</option>#}
-{#                                    {% for course in courses %}#}
-{#                                        <option value="{{ course.course_id }}">{{ course.name }}</option>#}
-{#                                    {% endfor %}#}
-{#                            </optgroup>#}
-{#                        </select>#}
-{#                    </span>#}
-{#                    <div id="c2Error" style="display:none;color: red;">Please enter course2.</div>#}
-{#                </div>#}
-{#                <div>#}
-{#                    <label for="c3">Course 3:</label>#}
-{#                    <span class="custom-dropdown">#}
-{#                        <select name="course3" id="c3" required>#}
-{#                            <optgroup label="course3">#}
-{#                                <option value="" disabled selected >Select the third course</option>#}
-{#                                    {% for course in courses %}#}
-{#                                        <option value="{{ course.course_id }}">{{ course.name }}</option>#}
-{#                                    {% endfor %}#}
-{#                        </select>#}
-{#                    </span>#}
-{#                    <div id="c3Error" style="display:none;color: red;">Please enter course3.</div>#}
-{#                </div>#}
+{#
                 <br>
                 {% for message in messages %}
                     <div class="alert alert-success" style="color: red;">

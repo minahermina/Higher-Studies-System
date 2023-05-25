@@ -13,9 +13,10 @@
         </li>
         {% endif %}
 
-        <li id = "menu">
-            <a href="" class = "left-right-border-effect" >Menu</a>
-            <ul class = "dropdown-content">
+        {% if request.user.is_authenticated %}
+            <li id = "menu">
+                <a href="" class = "left-right-border-effect" >Menu</a>
+                <ul class = "dropdown-content">
                     {#  Student chioces #}
                     {% if request.user.role == "STUDENT" %}
                         <li class = "student-only"><a href="{% url 'register_in_courses' %}">Register in a Course</a></li>
@@ -24,10 +25,11 @@
                         {#  Admin chioces #}
                         <li class = "admin-only"><a href="{% url 'add_student'%}">Add a Student</a></li>
                         <li class = "admin-only"><a href="{% url 'search_students' %}">Search in Students</a></li>
-                          <li class = "admin-only"><a href="{% url 'add_course' %}">Add Course</a></li>
+                        <li class = "admin-only"><a href="{% url 'add_course' %}">Add Course</a></li>
                     {% endif %}
-            </ul>
-        </li>
+                </ul>
+            </li>
+        {% endif %}
         <li>
             <a href="{% url 'about' %}" class = "left-right-border-effect">About</a>
         </li>
