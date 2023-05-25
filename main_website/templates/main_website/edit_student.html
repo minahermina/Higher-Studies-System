@@ -135,6 +135,47 @@
                     {% endif %}
                 </div>
                 <br>
+                <div>
+                    <label for="c1">Course 1:</label>
+                        <span class="custom-dropdown">
+                            <select name="course1" id="c1" required>
+                                <optgroup label="course1">
+                                <option value="{{ takenCourses.0.course_id }}"selected >{{ takenCourses.0.name }}</option>
+                                {% for course in courses %}
+                                <option value="{{ course.course_id }}">{{ course.name }}</option>
+                                {% endfor %}
+                                </optgroup>
+                            </select>
+                        </span>
+                    <div id="c1Error" style="display:none;color: red;">Please enter course1.</div>
+                </div>
+                 <div>
+                 <label for="c2">Course 2:</label>
+                     <span class="custom-dropdown">
+                        <select name="course2" id="c2" required>
+                            <optgroup label="course2">
+                            <option value="{{ takenCourses.1.course_id }}"selected >{{ takenCourses.1.name }}</option>
+                                {% for course in courses %}
+                                <option value="{{ course.course_id }}">{{ course.name }}</option>                       {% endfor %}
+                            </optgroup>
+                        </select>
+                    </span>
+                 <div id="c2Error" style="display:none;color: red;">Please enter course2.</div>
+                </div>
+                <div>
+                    <label for="c3">Course 3:</label>
+                        <span class="custom-dropdown">
+                            <select name="course3" id="c3" required>
+                                <optgroup label="course3">
+                                <option value="{{ takenCourses.2.course_id }}"selected >{{ takenCourses.2.name }}</option>
+                                {% for course in allcourses %}
+                                <option value="{{ course.course_id }}">{{ course.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                        <div id="c3Error" style="display:none;color: red;">Please enter course3.</div>
+                </div>
+
                 <br>
                 <div>
                     <button type="submit" class="btn" id="submit"> <span> Edit</span></button>
