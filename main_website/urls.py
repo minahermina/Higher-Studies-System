@@ -30,5 +30,5 @@ urlpatterns = [
     path('logout/', views.logoutPage, name='logout'),
     path('register_in_courses/', views.register_in_courses, name='register_in_courses'),
     path('add_student/', views.add_student, name="add_student"),
-    path('api/courses/', views.get_courses_by_department, name='get_courses_by_department'),
+    # path('api/courses/', views.get_courses_by_department, name='get_courses_by_department'),
 ]

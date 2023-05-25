@@ -6,6 +6,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from datetime import timedelta
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def admin_required(view_func):
@@ -294,44 +295,71 @@ def add_student(request):
         date_of_birth = request.POST.get('dateOfBirth')
         department_id = request.POST.get('department')
         status = request.POST.get('status')
-        course1_ID = request.POST.get('course1')
-        course2_ID = request.POST.get('course2')
-        course3_ID = request.POST.get('course3')
+        # course1_ID = request.POST.get('course1')
+        # course2_ID = request.POST.get('course2')
+        # course3_ID = request.POST.get('course3')
         university = request.POST.get('university')
         gender = request.POST.get('gender')
 
+        departments = Department.objects.all()
+        context = {
+            # 'courses': courses,
+            'departments': departments
+        }
+        # Check if username and email already exist
+        try:
+            Student.objects.get(username=username)
+            messages.error(request, 'Username already exists')
+            return render(request, 'main_website/add_student.html', context)
+        except ObjectDoesNotExist:
+            pass
 
-        if department_id is not None and course1_ID is not None and course2_ID is not None and course3_ID is not None:
-            department_id = int(department_id)
-            course1 = Course.objects.get(course_id=course1_ID)
-            course2 = Course.objects.get(course_id=course2_ID)
-            course3 = Course.objects.get(course_id=course3_ID)
+        try:
+            Student.objects.get(email=email)
+            messages.error(request, 'Email already exists')
+            return render(request, 'main_website/add_student.html', context)
+        except ObjectDoesNotExist:
+            pass
+
+        # Check if student ID already exists
+        try:
+            Student.objects.get(stud_id=stud_id)
+            messages.error(request, 'Student ID already exists')
+            return render(request, 'main_website/add_student.html', context)
+        except ObjectDoesNotExist:
+            pass
+
+        # if department_id is not None:
+        #     department_id = int(department_id)
+            # course1 = Course.objects.get(course_id=course1_ID)
+            # course2 = Course.objects.get(course_id=course2_ID)
+            # course3 = Course.objects.get(course_id=course3_ID)
 
             department = Department.objects.get(id=department_id)
 
-            student = Student.objects.create_user(name=name, username=username, email=email, stud_id=stud_id,
-                                                  password=password,
-                                                  date_of_birth=date_of_birth,  department=department,
-                                                  is_active=status, university=university, gender=gender)
+            Student.objects.create_user(name=name, username=username, email=email, stud_id=stud_id,
+                                        password=password,
+                                        date_of_birth=date_of_birth,  department=department,
+                                        is_active=status, university=university, gender=gender)
 
-            Grades.objects.create(student=student, course=course1)
-            Grades.objects.create(student=student, course=course2)
-            Grades.objects.create(student=student, course=course3)
+            # Grades.objects.create(student=student, course=course1)
+            # Grades.objects.create(student=student, course=course2)
+            # Grades.objects.create(student=student, course=course3)
 
-        return render(request, 'main_website/home.html')
+        return render(request, 'main_website/add_student.html', context)
 
     else:
-        courses = Course.objects.all()
+        # courses = Course.objects.all()
         departments = Department.objects.all()
         context = {
-            'courses': courses,
+            # 'courses': courses,
             'departments': departments
         }
         return render(request, 'main_website/add_student.html', context)
 
 
-def get_courses_by_department(request):
-    department_id = request.GET.get('department')
-    courses = Course.objects.filter(department_id=department_id).values('course_id', 'name')
-
-    return JsonResponse(list(courses), safe=False)
+# def get_courses_by_department(request):
+#     department_id = request.GET.get('department')
+#     courses = Course.objects.filter(department_id=department_id).values('course_id', 'name')
+#
+#     return JsonResponse(list(courses), safe=False)
