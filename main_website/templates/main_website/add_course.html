@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,16 +11,16 @@
     <link rel="stylesheet" href="{% static 'css/add_student.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <script defer src="{% static 'js/footer.js' %}"></script>
-    <script defer src="{% static 'js/add_course.js' %}"></script>
     <script defer src="{% static 'js/eyeIcon.js' %}"></script>
+    <meta name="description" content="Add Student Page." />
     <title>Add Course</title>
 
 </head>
 <body>
-    <!-- header -->
-    <header id="website-header"></header>
-       <div id="main-content">
-            <div class="page-body">
+ <header id="website-header">{% include 'header.html' %}</header>
+
+    <div id = "main-content">
+        <section class="page-body">
             <div class="title">
                 <h1><b>Add Course</b> </h1>
             </div>
@@ -45,24 +46,23 @@
                 <label for="course Hours" class="form__label">course Hours:</label>
             </div>
             <br>
-            
-                <br>
-                <div>
-                    <label for="department">Department:</label>
-                    <span class="custom-dropdown">
-                        <select name="department" id="department" required>
-                            <optgroup label="department">
-                                <option value="" disabled selected >Select your department</option>
-                                    {% for departement in departments %}
-                                        <option value="{{ departement.id }}">{{ departement.name }}</option>
-                                    {% endfor %}
-                            </optgroup>
-                        </select>
-                    </span>
-                    <div id="depError" style="display:none;color: red;">Please enter the department.</div>
-                </div>
-                <br>
+            <div>
+                <label for="department">Department:</label>
+                <span class="custom-dropdown">
+                    <select name="department" id="department" required>
+                        <optgroup label="department">
+                            <option value="" disabled selected >Select your department</option>
+                                <option value="1">CS</option>
+                                {% for departement in departments %}
+                                    <option value="{{ departement.id }}">{{ departement.name }}</option>
+                                {% endfor %}
+                        </optgroup>
+                    </select>
+                </span>
+                <div id="depError" style="display:none;color: red;">Please enter the department.</div>
+            </div>
             <br>
+
             <div>
             <label for="lecture Day">lecture Day:</label>
             <span class="custom-dropdown">
@@ -89,10 +89,11 @@
             <br>
             <div>
                 <button type="reset" class="btn"id="reset"> <span> Reset</span> </button>
-                <button type="add" class="btn" id="add"> <span>Submit</span></button>
+                <button type="submit" class="btn" id="add"> <span>Submit</span></button>
             </div>
+
         </form>
-        </div>
+        </section>
     </div>
     
     
