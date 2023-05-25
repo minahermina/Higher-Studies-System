@@ -24,11 +24,11 @@
             <div class="title">
                 <h1><b>Add Course</b> </h1>
             </div>
-            <form id ="form" action="" method="post">
+            <form id ="form" action="" method="POST">
                 {% csrf_token %}
             <div class="txt_field">
                 <span></span>
-                <input type="text" id="courseName" class="form__field" name="Course name" value="" placeholder="Course name" autofocus>
+                <input type="text" id="courseName" class="form__field" name="name" value="" placeholder="Course name" autofocus>
                 <label class="form__label" for="Course name">Course name:</label>
             </div>
             <div id="cNameError" style="display:none;color:red;">Invalid Name:The name must start with letters </div>

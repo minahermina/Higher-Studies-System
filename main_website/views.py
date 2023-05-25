@@ -172,6 +172,7 @@ def search_students(request):
 def add_course(request):
     if request.method == 'POST':
         name = request.POST.get('name')
+        print(name)
         course_id = request.POST.get('Course ID')
         number_of_hours = request.POST.get('course Hours')
         lecture_day = request.POST.get('lDay')
@@ -185,7 +186,7 @@ def add_course(request):
         'departments': departments
     }
 
-    return render(request, 'main_website/add_course.html')
+    return render(request, 'main_website/add_course.html', context)
 
 
 @login_required(login_url='login_admin')
@@ -271,7 +272,7 @@ def register_in_courses(request):
         Grades.objects.create(student=student, course=course2)
         Grades.objects.create(student=student, course=course3)
 
-        return render(request, 'main_website/home.html')
+        return redirect('home')
 
     else:
         student_id = request.POST.get('student_id')
