@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href={% static 'css/main.css'%}>
-    <link rel="stylesheet" href={% static 'css/Add Course.css'%}>
-    <script defer src={% static 'js/header.js'%}></script>
-    <script defer src={% static 'js/footer.js.js'%}></script>
-    <script defer src={% static 'js/add_course.js'%}></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="{% static 'css/add_student.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script defer src="{% static 'js/footer.js' %}"></script>
+    <script defer src="{% static 'js/add_course.js' %}"></script>
+    <script defer src="{% static 'js/eyeIcon.js' %}"></script>
     <title>Add Course</title>
 
 </head>
@@ -44,23 +46,25 @@
             </div>
             <br>
             
-            <div>
-                <label for="department">Department:</label>
-                <span class="custom-dropdown">
-                    <select name="department" id="department" required>
-                        <optgroup label="department">
-                            <option value="" disabled selected >Select your department</option>
-                                {% for departement in departments %}
-                                    <option value="{{ departement.id }}">{{ departement.name }}</option>
-                                {% endfor %}
-                        </optgroup>
-                    </select>
-                </span>
-                <div id="depError" style="display:none;color: red;">Please enter the department.</div>
-            </div>
+                <br>
+                <div>
+                    <label for="department">Department:</label>
+                    <span class="custom-dropdown">
+                        <select name="department" id="department" required>
+                            <optgroup label="department">
+                                <option value="" disabled selected >Select your department</option>
+                                    {% for departement in departments %}
+                                        <option value="{{ departement.id }}">{{ departement.name }}</option>
+                                    {% endfor %}
+                            </optgroup>
+                        </select>
+                    </span>
+                    <div id="depError" style="display:none;color: red;">Please enter the department.</div>
+                </div>
+                <br>
             <br>
             <div>
-            <label for="lectureDay">University:</label>
+            <label for="lecture Day">lecture Day:</label>
             <span class="custom-dropdown">
                 <select name="lDay" id="lecDay" required>
                     <optgroup label="lecture Day">
