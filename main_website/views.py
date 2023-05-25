@@ -173,16 +173,57 @@ def add_course(request):
 @login_required(login_url='login_admin')
 @admin_required
 def edit_student(request):
-    id = request.GET.get('student_id')
+    id = request.POST.get('edit')
+    student = Student.objects.get(stud_id=id)
+    takenCourses = Grades.objects.filter(student_id=id, final_grade__isnull=True)
+    allCourses = Course.objects.filter(department = student.department )
+    #courses = allCourses.object.filter()
 
-    student = Student.objects.filter(stud_id=id)
+    #student id can be changed
+    #if form type = update 1 check taken course 1 ,2 ,3 changed or not if changed then update in grades
+    # all courses must be courses in the student department an courses not in grades table with the same
+    # student id
+
+    #Grades.objects.filter(student_id=id, course_id=cid).update(student=student, course=course1)
 
     if request.method == 'POST':
-        print(request.POST)
+        form_type = request.POST.get('form_type')
+        if form_type == 'update':
+            sID = request.POST.get('student id')
+            #sID hasnot changed
+            name = request.POST.get('student name')
+            username = request.POST.get('username')
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+            date_of_birth = request.POST.get('dateOfBirth')
+            status = request.POST.get('status')
+            university = request.POST.get('university')
+            gender = request.POST.get('gender')
+            course1_ID = request.POST.get('course1')
+            course2_ID = request.POST.get('course2')
+            course3_ID = request.POST.get('course3')
+            if id == sID:
+                student = Student.objects.filter(stud_id = sID).update(
+                    name=name,
+                    username=username,
+                    email=email,
+                    password=password,
+                    date_of_birth=date_of_birth,
+                    is_active=status,
+                    university=university,
+                    gender=gender
+                )
+            #else:
+
+
+            #if c1==
     context = {
-        'student': student
+        'student': student,
+        'takenCourses':takenCourses,
+        'courses':allCourses,
     }
     return render(request, 'main_website/edit_student.html', context)
+
 
 
 def error_404(request, exception):
