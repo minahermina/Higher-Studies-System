@@ -35,7 +35,7 @@
             <br>
             <div class="txt_field">
                 <span></span>
-                <input type="text" id="courseID" class="form__field" name="Course ID" value="" placeholder="course ID" autofocus>
+                <input type="text" id="courseID" class="form__field" name="ID" value="" placeholder="course ID" autofocus>
                 <label class="form__label" for="Course ID">course ID:</label>
             </div>
             <div id="idError" style="display:none;color:red;">ID must start with letters followed by numbers</div>
@@ -52,7 +52,6 @@
                     <select name="department" id="department" required>
                         <optgroup label="department">
                             <option value="" disabled selected >Select your department</option>
-                                <option value="1">CS</option>
                                 {% for departement in departments %}
                                     <option value="{{ departement.id }}">{{ departement.name }}</option>
                                 {% endfor %}
