@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
+from datetime import timedelta
 
 
 def admin_required(view_func):
@@ -34,21 +35,16 @@ def student_required(view_func):
 
 
 def home(request):
-
-    return render(request, 'main_website/home.html', {})
+    return render(request, 'main_website/home.html')
 
 
 def about(request):
-    return render(request, 'main_website/about.html', {})
+    return render(request, 'main_website/about.html')
+
 
 @login_required(login_url='home')
 def profile(request):
-    return render(request, 'main_website/profile.html', {})
-
-
-# def logoutPage(request):
-#
-#     return redirect('home')
+    return render(request, 'main_website/profile.html')
 
 
 def loginStudent(request):
@@ -56,28 +52,37 @@ def loginStudent(request):
         return redirect('home')
 
     if request.method == 'POST':
+        # messages.clear(request)
         id = request.POST.get('id')
         password = request.POST.get('pass')
+        remember = request.POST.get('remember')
 
-        student = Student.objects.get(stud_id=id)
+        try:
+            student = Student.objects.get(stud_id=id)
+        except:
+            messages.error(request, 'Credentials are not valid')
+            return redirect('login_student')
 
         user = authenticate(request, username=student.username, password=password)
-        # print(student.user.check_password(password))
-        print(user)
+
         if user is not None:
             login(request, user)
+
+            if remember == 'on':
+                request.session.set_expiry(timedelta(days=365).total_seconds())
+            else:
+                request.session.set_expiry(0)
+
             return redirect('home')
         else:
             messages.error(request, 'Credentials are not valid')
             return redirect('login_student')
 
-    context = {}
-    return render(request, 'main_website/login.html', context)
+    return render(request, 'main_website/login.html')
 
 
 def loginAdmin(request):
     login_type = 'admin'
-    message = None
     if request.user.is_authenticated:
         return redirect('home')
 
@@ -92,21 +97,19 @@ def loginAdmin(request):
             login(request, admin)
             print(remember)
             # request.session.set_expiry(0)
-            # request.session.flush()
-            if remember is not None:
-                request.session.set_expiry(None)
+
+            if remember == 'on':
+                request.session.set_expiry(timedelta(days=365).total_seconds())
             else:
                 request.session.set_expiry(0)
+
             return redirect('home')
         else:
             # if username is not None and password is not None:
             messages.error(request, 'Credentials are not valid')
             return redirect('login_admin')
 
-        # request.session.flush()
-    # print(messages.warning(request, "Your account expires in three days."))
-
-    context = {'login_type':login_type}
+    context = {'login_type': login_type}
     return render(request, 'main_website/login.html', context)
 
 
@@ -122,7 +125,7 @@ def logoutPage(request):
 @student_required
 def registered_courses(request):
     grades = Grades.objects.filter(student_id=request.user.student.stud_id)
-    
+
     context = {
         'grades': grades
     }
@@ -164,7 +167,7 @@ def search_students(request):
 @login_required(login_url='login_admin')
 @admin_required
 def add_course(request):
-    return render(request, 'main_website/add_course.html', {})
+    return render(request, 'main_website/add_course.html')
 
 
 @login_required(login_url='login_admin')
@@ -184,6 +187,7 @@ def edit_student(request):
 
 def error_404(request, exception):
     return render(request, 'main_website/404.html', status=404)
+
 
 @login_required(login_url='login_student')
 @student_required
@@ -211,7 +215,7 @@ def register_in_courses(request):
 
     else:
         student_id = request.POST.get('student_id')
-        student = Student.objects.get(user= request.user)
+        student = Student.objects.get(user=request.user)
         department_courses = Course.objects.filter(department=student.department)
 
         context = {
@@ -224,7 +228,6 @@ def register_in_courses(request):
 @login_required(login_url='login_admin')
 @staff_member_required
 def add_student(request):
-
     if request.method == 'POST':
         name = request.POST.get('student name')
         username = request.POST.get('username')
@@ -248,7 +251,7 @@ def add_student(request):
 
         student = Student.objects.create_user(name=name, username=username, email=email, stud_id=stud_id,
                                               password=password,
-                                              date_of_birth=date_of_birth,  department=department,
+                                              date_of_birth=date_of_birth, department=department,
                                               is_active=status, university=university, gender=gender)
 
         Grades.objects.create(student=student, course=course1)

@@ -43,12 +43,12 @@
                     <!-- Password -->
                     <div class="txt_field">
                         <input type="password" name = "pass" required>
-                        <ion-icon name="eye-off-outline" ></ion-icon>
+                        <ion-icon name="eye-off" ></ion-icon>
                         <label> Password </label>
                     </div>
                     {%if messages%}
                         {% for message in messages %}
-                            <div  style="color: red; margin: 0 0 15px 15px;">{{ message }}</div>
+                            <div  style="list-style-type: circle; color: red; margin: 0 0 15px 15px;">{{ message }}</div>
                         {% endfor %}
                     {%endif%}
                     <!-- Remember me checkbox -->
