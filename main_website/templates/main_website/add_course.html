@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 {% load static %}
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -44,22 +43,21 @@
                 <label for="course Hours" class="form__label">course Hours:</label>
             </div>
             <br>
-            <div >
-                <label for="department" >Department:</label>
+            
+            <div>
+                <label for="department">Department:</label>
                 <span class="custom-dropdown">
-                    <select name="department" id="department">
+                    <select name="department" id="department" required>
                         <optgroup label="department">
-                                <option value="" disabled selected  >Select your department</option>
-                                <option value="CS"> Computer Science </option>
-                                <option value="IT"> Information Technology </option>
-                                <option value="OR"> Operation Research </option>
-                                <option value="IS"> Information System </option>
-                                <option value="AI"> Artificial Intelligence </option>
+                            <option value="" disabled selected >Select your department</option>
+                                {% for departement in departments %}
+                                    <option value="{{ departement.id }}">{{ departement.name }}</option>
+                                {% endfor %}
                         </optgroup>
                     </select>
                 </span>
-            </div> 
-            <div id="departmentError" style="display:none;color:red;">Please select a department.</div>
+                <div id="depError" style="display:none;color: red;">Please enter the department.</div>
+            </div>
             <br>
             <div>
             <label for="lectureDay">University:</label>
