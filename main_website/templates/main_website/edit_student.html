@@ -21,7 +21,7 @@
             <div class="title">
                 <h1>Edit Student</h1>
             </div>
-             <form id ="form" method="POST" action = "{% url 'search/' %}" >
+             <form id ="form" method="POST" action = "{% url 'search_students' %}" >
                 {% csrf_token %}
                 <div class="txt_field">
                     <span></span>
@@ -140,7 +140,7 @@
                         <span class="custom-dropdown">
                             <select name="course1" id="c1" required>
                                 <optgroup label="course1">
-                                <option value="{{ takenCourses.0.course_id }}"selected >{{ takenCourses.0.name }}</option>
+                                <option value="{{ takenCourses.0.course_id }}"selected >{{ takenCourses.0.course }}</option>
                                 {% for course in courses %}
                                 <option value="{{ course.course_id }}">{{ course.name }}</option>
                                 {% endfor %}
@@ -154,9 +154,10 @@
                      <span class="custom-dropdown">
                         <select name="course2" id="c2" required>
                             <optgroup label="course2">
-                            <option value="{{ takenCourses.1.course_id }}"selected >{{ takenCourses.1.name }}</option>
+                            <option value="{{ takenCourses.1.course_id }}"selected >{{  takenCourses.1.course }}</option>
                                 {% for course in courses %}
-                                <option value="{{ course.course_id }}">{{ course.name }}</option>                       {% endfor %}
+                                <option value="{{ course.course_id }}">{{ course.name }}</option>
+                                {% endfor %}
                             </optgroup>
                         </select>
                     </span>
@@ -167,8 +168,8 @@
                         <span class="custom-dropdown">
                             <select name="course3" id="c3" required>
                                 <optgroup label="course3">
-                                <option value="{{ takenCourses.2.course_id }}"selected >{{ takenCourses.2.name }}</option>
-                                {% for course in allcourses %}
+                                <option value="{{ takenCourses.2.course_id }}"selected >{{ takenCourses.2.course }}</option>
+                                {% for course in courses %}
                                 <option value="{{ course.course_id }}">{{ course.name }}</option>
                                 {% endfor %}
                             </select>
