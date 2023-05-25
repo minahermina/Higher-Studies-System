@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 
+{% load static %}
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
@@ -60,10 +61,22 @@
             </div> 
             <div id="departmentError" style="display:none;color:red;">Please select a department.</div>
             <br>
-            <div class="txt_field">
-                <span></span>
-                <input type="text" id="lecDay" class="form__field" name="lDay" value="" placeholder="lecture day" autofocus>
-                <label class="form__label" for="lecture Day">lecture day:</label>
+            <div>
+            <label for="lectureDay">University:</label>
+            <span class="custom-dropdown">
+                <select name="lDay" id="lecDay" required>
+                    <optgroup label="lecture Day">
+                        <option value="" selected disabled>lecture Day</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                    </optgroup>
+                </select>
+            </span>
             </div>
             <br>
             <div class="txt_field">
