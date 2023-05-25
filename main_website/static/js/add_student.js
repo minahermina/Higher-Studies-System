@@ -146,14 +146,6 @@ function validate_form(){
     return true;
 }
 
-function isValid(){
-    const form = document.getElementById('form');
-    if(validate_form()){
-        alert("Your data has been submitted successfully.");
-        return true;
-    }
-    return false;
-}
 
 const reset = document.getElementById('reset');
 
@@ -188,14 +180,21 @@ document.getElementById("department").addEventListener("change", function () {
         if (xhr.status === 200) {
           var courses = JSON.parse(xhr.responseText);
 
-          // Populate the course select menus with the retrieved courses
           for (var i = 0; i < courses.length; i++) {
-            var option = document.createElement("option");
-            option.value = courses[i].id;
-            option.textContent = courses[i].name;
-            course1Select.appendChild(option.cloneNode(true));
-            course2Select.appendChild(option.cloneNode(true));
-            course3Select.appendChild(option.cloneNode(true));
+            var option1 = document.createElement("option");
+            option1.value = courses[i]["course_id"];
+            option1.textContent = courses[i].name;
+            course1Select.appendChild(option1);
+
+            var option2 = document.createElement("option");
+            option2.value = courses[i]["course_id"];
+            option2.textContent = courses[i].name;
+            course2Select.appendChild(option2);
+
+            var option3 = document.createElement("option");
+            option3.value = courses[i]["course_id"];
+            option3.textContent = courses[i].name;
+            course3Select.appendChild(option3);
           }
 
           // Enable the course select menus
@@ -214,11 +213,15 @@ document.getElementById("department").addEventListener("change", function () {
   }
 });
 
-
-// form.addEventListener('submit', function(event) {
-//     event.preventDefault(); // prevent default form submission behavior
-//     if(validate_form()){
+const form = document.getElementById('form');
+// if(validate_form()){
+//     form.addEventListener('submit', function() {
 //         alert("Your data has been submitted successfully.");
-//     }
-// });
+//     });
+// }
+form.addEventListener('submit', function() {
+    if(validate_form()){
+        alert("Your data has been submitted successfully.");
+    }
+});
   

@@ -27,7 +27,7 @@
             <div class="title">
                 <h1>Add Student</h1>
             </div>
-            <form id ="form" onsubmit="return isValid()" method="POST">
+            <form id ="form" action method="POST">
                 {% csrf_token %}
                 <div class="txt_field">
                     <span></span>
@@ -77,11 +77,11 @@
                         <select name="university" id="university" required>
                             <optgroup label="University">
                                 <option value="" selected disabled>Select your university</option>
-                                <option value="CU">Cairo University</option>
-                                <option value="ASU">Ain Shams University</option>
-                                <option value="HU">Helwan University</option>
-                                <option value="AUC">The American University in Cairo</option>
-                                <option value="GUC">German University in Cairo</option>
+                                <option value="Cairo University">Cairo University</option>
+                                <option value="Ain Shams University">Ain Shams University</option>
+                                <option value="Helwan University">Helwan University</option>
+                                <option value="The American University in Cairo">The American University in Cairo</option>
+                                <option value="German University in Cairo">German University in Cairo</option>
                             </optgroup>
                         </select>
                     </span>

@@ -246,22 +246,24 @@ def add_student(request):
         university = request.POST.get('university')
         gender = request.POST.get('gender')
 
-        course1 = Course.objects.get(course_id=course1_ID)
-        course2 = Course.objects.get(course_id=course2_ID)
-        course3 = Course.objects.get(course_id=course3_ID)
+        if department_id is not None and course1_ID is not None and course2_ID is not None and course3_ID is not None:
+            department_id = int(department_id)
+            course1 = Course.objects.get(course_id=course1_ID)
+            course2 = Course.objects.get(course_id=course2_ID)
+            course3 = Course.objects.get(course_id=course3_ID)
 
-        department = Department.objects.get(id=department_id)
+            department = Department.objects.get(id=department_id)
 
-        student = Student.objects.create_user(name=name, username=username, email=email, stud_id=stud_id,
-                                              password=password,
-                                              date_of_birth=date_of_birth,  department=department,
-                                              is_active=status, university=university, gender=gender)
+            student = Student.objects.create_user(name=name, username=username, email=email, stud_id=stud_id,
+                                                  password=password,
+                                                  date_of_birth=date_of_birth,  department=department,
+                                                  is_active=status, university=university, gender=gender)
 
-        Grades.objects.create(student=student, course=course1)
-        Grades.objects.create(student=student, course=course2)
-        Grades.objects.create(student=student, course=course3)
+            Grades.objects.create(student=student, course=course1)
+            Grades.objects.create(student=student, course=course2)
+            Grades.objects.create(student=student, course=course3)
 
-        return render(request, 'main_website/add_student.html', {})
+            return render(request, 'main_website/add_student.html', {})
 
     else:
         courses = Course.objects.all()
