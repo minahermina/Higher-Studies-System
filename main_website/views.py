@@ -37,6 +37,9 @@ def student_required(view_func):
 def home(request):
     return render(request, 'main_website/home.html')
 
+def index(request):
+    return render(request, 'main_website/websites_navigation.html')
+
 
 def about(request):
     return render(request, 'main_website/about.html')
