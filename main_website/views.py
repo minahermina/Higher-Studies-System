@@ -154,7 +154,10 @@ def search_students(request):
 
         if search:
             deps =  Department.objects.filter(name = search)
-            students = students.filter(Q(name__icontains=search) | Q(department_id__in=deps.values_list('id', flat=True)))
+            students = students.filter(
+                (Q(name__icontains=search) | Q(department_id__in=deps.values_list('id', flat=True))) & Q(is_active=True)
+            )
+
         if priority == 'name':
             students = students.order_by('name')
         elif priority == 'stud_id':
