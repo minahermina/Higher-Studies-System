@@ -22,11 +22,11 @@
             <div class="title">
                 <h1>Edit Student</h1>
             </div>
-             <form id ="form" method="POST" action = "{% url 'search_students' %}" >
+             <form id ="form" method="POST" >
                 {% csrf_token %}
                 <div class="txt_field">
                     <span></span>
-                    <input type="text" id="name" class="form__field" name="student name" value="{{student.name}}" placeholder="Name" autofocus>
+                    <input type="text" id="name" class="form__field" name="student_name" value="{{student.name}}" placeholder="Name" autofocus>
                     <label class="form__label" for="name">Name:</label>
                 </div>
                 <div id="name-error" style="display:none;color:red;">Name can't be empty and must contain only letters.</div>
@@ -118,10 +118,11 @@
                 <br>
                 <div>
                     <label>Status:</label>
-                    <input id="a" type="radio" name="status" value="student.is_active" checked="student.is_active">
+                    <label>Status:</label>
+                    <input id="a" type="radio" name="status" value=1 checked="{{student.is_active}}">
                     <label for="a">Active</label>
 
-                    <input id="ina" type="radio" name="status"{% if student.is_active == "True" %}checked="false"{% endif %}>
+                    <input id="ina" type="radio" name="status" value="0"{% if student.is_active == True %}checked= False{% else %}checked= True {% endif %}>
                     <label for="ina">Inactive</label>
 
                 </div>

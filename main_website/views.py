@@ -164,9 +164,6 @@ def search_students(request):
     return render(request, 'main_website/search.html', context)
 
 
-
-
-
 @login_required(login_url='login_admin')
 @admin_required
 def add_course(request):
@@ -179,8 +176,9 @@ def add_course(request):
         hall_number = request.POST.get('hallNumber')
         department_id = request.POST.get('department')
         department = Department.objects.get(id=department_id)
-        course = Course.objects.create(name=name, course_id = course_id, department = department,
-                                            number_of_hours = number_of_hours, lecture_day=lecture_day ,hall_number=hall_number)
+        course = Course.objects.create(name=name, course_id=course_id, department=department,
+                                       number_of_hours=number_of_hours, lecture_day=lecture_day,
+                                       hall_number=hall_number)
     departments = Department.objects.all()
     context = {
         'departments': departments
@@ -195,55 +193,75 @@ def edit_student(request):
     id = request.POST.get('edit')
     student = Student.objects.get(stud_id=id)
     takenCourses = Grades.objects.filter(student_id=id, final_grade__isnull=True)
-    print(takenCourses.count())
-    allCourses = Course.objects.filter(department = student.department )
-    #courses = allCourses.object.filter()
+    # print(takenCourses.count())
+    allCourses = Course.objects.filter(department=student.department)
+    # courses = allCourses.object.filter()
 
-    #student id can be changed
-    #if form type = update 1 check taken course 1 ,2 ,3 changed or not if changed then update in grades
+    # student id can be changed
+    # if form type = update 1 check taken course 1 ,2 ,3 changed or not if changed then update in grades
     # all courses must be courses in the student department an courses not in grades table with the same
     # student id
 
-    #Grades.objects.filter(student_id=id, course_id=cid).update(student=student, course=course1)
+    # Grades.objects.filter(student_id=id, course_id=cid).update(student=student, course=course1)
 
     if request.method == 'POST':
+        # print("alarm")
         form_type = request.POST.get('form_type')
+        # print(form_type)
+
         if form_type == 'update':
+
             sID = request.POST.get('student id')
-            #sID hasnot changed
-            name = request.POST.get('student name')
+            # sID hasnot changed
+            name = request.POST.get('student_name')
             username = request.POST.get('username')
             email = request.POST.get('email')
+            # print(name)
             password = request.POST.get('password')
             date_of_birth = request.POST.get('dateOfBirth')
             status = request.POST.get('status')
+            # print(status + "-------------------")
             university = request.POST.get('university')
             gender = request.POST.get('gender')
             course1_ID = request.POST.get('course1')
             course2_ID = request.POST.get('course2')
             course3_ID = request.POST.get('course3')
             if id == sID:
-                student = Student.objects.filter(stud_id = sID).update(
-                    name=name,
-                    username=username,
-                    email=email,
-                    password=password,
-                    date_of_birth=date_of_birth,
-                    is_active=status,
-                    university=university,
-                    gender=gender
-                )
-            #else:
-                #just delete student
+                # student = Student.objects.get(stud_id=sID).update(
+                #     name=name,
+                #     username=username,
+                #     email=email,
+                #     password=password,
+                #     date_of_birth=date_of_birth,
+                #     is_active=status,
+                #     university=university,
+                #     gender=gender
+                # )
+                student = Student.objects.get(stud_id=sID)
+                print(student)
 
-            #if c1==
+                student.name = name
+                student.username = username
+                student.email = email
+                student.password = password
+                student.date_of_birth = date_of_birth
+                student.is_active = status
+                student.university = university
+                student.gender = gender
+
+                print(student)
+                student.save()
+                return redirect('search_students')
+            # else:
+            # just delete student
+
+            # if c1==
     context = {
         'student': student,
-        'takenCourses':takenCourses,
-        'courses':allCourses,
+        'takenCourses': takenCourses,
+        'courses': allCourses,
     }
     return render(request, 'main_website/edit_student.html', context)
-
 
 
 def error_404(request, exception):
@@ -304,7 +322,6 @@ def add_student(request):
         university = request.POST.get('university')
         gender = request.POST.get('gender')
 
-
         if department_id is not None and course1_ID is not None and course2_ID is not None and course3_ID is not None:
             department_id = int(department_id)
             course1 = Course.objects.get(course_id=course1_ID)
@@ -315,7 +332,7 @@ def add_student(request):
 
             student = Student.objects.create_user(name=name, username=username, email=email, stud_id=stud_id,
                                                   password=password,
-                                                  date_of_birth=date_of_birth,  department=department,
+                                                  date_of_birth=date_of_birth, department=department,
                                                   is_active=status, university=university, gender=gender)
 
             Grades.objects.create(student=student, course=course1)
