@@ -187,20 +187,17 @@ def add_course(request):
     return render(request, 'main_website/add_course.html', context)
 
 
+
 @login_required(login_url='login_admin')
 @admin_required
 def edit_student(request):
     id = request.POST.get('edit')
     student = Student.objects.get(stud_id=id)
     takenCourses = Grades.objects.filter(student_id=id, final_grade__isnull=True)
-    # print(takenCourses.count())
+    print(takenCourses.count())
     allCourses = Course.objects.filter(department=student.department)
-    # courses = allCourses.object.filter()
-
     # student id can be changed
     # if form type = update 1 check taken course 1 ,2 ,3 changed or not if changed then update in grades
-    # all courses must be courses in the student department an courses not in grades table with the same
-    # student id
 
     # Grades.objects.filter(student_id=id, course_id=cid).update(student=student, course=course1)
 
@@ -223,9 +220,14 @@ def edit_student(request):
             # print(status + "-------------------")
             university = request.POST.get('university')
             gender = request.POST.get('gender')
+            department_id = request.POST.get('department')
+            department = Department.objects.get(id=department_id)
             course1_ID = request.POST.get('course1')
             course2_ID = request.POST.get('course2')
             course3_ID = request.POST.get('course3')
+            course1 = Course.objects.get(course_id=course1_ID)
+            course2 = Course.objects.get(course_id=course2_ID)
+            course3 = Course.objects.get(course_id=course3_ID)
             if id == sID:
                 # student = Student.objects.get(stud_id=sID).update(
                 #     name=name,
@@ -251,11 +253,43 @@ def edit_student(request):
 
                 print(student)
                 student.save()
-                return redirect('search_students')
-            # else:
-            # just delete student
+                if takenCourses.count() > 0 and takenCourses[0].course.course_id != course1_ID:
+                    c1 = Grades.objects.get(student=id, course=takenCourses[0].course.course_id)
+                    c1.course = course1
+                    c1.final_grade = None
+                    c1.course_grade =None
+                    c1.save()
+                else:
+                    Grades.objects.create(student=sID, course=course1)
+                if takenCourses.count() > 1 and takenCourses[1].course.course_id != course2_ID:
+                    c2 = Grades.objects.get(student=id, course=takenCourses[1].course.course_id)
+                    c2.course = course1
+                    c2.final_grade = None
+                    c2.course_grade = None
+                    c2.save()
+                else:
+                    Grades.objects.create(student=sID, course=course2)
+                if takenCourses.count() > 2 and takenCourses[2].course.course_id != course3_ID:
+                    c3 = Grades.objects.get(student=id, course=takenCourses[2].course.course_id)
+                    c3.course = course1
+                    c3.final_grade = None
+                    c3.course_grade = None
+                    c3.save()
+                else:
+                    Grades.objects.create(student=sID, course=course3)
+                return redirect('search_students',{})
+            else:
+                student = Student.objects.get(stud_id=id)
+                student.delete()
+                student = Student.objects.create_user(name=name, username=username, email=email, stud_id=SID,
+                                                      password=password,
+                                                      date_of_birth=date_of_birth, department=department,
+                                                      is_active=status, university=university, gender=gender)
 
-            # if c1==
+                Grades.objects.create(student=sID, course=course1)
+                Grades.objects.create(student=sID, course=course2)
+                Grades.objects.create(student=sID, course=course3)
+                return redirect('search_students',{})
     context = {
         'student': student,
         'takenCourses': takenCourses,
