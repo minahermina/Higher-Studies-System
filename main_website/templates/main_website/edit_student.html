@@ -22,7 +22,7 @@
             <div class="title">
                 <h1>Edit Student</h1>
             </div>
-             <form id ="form" method="POST" action = "{% url 'search/' %}" >
+             <form id ="form" method="POST" action = "{% url 'search_students' %}" >
                 {% csrf_token %}
                 <div class="txt_field">
                     <span></span>
@@ -109,9 +109,9 @@
                 <br>
                 <div>
                    <label>Gender:</label>
-                    <input id="m" type="radio" name="gender" value="Male" {% if student.gender =="Male" %}checked="true"{% endif %}>
+                    <input id="m" type="radio" name="gender" value="Male" {% if student.gender == "Male" %}checked="true"{% endif %}>
                     <label for="m">Male</label>
-                    <input id="f" type="radio" name="gender" value="Female" {% if student.gender =="Female" %}checked="true"{% endif %}>
+                    <input id="f" type="radio" name="gender" value="Female" {% if student.gender == "Female" %}checked="true"{% endif %}>
                     <label for="f">Female</label>
 
                 </div>
@@ -121,7 +121,7 @@
                     <input id="a" type="radio" name="status" value="student.is_active" checked="student.is_active">
                     <label for="a">Active</label>
 
-                    <input id="ina" type="radio" name="status"{% if student.is_active =="True" %}checked="false"{% endif %}>
+                    <input id="ina" type="radio" name="status"{% if student.is_active == "True" %}checked="false"{% endif %}>
                     <label for="ina">Inactive</label>
 
                 </div>

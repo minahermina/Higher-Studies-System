@@ -195,7 +195,7 @@ def edit_student(request):
     id = request.POST.get('edit')
     student = Student.objects.get(stud_id=id)
     takenCourses = Grades.objects.filter(student_id=id, final_grade__isnull=True)
-    print(takenCourses)
+    print(takenCourses.count())
     allCourses = Course.objects.filter(department = student.department )
     #courses = allCourses.object.filter()
 
