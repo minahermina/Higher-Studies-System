@@ -1,3 +1,5 @@
+
+
 function validate_form(){
     const nameInput = document.getElementById("name");
     const nameError = document.getElementById("name-error");
@@ -11,6 +13,18 @@ function validate_form(){
         nameError.style.display = "none";
     }
 
+    const usernameInput = document.getElementById("username");
+    const usernameError = document.getElementById("username-error");
+
+    if (usernameInput.value.trim() === "" || !/^[a-zA-Z0-9_-]{3,16}$/.test(usernameInput.value.trim())) { // added space to regex
+        usernameError.style.display = "block";
+        usernameInput.focus();
+        window.scroll(0,0);
+        return false;
+    } else {
+        usernameError.style.display = "none";
+    }
+
 
     const emailInput = document.getElementById("email");
     const emailError = document.getElementById("emailError");
@@ -18,15 +32,14 @@ function validate_form(){
     if (!emailInput.value.trim() || !emailRegex.test(emailInput.value.trim())) {
         emailError.style.display = "inline";
         emailInput.focus();
-        window.scroll(0,0);
+        window.scroll(2,2);
         return false;
     }
     else{
         emailError.style.display = "none";
     }
 
-
-    const idInput = document.getElementById("id");
+    const idInput = document.getElementById("sid");
     const idError = document.getElementById("id-error");
     if (!idInput.value || idInput.value.length !== 8 || isNaN(idInput.value)) {
         idError.style.display = "block";
@@ -38,79 +51,15 @@ function validate_form(){
     }
 
 
-
-
-    const passwordField = document.getElementById("password");
-    const passwordError = document.getElementById("passwordError");
-    if (passwordField.value === "" || passwordField.value.length < 8) {
-        passwordError.style.display = "block";
-        passwordField.focus();
-        window.scroll(0,0);
-        return false;
-    } else {
-        passwordError.style.display = "none";
-    }
-
-    const course1 = document.getElementById("c1").value;
-    const cr1=document.getElementById("c1Error");
-    if (course1 === "") {
-        cr1.style.display="block";
-        window.scroll(0,1000);
-        return false;
-    }
-    else{
-        cr1.style.display="none";
-    }
-
-
-    const course2 = document.getElementById("c2").value;
-    const cr2=document.getElementById("c2Error");
-    if (course2 === "") {
-        cr2.style.display="block";
-        window.scroll(0,1000);
-        return false;
-    }
-    else{
-        cr2.style.display="none";
-    }
-
-
-    const course3 = document.getElementById("c3").value;
-    const cr3 =document.getElementById("c3Error");
-    if (course3 === "") {
-        cr3.style.display="block";
-        window.scroll(0,1000);
-        return false;
-    }
-    else{
-        cr3.style.display="none";
-    }
-
-
-    const c1 = document.getElementById("c1").value;
-    const c2 = document.getElementById("c2").value;
-    const c3 = document.getElementById("c3").value;
-
-    if (c1 === c2 || c1 === c3 || c2 === c3) {
-        alert("Please select different courses for each option.");
-        return false;
-    }
     return true;
 }
 
-function isValid(){
-    const form = document.getElementById('form');
-    if(validate_form()){
-        alert("Your data has been submitted successfully.");
-        return true;
+
+
+const form = document.getElementById('form');
+
+form.addEventListener('submit', function(event) {
+    if(!validate_form()){
+        event.preventDefault();
     }
-    return false;
-}
-
-const reset = document.getElementById('reset');
-
-reset.addEventListener('click', function() {
-    document.getElementById("name").focus();
-    window.scroll({top:1});
 });
-
