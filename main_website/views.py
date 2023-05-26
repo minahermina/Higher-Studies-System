@@ -179,24 +179,32 @@ def search_students(request):
 @login_required(login_url='login_admin')
 @admin_required
 def add_course(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        print(name)
-        course_id = request.POST.get('ID')
-        print(course_id)
-        number_of_hours = request.POST.get('course Hours')
-        lecture_day = request.POST.get('lDay')
-        hall_number = request.POST.get('hallNumber')
-        department_id = request.POST.get('department')
-        department = Department.objects.get(id=department_id)
-        course = Course.objects.create(name=name, course_id=course_id, department=department,
-                                       number_of_hours=number_of_hours, lecture_day=lecture_day,
-                                       hall_number=hall_number)
-        return redirect('home')
     departments = Department.objects.all()
     context = {
         'departments': departments
     }
+
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        course_id = request.POST.get('ID')
+        number_of_hours = request.POST.get('course Hours')
+        lecture_day = request.POST.get('lDay')
+        hall_number = request.POST.get('hallNumber')
+        department_id = request.POST.get('department')
+
+        if department_id =='notSEl':
+            messages.error(request, 'Select Department ')
+            return render(request, 'main_website/add_course.html', context)
+        if lecture_day =='notSEl':
+            messages.error(request, 'Select lecture day ')
+            return render(request, 'main_website/add_course.html', context)
+            #pass
+        else:
+            department = Department.objects.get(id=department_id)
+            course = Course.objects.create(name=name, course_id=course_id, department=department,
+                                           number_of_hours=number_of_hours, lecture_day=lecture_day,
+                                           hall_number=hall_number)
+            return redirect('home')
 
     return render(request, 'main_website/add_course.html', context)
 
