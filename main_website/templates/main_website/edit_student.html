@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{% static 'css/add_student.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <script defer src="{% static 'js/footer.js' %}"></script>
+    <script defer src="{% static 'js/edit_student.js' %}"></script>
     <title>Edit Student</title>
 </head>
 
@@ -37,6 +38,7 @@
                     <input type="text" id="username" class="form__field" name="username" value="{{student.username}}" placeholder="Username">
                     <label class="form__label" for="username">Username:</label>
                 </div>
+                 <div id="username-error" style="display:none;color:red;">Username is not valid.</div>
                  <br>
                 <input type="hidden" name="edit" value="{{ student.stud_id }}">
                  <input type="hidden" name="form_type" value="update">
@@ -45,18 +47,18 @@
                     <input type="text" id="email" class="form__field" name="email" value = "{{student.email}}" placeholder="email">
                     <label for="email" class="form__label">Email:</label>
                 </div>
-                <span id="emailError" style="display: none; color: red;">Please enter a valid email.</span>
+                  <span id="emailError" style="display: none; color: red;">Please enter a valid email.</span>
                 <br>
                 <div class="txt_field">
                     <span></span>
-                    <input type="text" id="id" name="student id" value ="{{student.stud_id}}"  class="form__field" placeholder="id">
+                    <input type="text" id="sid" name="student id" value ="{{student.stud_id}}"  class="form__field" placeholder="id">
                     <label for="id" class="form__label">ID:</label>
                 </div>
                 <div id="id-error" style="display:none;color: red;">ID can't be empty. It's a numeric value of length 8.</div>
                 <br>
                 <div class="txt_field">
                     <span></span>
-                    <input type="password" value="" id="password" name="password" class="form__field" placeholder="password" disabled>
+                    <input type="password" value="********" id="password" name="password" class="form__field" placeholder="password" disabled>
                     <ion-icon name="eye-off-outline" ></ion-icon>
                     <label for="password" class="form__label">Password:</label>
                 </div>
@@ -120,10 +122,10 @@
                 <div>
 {#                    <label>Status:</label>#}
                     <label>Status:</label>
-                    <input id="a" type="radio" name="status" value=1 checked="{{student.is_active}}">
+                    <input id="a" type="radio" name="status" value=1 {% if student.is_active == 1 %} checked=True  {% endif %}>
                     <label for="a">Active</label>
 
-                    <input id="ina" type="radio" name="status" value="0"{% if student.is_active == True %}checked= False{% else %}checked= True {% endif %}>
+                    <input id="ina" type="radio" name="status" value="0"{% if student.is_active == 1 %}checked= False{% else %}checked= True {% endif %}>
                     <label for="ina">Inactive</label>
 
                 </div>
@@ -177,7 +179,15 @@
                         </span>
                         <div id="c3Error" style="display:none;color: red;">Please enter course3.</div>
                 </div>
+                 <br>
+                {% for message in messages %}
+                    <div class="alert alert-success" style="color: red;">
+                    <a class="close" href="" data-dismiss="alert">×</a>
+                    {{ message }}
+                    </div>
 
+                {% endfor %}
+                <br>
                 <br>
                 <div>
                     <button type="submit" class="btn" id="submit"> <span> Edit</span></button>
