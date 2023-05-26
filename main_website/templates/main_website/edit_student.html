@@ -134,10 +134,12 @@
                     <label for="c1">Course 1:</label>
                         <span class="custom-dropdown">
                             <select name="course1" id="c1" required>
-{#                                <p>{{ takenCourses.0.Course }}</p>#}
                                 <optgroup label="course1">
-                                <option value="{{ takenCourses.0.course.course_id }}" selected >{{ takenCourses.0.course }}</option>
-
+                                {% if n > 0  %}
+                                    <option value="{{ takenCourses.0.course.course_id }}" selected >{{ takenCourses.0.course }}</option>
+                                {% else %}
+                                    <option value="select" selected disabled>Select course1</option>
+                                {% endif %}
                                 {% for course in courses %}
                                     {% if takenCourses.0.course.course_id != course.course_id  %}
                                         <option value="{{ course.course_id }}">{{ course.name }}</option>
@@ -153,12 +155,17 @@
                      <span class="custom-dropdown">
                         <select name="course2" id="c2" required>
                             <optgroup label="course2">
-                            <option value="{{ takenCourses.1.course_id }}"selected >{{ takenCourses.1.course }}</option>
+                                {% if n > 1  %}
+                                <option value="{{ takenCourses.1.course_id }}"selected >{{ takenCourses.1.course }}</option>
+                                {% else %}
+                                    <option value="select" selected disabled>Select course2</option>
+                                {% endif %}
+
                                 {% for course in courses %}
                                     {% if takenCourses.1.course.course_id != course.course_id   %}
                                         <option value="{{ course.course_id }}">{{ course.name }}</option>
                                     {% endif %}
-                                {% endfor %}                      
+                                {% endfor %}
                             </optgroup>
                         </select>
                     </span>
@@ -169,7 +176,12 @@
                         <span class="custom-dropdown">
                             <select name="course3" id="c3" required>
                                 <optgroup label="course3">
-                                <option value="{{ takenCourses.2.course_id }}"selected >{{ takenCourses.2.course }}</option>
+                                {% if n > 2  %}
+                                    <option value="{{ takenCourses.2.course_id }}"selected >{{ takenCourses.2.course }}</option>
+                                {% else %}
+                                    <option value="select" selected disabled>Select course3</option>
+                                {% endif %}
+
                                 {% for course in courses %}
                                     {% if  takenCourses.2.course.course_id != course.course_id   %}
                                         <option value="{{ course.course_id }}">{{ course.name }}</option>
