@@ -31,7 +31,7 @@ function validInputs(){
     }
 
     var lDay = document.getElementById("lecDay").value;
-    if (lDay === "") {
+    if (lDay === "NOT") {
         document.getElementById('LError').style.display = "block";
         document.getElementById("lecDay").focus();
         window.scroll(10,10);
