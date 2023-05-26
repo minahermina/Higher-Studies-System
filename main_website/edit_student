@@ -217,11 +217,14 @@ def edit_student(request):
 
     takenCourses = Grades.objects.filter(student_id=id, final_grade__isnull=True)
     allCourses = Course.objects.filter(department=student.department)
+    nCourses =takenCourses.count()
     context = {
         'student': student,
         'takenCourses': takenCourses,
         'courses': allCourses,
+        'n':nCourses,
     }
+
 
     if request.method == 'POST':
         form_type = request.POST.get('form_type')
