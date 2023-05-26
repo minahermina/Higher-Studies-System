@@ -214,9 +214,14 @@ def add_course(request):
 def edit_student(request):
     id = request.POST.get('edit')
     student = Student.objects.get(stud_id=id)
-    # old_password = student.pass
+
     takenCourses = Grades.objects.filter(student_id=id, final_grade__isnull=True)
     allCourses = Course.objects.filter(department=student.department)
+    context = {
+        'student': student,
+        'takenCourses': takenCourses,
+        'courses': allCourses,
+    }
 
     if request.method == 'POST':
         form_type = request.POST.get('form_type')
@@ -228,11 +233,9 @@ def edit_student(request):
             name = request.POST.get('student_name')
             username = request.POST.get('username')
             email = request.POST.get('email')
-            # print(name)
-            password = request.POST.get('password')
+            # password = request.POST.get('password')
             date_of_birth = request.POST.get('dateOfBirth')
             status = request.POST.get('status')
-            # print(status + "-------------------")
             university = request.POST.get('university')
             gender = request.POST.get('gender')
             department_id = request.POST.get('department')
@@ -241,7 +244,6 @@ def edit_student(request):
             course1_ID = request.POST.get('course1')
             course2_ID = request.POST.get('course2')
             course3_ID = request.POST.get('course3')
-
 
             course1 = Course.objects.get(course_id=course1_ID)
             course2 = Course.objects.get(course_id=course2_ID)
@@ -262,47 +264,54 @@ def edit_student(request):
                 student.save()
                 if takenCourses.count() > 0:
                     if takenCourses[0].course.course_id != course1_ID:
+                        try:
+                            Grades.objects.get(course_id=course1_ID)
+                            messages.error(request, 'Please select three different courses')
+                            return render(request, 'main_website/edit_student.html', context)
+                        except ObjectDoesNotExist:
+                            pass
                         print("Error 1")
                         c1 = Grades.objects.get(student_id=id, course_id=takenCourses[0].course.course_id)
                         c1.delete()
-                        Grades.objects.create(student_id=sID, course_id=course1_ID)
+                        Grades.objects.create(student_id=id, course_id=course1_ID)
                 else:
-                    Grades.objects.create(student_id=sID,course_id=course1_ID)
-                if takenCourses.count() > 1 :
+                    Grades.objects.create(student_id=id, course_id=course1_ID)
+                if takenCourses.count() > 1:
                     if takenCourses[1].course.course_id != course2_ID:
-                        c1 = Grades.objects.get(student_id=id, course_id=takenCourses[1].course.course_id)
-                        c1.delete()
-                        Grades.objects.create(student_id=sID, course_id=course2_ID)
+                        c2 = Grades.objects.get(student_id=id, course_id=takenCourses[1].course.course_id)
+                        c2.delete()
+                        Grades.objects.create(student_id=id, course_id=course2_ID)
                 else:
-                    Grades.objects.create(student_id=sID,course_id=course2_ID)
+                    Grades.objects.create(student_id=id, course_id=course2_ID)
                 if takenCourses.count() > 2:
                     if takenCourses[2].course.course_id != course2_ID:
                         c1 = Grades.objects.get(student_id=id, course_id=takenCourses[2].course.course_id)
                         c1.delete()
-                        Grades.objects.create(student_id=sID,course_id=course3_ID)
+                        Grades.objects.create(student_id=id, course_id=course3_ID)
                 else:
-                    Grades.objects.create(student_id=sID, course_id=course3_ID)
+                    Grades.objects.create(student_id=id, course_id=course3_ID)
                 return redirect('search_students')
             else:
                 student = Student.objects.get(stud_id=id)
                 student.delete()
-                print(sID)
+                # Check if student ID already exists
+                try:
+                    Student.objects.get(stud_id=sID)
+                    messages.error(request, 'Student ID already exists')
+                    return render(request, 'main_website/edit_student.html', context)
+                except ObjectDoesNotExist:
+                    pass
                 student = Student.objects.create_user(name=name, username=username, email=email, stud_id=sID,
-                                                      password=password,
+                                                      password="passw",
                                                       date_of_birth=date_of_birth, department=department,
                                                       is_active=status, university=university, gender=gender)
 
-                Grades.objects.create(student_id=sID, course_id=course1.course_id)
-                Grades.objects.create(student_id=sID, course_id=course2.course_id)
-                Grades.objects.create(student_id=sID, course_id=course3.course_id)
+                Grades.objects.create(student_id=sID, course_id=course1_ID)
+                Grades.objects.create(student_id=sID, course_id=course2_ID)
+                Grades.objects.create(student_id=sID, course_id=course3_ID)
                 return redirect('search_students')
-    context = {
-        'student': student,
-        'takenCourses': takenCourses,
-        'courses': allCourses,
-    }
-    return render(request, 'main_website/edit_student.html', context)
 
+    return render(request, 'main_website/edit_student.html', context)
 
 def error_404(request, exception):
     return render(request, 'main_website/404.html', status=404)
