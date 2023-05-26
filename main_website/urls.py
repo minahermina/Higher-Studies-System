@@ -18,7 +18,8 @@ from django.urls import path
 from main_website import views
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', views.index, name='index'),
+    path('home', views.home, name='home'),
     path('about/', views.about, name='about'),
     path('registered_courses/', views.registered_courses, name='registered_courses'),
     path('login_student/', views.loginStudent, name='login_student'),
@@ -30,5 +31,4 @@ urlpatterns = [
     path('logout/', views.logoutPage, name='logout'),
     path('register_in_courses/', views.register_in_courses, name='register_in_courses'),
     path('add_student/', views.add_student, name="add_student"),
-    path('api/courses/', views.get_courses_by_department, name='get_courses_by_department'),
 ]

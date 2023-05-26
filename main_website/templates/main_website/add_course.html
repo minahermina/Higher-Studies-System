@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/logo.png'%}" />
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="{% static 'css/add_student.css' %}">
@@ -28,21 +29,21 @@
                 {% csrf_token %}
             <div class="txt_field">
                 <span></span>
-                <input type="text" id="courseName" class="form__field" name="name" value="" placeholder="Course name" autofocus>
+                <input type="text" id="courseName" class="form__field" name="name" value="" placeholder="Course name" autofocus required>
                 <label class="form__label" for="Course name">Course name:</label>
             </div>
             <div id="cNameError" style="display:none;color:red;">Invalid Name:The name must start with letters </div>
             <br>
             <div class="txt_field">
                 <span></span>
-                <input type="text" id="courseID" class="form__field" name="ID" value="" placeholder="course ID" autofocus>
+                <input type="text" id="courseID" class="form__field" name="ID" value="" placeholder="course ID" autofocus required>
                 <label class="form__label" for="Course ID">course ID:</label>
             </div>
             <div id="idError" style="display:none;color:red;">ID must start with letters followed by numbers</div>
             <br>
             <div class="txt_field">
                 <span></span>
-                <input type="number" min="1" max ="20" id="courseHours" name="course Hours" class="form__field" placeholder="course Hours">
+                <input type="number" min="1" max ="20" id="courseHours" name="course Hours" class="form__field" placeholder="course Hours" required>
                 <label for="course Hours" class="form__label">course Hours:</label>
             </div>
             <br>
@@ -82,13 +83,13 @@
             <br>
             <div class="txt_field">
                 <span></span>
-                <input type="text" id="hNumber" class="form__field" name="hallNumber" value="" placeholder="Hall number" autofocus>
+                <input type="text" id="hNumber" class="form__field" name="hallNumber" value="" placeholder="Hall number" autofocus required>
                 <label class="form__label" for="Hall number">Hall number:</label>
             </div>
             <br>
             <div>
-                <button type="reset" class="btn"id="reset"> <span> Reset</span> </button>
                 <button type="submit" class="btn" id="add"> <span>Submit</span></button>
+                <button type="reset" class="btn"id="reset"> <span> Reset</span> </button>
             </div>
 
         </form>

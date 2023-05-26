@@ -6,12 +6,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/logo.png'%}" />
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="{% static 'css/add_student.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <script defer src="{% static 'js/footer.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'css/add_student.css'%}">
     <title>Edit Student</title>
 </head>
 
@@ -64,7 +64,8 @@
                 <br>
                 <div>
                     <label for="DateOfBirth">Date Of Birth:</label>
-                    <input type="date" value="{{ student.date_of_birth }}"  name="dateOfBirth" id="DateOfBirth" min='1899-01-01' max='2005-12-31'  required>
+                    <input type="date" value="{{ student.date_of_birth|date:'Y-m-d' }}" name="dateOfBirth" id="DateOfBirth" min="1899-01-01" max="2005-12-31" required>
+
                 </div>
                 <div id="dateError" style="display:none;color: rgba(253,23,23,0.09);">Please enter the date of birth.</div>
                 <br>

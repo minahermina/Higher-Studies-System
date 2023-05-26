@@ -1,12 +1,12 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect
 from .models import Student, Grades, Course, Department, User
-from django.contrib import admin, messages
-from django.contrib.auth.decorators import user_passes_test, login_required
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
-from django.http import JsonResponse
 from datetime import timedelta
-
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 
 def admin_required(view_func):
     def check_admin(user):
@@ -22,11 +22,11 @@ def admin_required(view_func):
 
 
 def student_required(view_func):
-    def check_admin(user):
+    def check_student(user):
         return user.is_authenticated and user.role == User.Role.STUDENT
 
     def decorator(request, *args, **kwargs):
-        if check_admin(request.user):
+        if check_student(request.user):
             return view_func(request, *args, **kwargs)
         else:
             return redirect('home')  # Redirect to the home page
@@ -36,6 +36,9 @@ def student_required(view_func):
 
 def home(request):
     return render(request, 'main_website/home.html')
+
+def index(request):
+    return render(request, 'main_website/websites_navigation.html')
 
 
 def about(request):
@@ -96,7 +99,6 @@ def loginAdmin(request):
         if admin is not None:
             login(request, admin)
             print(remember)
-            # request.session.set_expiry(0)
 
             if remember == 'on':
                 request.session.set_expiry(timedelta(days=365).total_seconds())
@@ -145,23 +147,33 @@ def search_students(request):
             except Student.DoesNotExist:
                 pass
     students = Student.objects.all()
-    name = ''
+    search = ''
     if request.method == 'POST':
         priority = request.POST.get('priority')
-        name = request.POST.get('keyword')
+        search = request.POST.get('keyword')
 
-        if name:
-            students = students.filter(name__icontains=name)
+        if search:
+            deps =  Department.objects.filter(name = search)
+            students = students.filter(
+                (Q(name__icontains=search) | Q(department_id__in=deps.values_list('id', flat=True))) & Q(is_active=True)
+            )
+
         if priority == 'name':
             students = students.order_by('name')
         elif priority == 'stud_id':
             students = students.order_by('stud_id')
 
+    departments = []
+    for student in students:
+        department = Department.objects.get(id=student.department_id)
+        departments.append(department.name)
+
     context = {
-        'students': students,
-        'search': name,
+        'students_departments':  zip(students, departments),
+        'search': search,
     }
     return render(request, 'main_website/search.html', context)
+
 
 
 @login_required(login_url='login_admin')
@@ -170,7 +182,8 @@ def add_course(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         print(name)
-        course_id = request.POST.get('Course ID')
+        course_id = request.POST.get('ID')
+        print(course_id)
         number_of_hours = request.POST.get('course Hours')
         lecture_day = request.POST.get('lDay')
         hall_number = request.POST.get('hallNumber')
@@ -179,6 +192,7 @@ def add_course(request):
         course = Course.objects.create(name=name, course_id=course_id, department=department,
                                        number_of_hours=number_of_hours, lecture_day=lecture_day,
                                        hall_number=hall_number)
+        return redirect('home')
     departments = Department.objects.all()
     context = {
         'departments': departments
@@ -336,43 +350,51 @@ def add_student(request):
         date_of_birth = request.POST.get('dateOfBirth')
         department_id = request.POST.get('department')
         status = request.POST.get('status')
-        course1_ID = request.POST.get('course1')
-        course2_ID = request.POST.get('course2')
-        course3_ID = request.POST.get('course3')
+
         university = request.POST.get('university')
         gender = request.POST.get('gender')
 
-        if department_id is not None and course1_ID is not None and course2_ID is not None and course3_ID is not None:
-            department_id = int(department_id)
-            course1 = Course.objects.get(course_id=course1_ID)
-            course2 = Course.objects.get(course_id=course2_ID)
-            course3 = Course.objects.get(course_id=course3_ID)
+        departments = Department.objects.all()
+        context = {
+            'departments': departments
+        }
+        # Check if username and email already exist
+        try:
+            Student.objects.get(username=username)
+            messages.error(request, 'Username already exists')
+            return render(request, 'main_website/add_student.html', context)
+        except ObjectDoesNotExist:
+            pass
+
+        try:
+            Student.objects.get(email=email)
+            messages.error(request, 'Email already exists')
+            return render(request, 'main_website/add_student.html', context)
+        except ObjectDoesNotExist:
+            pass
+
+        # Check if student ID already exists
+        try:
+            Student.objects.get(stud_id=stud_id)
+            messages.error(request, 'Student ID already exists')
+            return render(request, 'main_website/add_student.html', context)
+        except ObjectDoesNotExist:
+            pass
+
 
             department = Department.objects.get(id=department_id)
 
-            student = Student.objects.create_user(name=name, username=username, email=email, stud_id=stud_id,
-                                                  password=password,
-                                                  date_of_birth=date_of_birth, department=department,
-                                                  is_active=status, university=university, gender=gender)
+            Student.objects.create_user(name=name, username=username, email=email, stud_id=stud_id,
+                                        password=password,
+                                        date_of_birth=date_of_birth,  department=department,
+                                        is_active=status, university=university, gender=gender)
 
-            Grades.objects.create(student=student, course=course1)
-            Grades.objects.create(student=student, course=course2)
-            Grades.objects.create(student=student, course=course3)
-
-        return render(request, 'main_website/home.html')
+        return render(request, 'main_website/add_student.html', context)
 
     else:
-        courses = Course.objects.all()
         departments = Department.objects.all()
         context = {
-            'courses': courses,
             'departments': departments
         }
         return render(request, 'main_website/add_student.html', context)
 
-
-def get_courses_by_department(request):
-    department_id = request.GET.get('department')
-    courses = Course.objects.filter(department_id=department_id).values('course_id', 'name')
-
-    return JsonResponse(list(courses), safe=False)

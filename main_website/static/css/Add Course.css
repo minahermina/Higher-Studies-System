@@ -110,11 +110,7 @@ transition: .4s;
   transition: 0.2s;
   color: #9b9b9b;
 }
-/* .form__field:focus {
-  padding-bottom: 6px;
-  border-width: 3px;
-  border-image-slice: 1;
-} */
+
 .form__field:focus ~ .form__label {
   position: absolute;
   top: 0;
@@ -125,29 +121,7 @@ transition: .4s;
 
 
 
-/* 
-form select {
-  padding: 2px;
-  width:85%;
-  height: 25px;
-  border: 1px solid #49697d ;
-  border-radius: 3px;
-  font-size: 1rem;
-}
-/*
-form label {
-  color:black;
-  display: block;
-  font-weight: normal;
-  margin-bottom: 5px;
-}
-form select {
-  color: black;
-  padding: 2px;
-  border: 1px solid #49697d ;
-  border-radius: 3px;
-  font-size: 1rem;
-} */
+
 form button[type="add"],
 form button[type="reset"] {
   margin-left: 45px;
