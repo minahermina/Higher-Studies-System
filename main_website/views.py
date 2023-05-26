@@ -236,7 +236,7 @@ def edit_student(request):
             name = request.POST.get('student_name')
             username = request.POST.get('username')
             email = request.POST.get('email')
-            # password = request.POST.get('password')
+            
             date_of_birth = request.POST.get('dateOfBirth')
             status = request.POST.get('status')
             university = request.POST.get('university')
@@ -267,12 +267,6 @@ def edit_student(request):
                 student.save()
                 if takenCourses.count() > 0:
                     if takenCourses[0].course.course_id != course1_ID:
-                        try:
-                            Grades.objects.get(course_id=course1_ID)
-                            messages.error(request, 'Please select three different courses')
-                            return render(request, 'main_website/edit_student.html', context)
-                        except ObjectDoesNotExist:
-                            pass
                         print("Error 1")
                         c1 = Grades.objects.get(student_id=id, course_id=takenCourses[0].course.course_id)
                         c1.delete()
