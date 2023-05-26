@@ -191,22 +191,21 @@ def add_course(request):
         lecture_day = request.POST.get('lDay')
         hall_number = request.POST.get('hallNumber')
         department_id = request.POST.get('department')
-
-        if department_id =='notSEl':
-            messages.error(request, 'Select Department ')
+        try:
+            Course.objects.get(course_id=course_id)
+            messages.error(request, 'Course ID already exists')
             return render(request, 'main_website/add_course.html', context)
-        if lecture_day =='notSEl':
-            messages.error(request, 'Select lecture day ')
-            return render(request, 'main_website/add_course.html', context)
-            #pass
-        else:
-            department = Department.objects.get(id=department_id)
-            course = Course.objects.create(name=name, course_id=course_id, department=department,
-                                           number_of_hours=number_of_hours, lecture_day=lecture_day,
-                                           hall_number=hall_number)
-            return redirect('home')
+        except ObjectDoesNotExist:
+            pass
+        department = Department.objects.get(id=department_id)
+        Course.objects.create(name=name, course_id=course_id, department=department,
+                                       number_of_hours=number_of_hours, lecture_day=lecture_day,
+                                       hall_number=hall_number)
+        return redirect('home')
 
     return render(request, 'main_website/add_course.html', context)
+
+
 
 
 
