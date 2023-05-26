@@ -64,7 +64,8 @@
                 <br>
                 <div>
                     <label for="DateOfBirth">Date Of Birth:</label>
-                    <input type="date" value="{{ student.date_of_birth }}"  name="dateOfBirth" id="DateOfBirth" min='1899-01-01' max='2005-12-31'  required>
+                    <input type="date" value="{{ student.date_of_birth|date:'Y-m-d' }}" name="dateOfBirth" id="DateOfBirth" min="1899-01-01" max="2005-12-31" required>
+
                 </div>
                 <div id="dateError" style="display:none;color: rgba(253,23,23,0.09);">Please enter the date of birth.</div>
                 <br>
