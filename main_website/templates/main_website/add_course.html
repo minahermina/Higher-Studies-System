@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{% static 'css/add_student.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <script defer src="{% static 'js/footer.js' %}"></script>
+    <script defer src="{% static 'js/add_course.js' %}"></script>
 
     <script defer src="{% static 'js/eyeIcon.js' %}"></script>
     <meta name="description" content="Add Student Page." />
@@ -33,7 +34,7 @@
                 <input type="text" id="courseName" class="form__field" name="name" value="" placeholder="Course name" autofocus required>
                 <label class="form__label" for="Course name">Course name:</label>
             </div>
-            <div id="cNameError" style="display:none;color:red;">Invalid Name:The name must start with letters </div>
+            <div id="cNameError" style="display:none;color:red;">Invalid Name:The name must start with letters  </div>
             <br>
             <div class="txt_field">
                 <span></span>
@@ -53,14 +54,14 @@
                 <span class="custom-dropdown">
                     <select name="department" id="department" required>
                         <optgroup label="department">
-                            <option value="notSEl" disabled selected >Select your department</option>
+                            <option value="" disabled selected >Select your department</option>
                                 {% for departement in departments %}
                                     <option value="{{ departement.id }}">{{ departement.name }}</option>
                                 {% endfor %}
                         </optgroup>
                     </select>
                 </span>
-                <div id="depError" style="display:none;color: red;">Please enter the department.</div>
+                <div id="depError" style="display:none;color: red;">Please select a department.</div>
             </div>
             <br>
 
@@ -69,7 +70,7 @@
             <span class="custom-dropdown">
                 <select name="lDay" id="lecDay" required>
                     <optgroup label="lecture Day">
-                        <option value="notSEl" selected disabled>lecture Day</option>
+                        <option value="" selected disabled>lecture Day</option>
                         <option value="Saturday">Saturday</option>
                         <option value="Sunday">Sunday</option>
                         <option value="Monday">Monday</option>
@@ -80,6 +81,7 @@
                     </optgroup>
                 </select>
             </span>
+                <div id="LError" style="display:none;color: red;">Please select a lecture day.</div>
             </div>
             <br>
             <div class="txt_field">
@@ -95,6 +97,7 @@
                     </div>
 
                 {% endfor %}
+                <br>
                 <br>
             <div>
                 <button type="submit" class="btn" id="add"> <span>Submit</span></button>
