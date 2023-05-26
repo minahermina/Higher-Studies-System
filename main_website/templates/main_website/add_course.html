@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{% static 'css/add_student.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <script defer src="{% static 'js/footer.js' %}"></script>
+
     <script defer src="{% static 'js/eyeIcon.js' %}"></script>
     <meta name="description" content="Add Student Page." />
     <title>Add Course</title>
@@ -52,7 +53,7 @@
                 <span class="custom-dropdown">
                     <select name="department" id="department" required>
                         <optgroup label="department">
-                            <option value="" disabled selected >Select your department</option>
+                            <option value="notSEl" disabled selected >Select your department</option>
                                 {% for departement in departments %}
                                     <option value="{{ departement.id }}">{{ departement.name }}</option>
                                 {% endfor %}
@@ -68,7 +69,7 @@
             <span class="custom-dropdown">
                 <select name="lDay" id="lecDay" required>
                     <optgroup label="lecture Day">
-                        <option value="" selected disabled>lecture Day</option>
+                        <option value="notSEl" selected disabled>lecture Day</option>
                         <option value="Saturday">Saturday</option>
                         <option value="Sunday">Sunday</option>
                         <option value="Monday">Monday</option>
@@ -86,7 +87,15 @@
                 <input type="text" id="hNumber" class="form__field" name="hallNumber" value="" placeholder="Hall number" autofocus required>
                 <label class="form__label" for="Hall number">Hall number:</label>
             </div>
-            <br>
+                <br>
+                {% for message in messages %}
+                    <div class="alert alert-success" style="color: red;">
+                    <a class="close" href="" data-dismiss="alert">×</a>
+                    {{ message }}
+                    </div>
+
+                {% endfor %}
+                <br>
             <div>
                 <button type="submit" class="btn" id="add"> <span>Submit</span></button>
                 <button type="reset" class="btn"id="reset"> <span> Reset</span> </button>
