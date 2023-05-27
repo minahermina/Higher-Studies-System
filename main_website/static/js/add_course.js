@@ -32,6 +32,7 @@ function validInputs(){
 
     var lDay = document.getElementById("lecDay").value;
     if (lDay === "NOT") {
+        //if wrong in single ' in 'LError'
         document.getElementById('LError').style.display = "block";
         document.getElementById("lecDay").focus();
         window.scroll(10,10);
