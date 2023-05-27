@@ -236,7 +236,7 @@ def edit_student(request):
             name = request.POST.get('student_name')
             username = request.POST.get('username')
             email = request.POST.get('email')
-            
+
             date_of_birth = request.POST.get('dateOfBirth')
             status = request.POST.get('status')
             university = request.POST.get('university')
@@ -248,9 +248,6 @@ def edit_student(request):
             course2_ID = request.POST.get('course2')
             course3_ID = request.POST.get('course3')
 
-            course1 = Course.objects.get(course_id=course1_ID)
-            course2 = Course.objects.get(course_id=course2_ID)
-            course3 = Course.objects.get(course_id=course3_ID)
             if id == sID:
 
                 student = Student.objects.get(stud_id=sID)
@@ -266,27 +263,12 @@ def edit_student(request):
                 # print(student)
                 student.save()
                 if takenCourses.count() > 0:
-                    if takenCourses[0].course.course_id != course1_ID:
-                        print("Error 1")
-                        c1 = Grades.objects.get(student_id=id, course_id=takenCourses[0].course.course_id)
-                        c1.delete()
-                        Grades.objects.create(student_id=id, course_id=course1_ID)
-                else:
-                    Grades.objects.create(student_id=id, course_id=course1_ID)
-                if takenCourses.count() > 1:
-                    if takenCourses[1].course.course_id != course2_ID:
-                        c2 = Grades.objects.get(student_id=id, course_id=takenCourses[1].course.course_id)
-                        c2.delete()
-                        Grades.objects.create(student_id=id, course_id=course2_ID)
-                else:
-                    Grades.objects.create(student_id=id, course_id=course2_ID)
-                if takenCourses.count() > 2:
-                    if takenCourses[2].course.course_id != course2_ID:
-                        c1 = Grades.objects.get(student_id=id, course_id=takenCourses[2].course.course_id)
-                        c1.delete()
-                        Grades.objects.create(student_id=id, course_id=course3_ID)
-                else:
-                    Grades.objects.create(student_id=id, course_id=course3_ID)
+                    Grades.objects.filter(student=student).delete()
+
+                Grades.objects.create(student_id=sID, course_id=course1_ID)
+                Grades.objects.create(student_id=sID, course_id=course2_ID)
+                Grades.objects.create(student_id=sID, course_id=course3_ID)
+
                 return redirect('search_students')
             else:
                 student = Student.objects.get(stud_id=id)
@@ -309,6 +291,9 @@ def edit_student(request):
                 return redirect('search_students')
 
     return render(request, 'main_website/edit_student.html', context)
+
+
+
 
 def error_404(request, exception):
     return render(request, 'main_website/404.html', status=404)
