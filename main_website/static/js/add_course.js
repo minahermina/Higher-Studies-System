@@ -43,17 +43,26 @@ function validInputs(){
     return true;
 }
 
- const form = document.getElementById('form');
-
-  form.addEventListener('submit', function(event) {
-
-    if(!validInputs()){
-        // prevent default form submission behavior
-        event.preventDefault();
-    }
-    else{
-        alert("Course added successfully!");
+    document.getElementById("form").addEventListener("submit", function(event) {
+    var lDay = document.getElementById("lecDay").value;
+    if (lDay === "NOT") {
+        document.getElementById("LError").style.display = "block";
+        document.getElementById("lecDay").focus();
+        window.scroll(10, 10);
+        event.preventDefault(); // Prevent form submission
+    } else {
+        document.getElementById("LError").style.display = "none";
     }
 });
 
 
+//   form.addEventListener('submit', function(event) {
+//
+//     if(!validInputs()){
+//         // prevent default form submission behavior
+//         event.preventDefault();
+//     }
+//     else{
+//         alert("Course added successfully!");
+//     }
+// });
