@@ -54,6 +54,48 @@ function validate_form(){
     return true;
 }
 
+// function validateCourses() {
+//     var course1 = document.getElementById("c1").value;
+//     var course2 = document.getElementById("c2").value;
+//     var course3 = document.getElementById("c3").value;
+//     const c1 = document.getElementById("c1Error").value;
+//     const c2 = document.getElementById("c2Error").value;
+//     const c3 = document.getElementById("c3Error").value;
+//
+//     // Check if all option fields are filled
+//     if (course1 === "select" ) {
+//         c1.style.display = "block";
+//         course1.focus();
+//         window.scroll(10,10);
+//         return false;
+//     } else {
+//         c1.style.display = "none";
+//     }
+//     if(course2 === "select"){
+//         c2.style.display = "block";
+//         course2.focus();
+//         window.scroll(10,10);
+//         return false;
+//     } else {
+//         c2.style.display = "none";
+//     }
+//     if(course3 === "select"){
+//         c3.style.display = "block";
+//         course3.focus();
+//         window.scroll(10,10);
+//         return false;
+//     } else {
+//         c3.style.display = "none";
+//     }
+//     // Check if all selected courses are different
+//     if (course1 === course2 || course1 === course3 || course2 === course3) {
+//         alert("Please select three different courses.");
+//         return false;
+//     }
+//     // All validations passed
+//     return true;
+// }
+// check that user has chosen exactly 3 courses and that they are different
 function validateCourses() {
     var course1 = document.getElementById("c1").value;
     var course2 = document.getElementById("c2").value;
@@ -61,32 +103,12 @@ function validateCourses() {
     const c1 = document.getElementById("c1Error").value;
     const c2 = document.getElementById("c2Error").value;
     const c3 = document.getElementById("c3Error").value;
-
     // Check if all option fields are filled
-    if (course1 === "select" ) {
-        c1.style.display = "block";
-        course1.focus();
-        window.scroll(10,10);
+    if (course1 === "select" || course2 === "select" || course3 === "select") {
+         alert("Please select all three courses.");
         return false;
-    } else {
-        c1.style.display = "none";
     }
-    if(course2 === "select"){
-        c2.style.display = "block";
-        course2.focus();
-        window.scroll(10,10);
-        return false;
-    } else {
-        c2.style.display = "none";
-    }
-    if(course3 === "select"){
-        c3.style.display = "block";
-        course3.focus();
-        window.scroll(10,10);
-        return false;
-    } else {
-        c3.style.display = "none";
-    }
+
     // Check if all selected courses are different
     if (course1 === course2 || course1 === course3 || course2 === course3) {
         alert("Please select three different courses.");
