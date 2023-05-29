@@ -56,6 +56,15 @@
                 </div>
                 <div id="id-error" style="display:none;color: red;">ID can't be empty. It's a numeric value of length 8.</div>
                 <br>
+
+                {% for message in messages %}
+                    <div class="alert alert-success" style="color: red;">
+                    <a class="close" href="" data-dismiss="alert">×</a>
+                    {{ message }}
+                    </div>
+
+                {% endfor %}
+                <br>
                 <div class="txt_field">
                     <span></span>
                     <input type="password" value="********" id="password" name="password" class="form__field" placeholder="password" disabled>
@@ -191,15 +200,7 @@
                         </span>
                         <div id="c3Error" style="display:none;color: red;">Please enter course3.</div>
                 </div>
-                 <br>
-                {% for message in messages %}
-                    <div class="alert alert-success" style="color: red;">
-                    <a class="close" href="" data-dismiss="alert">×</a>
-                    {{ message }}
-                    </div>
 
-                {% endfor %}
-                <br>
                 <br>
                 <div>
                     <button type="submit" class="btn" id="submit"> <span> Edit</span></button>
