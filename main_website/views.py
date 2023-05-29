@@ -259,8 +259,6 @@ def edit_student(request):
                 student.is_active = status
                 student.university = university
                 student.gender = gender
-
-                # print(student)
                 student.save()
                 if takenCourses.count() > 0:
                     Grades.objects.filter(student=student).delete()
@@ -275,15 +273,17 @@ def edit_student(request):
                 # Check if student ID already exists
                 try:
                     Student.objects.get(stud_id=sID)
-                    messages.error(request, 'The student ID you are trying to change to already exists.')
+                    messages.error(request, 'Student ID are trying to change to already exists')
                     return render(request, 'main_website/edit_student.html', context)
                 except ObjectDoesNotExist:
                     pass
-                student = Student.objects.get(stud_id=id)
-                student.delete()
-                
+
+                oldstudent = Student.objects.get(stud_id=id)
+                oldPassword = oldstudent.password
+                oldstudent.delete()
+
                 student = Student.objects.create_user(name=name, username=username, email=email, stud_id=sID,
-                                                      password="passw",
+                                                      password=oldPassword,
                                                       date_of_birth=date_of_birth, department=department,
                                                       is_active=status, university=university, gender=gender)
 
@@ -293,6 +293,7 @@ def edit_student(request):
                 return redirect('search_students')
 
     return render(request, 'main_website/edit_student.html', context)
+
 
 
 
