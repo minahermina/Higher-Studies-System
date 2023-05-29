@@ -29,40 +29,45 @@ function validInputs(){
     }else{
         document.getElementById('departmentError').style.display = "none";
     }
-
-    var lDay = document.getElementById("lecDay").value;
-    if (lDay === "NOT") {
-        
-        document.getElementById("LError").style.display = "block";
-        document.getElementById("lecDay").focus();
-        window.scroll(10,10);
-        return false;
-    }else{
-        document.getElementById('LError').style.display = "none";
-    }
     return true;
 }
 
-    document.getElementById("form").addEventListener("submit", function(event) {
+function validateLectureDay() {
     var lDay = document.getElementById("lecDay").value;
-    if (lDay === "NOT") {
-        document.getElementById("LError").style.display = "block";
-        document.getElementById("lecDay").focus();
-        window.scroll(10, 10);
-        event.preventDefault(); // Prevent form submission
+    var errorElement = document.getElementById("LError");
+
+    if (lDay === "") {
+        errorElement.style.display = "block";
+        return false;
     } else {
-        document.getElementById("LError").style.display = "none";
+        errorElement.style.display = "none";
+        return true;
     }
+}
+
+document.getElementById("lecDay").addEventListener("input", validateLectureDay);
+
+
+document.getElementById("form").addEventListener("submit", function(event) {
+        if(!validInputs()){
+        // prevent default form submission behavior
+        event.preventDefault();
+        }
+        else {
+        var lDay = document.getElementById("lecDay").value;
+        if (lDay === "") {
+            // Display an error message for the lecture day field
+            document.getElementById("LError").style.display = "block";
+            document.getElementById("lecDay").focus();
+
+            // Prevent form submission
+            event.preventDefault();
+        } else {
+            // Hide the error message for the lecture day field
+            document.getElementById("LError").style.display = "none";
+        }
+    }
+
 });
 
 
-//   form.addEventListener('submit', function(event) {
-//
-//     if(!validInputs()){
-//         // prevent default form submission behavior
-//         event.preventDefault();
-//     }
-//     else{
-//         alert("Course added successfully!");
-//     }
-// });
