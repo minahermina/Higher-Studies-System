@@ -27,7 +27,7 @@
             <div class="title">
                 <h1><b>Add Course</b> </h1>
             </div>
-            <form id ="form" action="" method="POST">
+            <form id ="form" onclick="return validateLectureDay()" action="" method="POST">
                 {% csrf_token %}
             <div class="txt_field">
                 <span></span>
@@ -65,12 +65,12 @@
             </div>
             <br>
 
-            <div>
+            <div id="lday">
             <label for="lecture Day">lecture Day:</label>
             <span class="custom-dropdown">
                 <select name="lDay" id="lecDay" required>
                     <optgroup label="lecture Day">
-                        <option value="NOT" selected disabled>lecture Day</option>
+                        <option value="" selected disabled>lecture Day</option>
                         <option value="Saturday">Saturday</option>
                         <option value="Sunday">Sunday</option>
                         <option value="Monday">Monday</option>
@@ -81,7 +81,7 @@
                     </optgroup>
                 </select>
             </span>
-                <div id="LError" style="display:none;color: red;">Please select a lecture day.</div>
+                <div id="LError" style="display:none;color:red;">Please select a lecture day.</div>
             </div>
             <br>
             <div class="txt_field">
@@ -96,7 +96,7 @@
                     {{ message }}
                     </div>
 
-                {% endfor %}
+             ]   {% endfor %}
                 <br>
                 <br>
             <div>
