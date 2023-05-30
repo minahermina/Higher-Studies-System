@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-*u%7zzecwf8e_uz^l@qi$#y^oqbl%58@r5=2uagzp_$ya-3it*
 DEBUG = True
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
-ALLOWED_HOSTS = ['higherstudiesfcai.azurewebsites.net']
+ALLOWED_HOSTS = ['higherstudiesfcai.azurewebsites.net', '*']
 
 
 # Application definition
@@ -122,7 +122,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = 'static/'
+STATIC_ROOT = 'main_website/static/'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 
