@@ -12,8 +12,11 @@
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <script defer src="{% static 'js/footer.js'%}"></script>
     <script defer src="{% static 'js/eyeIcon.js' %}"></script>
-
+    {% if login_type == 'admin'%}
     <title> Login Admin </title>
+        {% else %}
+    <title> Login Student </title>
+    {% endif %}
 </head>
 
 <body>
