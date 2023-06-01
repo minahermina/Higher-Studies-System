@@ -47,10 +47,10 @@ class Student(User):
         User, on_delete=models.CASCADE,
         parent_link=True,
         related_name='student',
-        null=True,
+        null=False,
         default=None
     )
-    stud_id = models.CharField(max_length=8, unique=True, primary_key=True)
+    stud_id = models.CharField(max_length=8, unique=True)
     base_role = User.Role.STUDENT
     role = User.Role.STUDENT
 
