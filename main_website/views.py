@@ -292,7 +292,7 @@ def error_404(request, exception):
 @login_required(login_url='login_student')
 @student_required
 def register_in_courses(request):
-    # when clicking on the save button
+   # when clicking on the save button
     if request.method == 'POST':
         student_id = request.POST.get('student_id')
         course1_id = request.POST.get('course1')
@@ -301,16 +301,16 @@ def register_in_courses(request):
         # retrieve the student
 
         student = Student.objects.get(user=request.user)
-        Grades.objects.filter(student=student).delete()
+        Grades.objects.filter(student_id=student.stud_id).delete()
 
         # retrieve the selected courses
         course1 = Course.objects.get(course_id=course1_id)
         course2 = Course.objects.get(course_id=course2_id)
         course3 = Course.objects.get(course_id=course3_id)
 
-        Grades.objects.create(student=student, course=course1)
-        Grades.objects.create(student=student, course=course2)
-        Grades.objects.create(student=student, course=course3)
+        Grades.objects.create(student_id=student.stud_id, course=course1)
+        Grades.objects.create(student_id=student.stud_id, course=course2)
+        Grades.objects.create(student_id=student.stud_id, course=course3)
 
         return redirect('home')
 
