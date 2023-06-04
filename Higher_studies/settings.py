@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,10 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-*u%7zzecwf8e_uz^l@qi$#y^oqbl%58@r5=2uagzp_$ya-3it*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
-ALLOWED_HOSTS = ['higherstudiesfcai.azurewebsites.net', '*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -121,10 +121,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/main_website/static/'
-
-STATIC_ROOT = BASE_DIR / 'main_website' / 'static'
-
+STATIC_URL = 'static/'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 
@@ -138,9 +135,3 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL= 'main_website.User'
-
-if DEBUG:
-    import mimetypes
-    mimetypes.add_type("application/javascript", ".js", True)
-    mimetypes.add_type("text/css", ".css", True)
-
