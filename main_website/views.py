@@ -8,6 +8,7 @@ from datetime import timedelta
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 
+
 def admin_required(view_func):
     def check_admin(user):
         return user.is_authenticated and user.role == User.Role.ADMIN
@@ -36,6 +37,7 @@ def student_required(view_func):
 
 def home(request):
     return render(request, 'main_website/home.html')
+
 
 def index(request):
     return render(request, 'main_website/websites_navigation.html')
@@ -153,7 +155,7 @@ def search_students(request):
         search = request.POST.get('keyword')
 
         if search:
-            deps =  Department.objects.filter(name = search)
+            deps = Department.objects.filter(name=search)
             students = students.filter(
                 (Q(name__icontains=search) | Q(department_id__in=deps.values_list('id', flat=True))) & Q(is_active=True)
             )
@@ -169,11 +171,10 @@ def search_students(request):
         departments.append(department.name)
 
     context = {
-        'students_departments':  zip(students, departments),
+        'students_departments': zip(students, departments),
         'search': search,
     }
     return render(request, 'main_website/search.html', context)
-
 
 
 @login_required(login_url='login_admin')
@@ -199,14 +200,11 @@ def add_course(request):
             pass
         department = Department.objects.get(id=department_id)
         Course.objects.create(name=name, course_id=course_id, department=department,
-                                       number_of_hours=number_of_hours, lecture_day=lecture_day,
-                                       hall_number=hall_number)
+                              number_of_hours=number_of_hours, lecture_day=lecture_day,
+                              hall_number=hall_number)
         return redirect('home')
 
     return render(request, 'main_website/add_course.html', context)
-
-
-
 
 
 @login_required(login_url='login_admin')
@@ -217,14 +215,13 @@ def edit_student(request):
 
     takenCourses = Grades.objects.filter(student_id=id, final_grade__isnull=True)
     allCourses = Course.objects.filter(department=student.department)
-    nCourses =takenCourses.count()
+    nCourses = takenCourses.count()
     context = {
         'student': student,
         'takenCourses': takenCourses,
         'courses': allCourses,
-        'n':nCourses,
+        'n': nCourses,
     }
-
 
     if request.method == 'POST':
         form_type = request.POST.get('form_type')
@@ -261,7 +258,7 @@ def edit_student(request):
                 student.gender = gender
                 student.save()
                 if takenCourses.count() > 0:
-                    Grades.objects.filter(student=student).delete()
+                    Grades.objects.filter(student_id=id).delete()
 
                 Grades.objects.create(student_id=sID, course_id=course1_ID)
                 Grades.objects.create(student_id=sID, course_id=course2_ID)
@@ -269,23 +266,16 @@ def edit_student(request):
 
                 return redirect('search_students')
             else:
-
-                # Check if student ID already exists
-                try:
-                    Student.objects.get(stud_id=sID)
-                    messages.error(request, 'Student ID are trying to change to already exists')
-                    return render(request, 'main_website/edit_student.html', context)
-                except ObjectDoesNotExist:
-                    pass
-
-                oldstudent = Student.objects.get(stud_id=id)
-                oldPassword = oldstudent.password
-                oldstudent.delete()
-
-                student = Student.objects.create_user(name=name, username=username, email=email, stud_id=sID,
-                                                      password=oldPassword,
-                                                      date_of_birth=date_of_birth, department=department,
-                                                      is_active=status, university=university, gender=gender)
+                Grades.objects.filter(student_id=id).delete()
+                student.stud_id = sID
+                student.name = name
+                student.username = username
+                student.email = email
+                student.date_of_birth = date_of_birth
+                student.is_active = status
+                student.university = university
+                student.gender = gender
+                student.save()
 
                 Grades.objects.create(student_id=sID, course_id=course1_ID)
                 Grades.objects.create(student_id=sID, course_id=course2_ID)
@@ -293,10 +283,6 @@ def edit_student(request):
                 return redirect('search_students')
 
     return render(request, 'main_website/edit_student.html', context)
-
-
-
-
 
 
 def error_404(request, exception):
@@ -315,16 +301,16 @@ def register_in_courses(request):
         # retrieve the student
 
         student = Student.objects.get(user=request.user)
-        Grades.objects.filter(student=student).delete()
+        Grades.objects.filter(student_id=student.stud_id).delete()
 
         # retrieve the selected courses
         course1 = Course.objects.get(course_id=course1_id)
         course2 = Course.objects.get(course_id=course2_id)
         course3 = Course.objects.get(course_id=course3_id)
 
-        Grades.objects.create(student=student, course=course1)
-        Grades.objects.create(student=student, course=course2)
-        Grades.objects.create(student=student, course=course3)
+        Grades.objects.create(student_id=student.stud_id, course=course1)
+        Grades.objects.create(student_id=student.stud_id, course=course2)
+        Grades.objects.create(student_id=student.stud_id, course=course3)
 
         return redirect('home')
 
@@ -383,12 +369,11 @@ def add_student(request):
         except ObjectDoesNotExist:
             pass
 
-
             department = Department.objects.get(id=department_id)
 
             Student.objects.create_user(name=name, username=username, email=email, stud_id=stud_id,
                                         password=password,
-                                        date_of_birth=date_of_birth,  department=department,
+                                        date_of_birth=date_of_birth, department=department,
                                         is_active=status, university=university, gender=gender)
 
         return render(request, 'main_website/add_student.html', context)
@@ -399,4 +384,3 @@ def add_student(request):
             'departments': departments
         }
         return render(request, 'main_website/add_student.html', context)
-
