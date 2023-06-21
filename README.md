@@ -84,7 +84,7 @@ The project consists of 11 web pages .
   - University
   - Department
   - Date of Birth
-  - gender
+  - Gender
   - status (Active or Inactive)
 
 
@@ -165,6 +165,20 @@ The project consists of 11 web pages .
 
 - An student can register in a 3 different courses
 
+</br>
+
+### <span style="padding: 10px;"> Profile Page
+
+</br>
+
+
+- A screenshot from the page:
+
+<img src="https://i.imgur.com/7YtNxnT.png"/>
+
+
+
+</br>
 </br>
 
 ### <span style="padding: 10px;"> About Page
