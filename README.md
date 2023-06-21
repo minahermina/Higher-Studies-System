@@ -184,60 +184,6 @@ The project consists of 11 web pages .
 </br>
 
 
-Setting up the environment 🛠
---------------------------
-</br>
-
-#### 1. Make sure python v3.7 or higher is installed
-
-</br>
-- To get the python version installed Execute the following:
-
-    $ python --version
-    Python 3.9.6
-</br>
-
-
-#### 2. Make Sure Git is installed
-
-
-</br>
-- To get the git version installed Execute the following:
-
-
-    $ git --version
-    git version 2.28.0.windows.1
-
-</br>
-
-#### 3. Execute the following commands in your terminal after changing your directory to the desired path
-
-</br>
-
-
-    $ mkdir project && cd project
-    $ python -m venv venv
-
-
-For Windows Users:
-
-
-    $ venv\Scripts\activate
-
-
-For Linux Users:
-
-
-    $ source venv/bin/activate
-
-
-Then
-
-    $ git clone https://github.com/BemwaMalak/Student_Affairs_System.git && cd Student_Affairs_System
-    $ pip install -r requirements.txt
-
-
-</br>
 
 <b>These are the credentials for Django admin super user:</b></br>
 username: admin</br>
